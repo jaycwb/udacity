@@ -1,0 +1,9 @@
+Os seguintes itens:
+
+1.	Seu código Python para "Estudo de Caso: Dados do OpenStreetMap" bem como qualquer código adicional que você usou na auditoria e limpeza de seu conjunto de dados para o projeto final
+2.	Um documento pdf contendo as suas respostas às perguntas da rubrica. Este arquivo deve documentar os seu processo de limpeza de dados.
+3.	Um arquivo de texto contendo um link para a posição do mapa que limpou no seu projeto, uma breve descrição da área e uma razão para sua escolha.
+
+
+A rúbrica está no arquivo P3_rubrica.html e os demais tópicos estão contemplados no arquivo .html nomeado P3_udacity_jferrazneto.html
+
