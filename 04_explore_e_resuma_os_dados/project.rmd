@@ -566,6 +566,7 @@ ggplot(data=hist_subset, aes(x=residual.sugar, fill=factor(hist_subset$quality.s
 <p align="justify">O gráfico acima representa a função de distribuição de probabilidade para a variável <font color="red">`residual.sugar`</font>. Essa característica físico-química quantifica o teor de açucar proveninente das uvas que estão presentes após o término da fermentação do vinho. Dessa forma, uma maior quantidade de açucar resulta em um vinho mais doce, enquanto menos resultará em vinhos mais secos. Dessa forma, há existencia de dois picos de <font color="red">`residual.sugar`</font> para cada categoria de <font color="red">`quality.sense`</font> nos informa que não há um padrão de qualidade **baixa** ou **alta** no que diz respeito ao vinho ser seco ou doce.</p>
 <br>
 <h5 id="sec_53">**5.3 Terceiro Gráfico**</h5><br>
+
 ```{r echo=FALSE, fig.align="center", cache=TRUE}
 #scatterplot
 ggplot(data=subset(wine, alcohol < quantile(alcohol, 0.95) & density < quantile(density, .95)), aes(y=alcohol, x = density, color=quality.sense)) +     
