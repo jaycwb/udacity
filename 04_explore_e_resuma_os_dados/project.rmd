@@ -20,11 +20,9 @@ library(grid)
 ## **Projeto 4: Explore e resuma os dados**
 
 #### **Autor:** *José Ferraz Neto*
-```{r, fig.width=1, fig.height=1,echo=FALSE, fig.align="center", cache=TRUE}
-#CARREGA A IMAGEM DE PERFIL E APRESENTA NO DOCUMENTO.
-img <- readPNG("pics/foto_perfil.png")
- grid.raster(img)
-```
+<center>
+[<img src="./pics/foto_perfil.png" height="80" width="80">]()
+</center>
 <center>
 <!-- Carrega o logo da linkedin. -->
 [<img src="./pics/Logo-2C-14px.png">](https://www.linkedin.com/in/joseferrazneto/)
