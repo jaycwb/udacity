@@ -94,7 +94,8 @@ Além disso, para maiores informações sobre o <i>dataset</i> deve-se consultar o
 seguinte <a href="https://s3.amazonaws.com/udacity-hosted-downloads/ud651/wineQualityInfo.txt">
 link</a>.</p>
   
-<p align="justify">Para iniciar a análise, iremos começar pelo carregamento do *dataset* em um dataframe.</p>
+<p align="justify">Para iniciar a análise, iremos começar pelo carregamento 
+do *dataset* em um dataframe.</p>
 ```{r}
 wine <- read.csv('wineQualityWhites.csv')
 ```
@@ -132,9 +133,7 @@ meio de boxplots em cada variável.
 É possível observar que existem algumas variáveis que possuem muitas observações
 que encontram-se fora do intervalo interquartil (IQR), isto é, abaixo do primeiro
 quartil ou acima do terceiro quartil, como é o caso da variável 
-<font color="red">`chlorides`</font>. Além disso, vale destacar que a variável 
-resposta <font color="red">`quality`</font> possui apenas um registro para notas
-3, 8 e 9, os demais registros encontram-se entre 4 e 7.</p>
+<font color="red">`chlorides`</font>.</p>
 
 ```{r echo=FALSE, fig.align="center", cache=TRUE}
 #PRODUZ UMA SÉRIE DE BOXPLOTS PARA SEREM APRESENTADOS EM CONJUNTO.
@@ -438,7 +437,7 @@ correlação positiva entre os pares (<font color="red">`residual.sugar`</font> e
 </font> e <font color="red">`free.sulfur.dioxide`</font>), por exemplo. Além 
 disso, em relação as variáveis preditoras e a variável resposta <font 
 color="red">`quality`</font>, aquela que apresenta o maior coefieciente de 
-correlação foi <font color="red">`density`</font>.</p>
+correlação foi <font color="red">`alcohol`</font>.</p>
 
 ```{r echo=FALSE, fig.align="center", cache=TRUE}
 #seleciona as variáveis para criar o plot de correlação
@@ -465,10 +464,15 @@ correlação positiva entre as variáveis:</p>
 <p align="justify">Além disso, é válido descatar uma forte correlação negativa 
 entre:</p>
 <ul>
-<li><font color="red">`alcohol`</font> e <font color="red">`density`</font>: `
-r max(corr4)`</li>
+<li><font color="red">`alcohol`</font> e <font color="red">`density`</font>:
+`r max(corr4)`</li>
 </ul>
 
+```{r echo=FALSE, fig.align="center", cache=TRUE}
+#SCATTERPLOT MATRIX
+scatterplotMatrix(wine[2:12])
+
+```
 
 ```{r echo=FALSE, fig.align="center", cache=TRUE}
 #SCATTERPLOT
@@ -569,11 +573,6 @@ aes(x=residual.sugar))+
 
 <h4 id="sec_4">**4. Seção de Gráficos Multivariados**</h4>
 
-```{r echo=FALSE, fig.align="center", cache=TRUE}
-#SCATTERPLOT MATRIX
-scatterplotMatrix(wine[2:12])
-
-```
 
 ```{r echo=FALSE, fig.align="center", cache=TRUE}
 #scatterplot
