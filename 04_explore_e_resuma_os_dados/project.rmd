@@ -466,45 +466,83 @@ entre:</p>
 <ul>
 <li><font color="red">`alcohol`</font> e <font color="red">`density`</font>:
 `r max(corr4)`</li>
-</ul>
+</ul><br>
+<p align="justify">Por conseguinte, é possível produzir uma matriz de 
+gráficos de dispersão onde verifica-se em um única visualização o padrão
+de comportamento dos dados de múltiplas variáveis. A partir de uma primeira
+análise, é possível confirmar um bom ajuste para um modelo linear para as
+variáveis <font color="red">`residual.sugar`</font> e <font color="red">`density`
+</font>, corroborando o alto valor do coeficiante de correlação previamente
+mencionado. Além de <font color="red">`alcohol`</font> e <font color="red">
+`density`</font> que os dados claramente confirmam a relação inversa existente
+entre essas variáveis. As demais variáveis analisadas aparentemente não
+apresentam nenhum padrão a ser destacado nessa matriz.
+</p>
 
 ```{r echo=FALSE, fig.align="center", cache=TRUE}
 #SCATTERPLOT MATRIX
-scatterplotMatrix(wine[2:12])
 
+scatterplotMatrix(wine[c("residual.sugar","free.sulfur.dioxide","density","pH",
+                         "alcohol")])
 ```
+<p align="justify">A matriz de gráficos de dispersão é eficiente para uma
+análise exploratória prévia, todavia, é mais aconselhável plotar gráficos
+individuais para melhor avaliar a relação entre duas variáveis.
+O gráfico de dispersão abaixo foi plotado retirando o 5° percentil superior
+de ambas as variáveis e pode-se verificar que apresenta um ajuste razoável 
+para um modelo de regressão linear.</p>
 
 ```{r echo=FALSE, fig.align="center", cache=TRUE}
 #SCATTERPLOT
 ggplot(data=subset(wine, alcohol < quantile(alcohol, 0.95) & density < 
   quantile(density, .95)), aes(y=alcohol, x = density))+
-    geom_point()
+  stat_smooth(method = "lm")+
+    geom_point(alpha = .25,position='jitter')
 
 ```
-
+<p align="justify">O gráfico abaixo apresenta uma tendência de crescimento dos
+dados de <font color='red'>`residual.sugar`</font> e <font color='red'>
+`density`</font>, todavia, há um platô de pontos abaixo de 2.5 g / dm^3^
+de <font color='red'>`residual.sugar`</font> que claramente distorce da 
+tendência do restante do conjunto de dados.
+</p>
 ```{r echo=FALSE, fig.align="center", cache=TRUE}
 #SCATTERPLOT
 ggplot(data=subset(wine, residual.sugar < quantile(residual.sugar, 0.95) & 
   density < quantile(density, .95)), aes(y=residual.sugar, x = density))+
-    geom_point()
-
+  geom_smooth()+
+    geom_point(alpha = .25,position='jitter')
 ```
-
+<p align="justify">Pela plotagem individual de gráficos de dispersão para 
+<font color="red">`free.sulfur.dioxide`</font> vs <font color="red">`pH`</font>
+e de <font color="red">`alcohol`</font> vs <font color="red">`residual.sugar`
+</font> é possível confirmar que não existe nenhum padrão aparente entre essas
+variáveis.</p>
 ```{r echo=FALSE, fig.align="center", cache=TRUE}
 #SCATTERPLOT
 ggplot(data=subset(wine, free.sulfur.dioxide < quantile(free.sulfur.dioxide, 
   0.95) & pH < quantile(pH, .95)), aes(y=free.sulfur.dioxide, x = pH))+
-    geom_point()
+    geom_point(alpha = .25,position='jitter')
 
 ```
 ```{r echo=FALSE, fig.align="center", cache=TRUE}
 #SCATTERPLOT
-ggplot(data=subset(wine, total.sulfur.dioxide < quantile(total.sulfur.dioxide, 
-  0.95) & pH < quantile(pH, .95)), aes(y=total.sulfur.dioxide, x = pH))+
-    geom_point()
+ggplot(data=subset(wine, alcohol < quantile(alcohol, 
+  0.95) & residual.sugar < quantile(residual.sugar, .95)), aes(y=alcohol, x = residual.sugar))+
+    geom_point(alpha = .25,position='jitter')
 
 ```
-
+<p align="justify">Por uma plotagem de boxplots é possível determinar algumas
+tendências interessantes. O primeiro gráfico é de <font color="red">`alcohol`
+</font> vs <font color="red">`quality`</font> que apresenta uma tendêcia de 
+crescimento da mediana do teor de álcool com a qualidade do vinho. Enquanto o 
+segundo apresenta uma plotagem de <font color="red">`total.sulfur.dioxide`
+</font> vs <font color="red">`quality`</font> o qual a mediana da concentração
+total de dióxido de enxofre possui uma tendência de estabilização da mediana ao
+longo dos diferentes graus de qualidade, todavia, o IQR parece diminuir a medida
+que a qualidade dos vinhos aumenta, isto é, a maior parte dos vinhos de maior
+qualidade possui uma faixa de concentração total de dióxido de enxofre
+menos dispersa que aqueles vinhos de menor qualidade.</p>
 ```{r echo=FALSE, fig.align="center", cache=TRUE}
 #BOXPLOT
 ggplot(data=subset(wine, alcohol < quantile(alcohol, 0.95)), aes(factor
@@ -572,7 +610,13 @@ aes(x=residual.sugar))+
 `r max(corr1)`</p>
 
 <h4 id="sec_4">**4. Seção de Gráficos Multivariados**</h4>
-
+<p align="justify">A partir de gráficos multivaridos é possível determinar
+possíveis relações de múltiplas variáveis. Abaixo está plotado um gráfico de
+dispersão de <font color="red">`alcohol`</font> vs <font color="red">`pH`</font>
+no qual foi adicionado um terceira dimensão por meio da codificação em cores da 
+variável <font color="red">`quality.sense`</font>. Todavia, não possível
+determinar nenhuma segregação de qualidade baseada nas variáveis preditoras
+plotadas.</p>
 
 ```{r echo=FALSE, fig.align="center", cache=TRUE}
 #scatterplot
@@ -582,7 +626,9 @@ ggplot(data=subset(wine, alcohol < quantile(alcohol, 0.95) & pH < quantile(pH,
     scale_colour_brewer(type="seq", palette=8)
 
 ```
-
+<p align="justify">O gráfico abaixo apresenta uma tendência dos vinhos avaliados
+como alta estarem concentrados em maiores teores de <font color="red">`alcohol`
+</font>.</p>
 ```{r echo=FALSE, fig.align="center", cache=TRUE}
 #scatterplot
 ggplot(data=subset(wine, alcohol < quantile(alcohol, 0.95) & density < quantile
@@ -591,7 +637,9 @@ ggplot(data=subset(wine, alcohol < quantile(alcohol, 0.95) & density < quantile
     scale_colour_brewer(type="seq", palette=8)
 
 ```
-
+<p align="justify">Com o gráfico de dispersão abaixo é possível identificar
+que a maior parte dos vinhos melhores avaliados possuem valores de <font color="red">
+`density`</font> menores que 0.993.</p>
 ```{r echo=FALSE, fig.align="center", cache=TRUE}
 #scatterplot
 ggplot(data=subset(wine, density < quantile(density, 0.95) & pH < quantile(pH,
@@ -600,7 +648,10 @@ ggplot(data=subset(wine, density < quantile(density, 0.95) & pH < quantile(pH,
     scale_colour_brewer(type="seq", palette=8)
 
 ```
-
+<p align="justify">Apesar da tendência de crescimento existente entre os dados
+de <font color="red">`density`</font> e <font color="red">`residual.sugar`</font>
+ não é possível distinguir nenhum padrão em relação a <font color="red">
+ `quality.sense`</font>.</p>
 ```{r echo=FALSE, fig.align="center", cache=TRUE}
 #scatterplot
 ggplot(data=subset(wine, density < quantile(density, 0.95) & residual.sugar < 
@@ -609,7 +660,8 @@ quantile(residual.sugar, .95)), aes(y=density, x = residual.sugar)) +
     scale_colour_brewer(type="seq", palette=8)
 
 ```
-
+<p align="justify">Nesse gráfico não há nehum padrão entre as variáveis plotadas
+nos eixos x/y e tão pouco em relação a variável codificada pelas cores da legenda.</p>
 ```{r echo=FALSE, fig.align="center", cache=TRUE}
 #scatterplot
 ggplot(data=subset(wine, fixed.acidity < quantile(fixed.acidity, 0.95) & 
@@ -618,7 +670,9 @@ citric.acid < quantile(citric.acid, .95)), aes(y=fixed.acidity, x = citric.acid)
     scale_colour_brewer(type="seq", palette=8)
 
 ```
-
+<p align="justify">Apesar da tendência de crescimento apresentada pelo gráfico
+de dispersão abaixo, não é possível identificar nenhuma tendência de 
+segregação em relação a variável <font color="red">`quality.sense`</font>.</p>
 ```{r echo=FALSE, fig.align="center", cache=TRUE}
 #scatterplot
 ggplot(data=subset(wine, free.sulfur.dioxide < quantile(free.sulfur.dioxide, 0.95) 
