@@ -898,10 +898,9 @@ ggplot(data=hist_subset, aes(x=residual.sugar,
       scale_x_continuous(trans = log10_trans(), breaks = c(seq(1,11,2)))+
         theme_minimal()+
           scale_fill_discrete(name="Qualidade")+
-            ggtitle("Distribuição de probabilidade para teores de\n açúcares 
-                    residuais para diferentes qualidades de vinhos")+
+            ggtitle("Distribuição de probabilidade para teores de\n açúcares residuais para diferentes qualidades de vinhos")+
               ylab("Densidade")+
-                xlab("Concentração de Açucar Residual (g / dm^3)")
+                xlab(bquote('Concentração de Açucar Residual (g /'~dm^{3}~')'))
 ```
 <h5 id="sec_521">**5.2.1 Descrição do Segundo Gráfico**</h5>
 <p align="justify">O gráfico acima representa a função de distribuição de 
@@ -926,10 +925,9 @@ quantile(density, .95)), aes(y=alcohol, x = density, color=quality.sense)) +
       theme_minimal()+
         facet_wrap(~quality.sense)+
           geom_smooth(colour='black')+
-            ggtitle("Gráfico de dispersão de Alcohol vs Density \nem diferentes
-                    qualidades de vinhos")+
+            ggtitle("Gráfico de dispersão de Alcohol vs Density \n em diferentes qualidades de vinhos")+
               ylab("Teor de álcool / % por volume")+
-                xlab("Densidade (g / cm^3)")
+                xlab(bquote('Densidade (g /'~cm^{3}~')'))
 ```
 
 <h5 id="sec_531">**5.3.1 Descrição do Terceiro Gráfico**</h5>
@@ -939,9 +937,9 @@ possuem um coeficiente de correlação de <b>-0.78</b> mostrando a forte relação
 inversa entre as variáveis. Desse modo, pela adição de mais uma dimensão no 
 gráfico (<font color="red">`quality.sense`</font>) foi possível constatar que 
 essa tendência dos dados é semelhante independente da qualidade do vinho, 
-portanto, a distinção de vinhos de diferentes qualidades não pode ser explicada
-pela relação existente entre <font color="red">`alcohol`</font> e <font 
-color="red">`density`</font>.</p>
+ressaltando, que é possível ver uma maior concentração de vinhos avaliados como
+alta em menores valores de <font color="red">`density`</font>, e consequentemente,
+ maiores valores de <font color="red">`alcohol`</font>.</p>
 
 <h4 id="sec_6">**6. Reflexão**</h4>
 
@@ -954,18 +952,39 @@ especialistas.</p>
 
 <p align="justify">A análise foi feito utilizando o *package ggplot2* e foi 
 possível verificar que maiores teores de álcool do vinhos estavam associados aos
-vinhos de maior qualidade. Além disso, por um gráfico de distribuição de 
-probabilidade para a variável <font color="red">`residual.sugar`</font> foi 
-possível constatar que não há um padrão de maior qualidade associado a vinhos 
-que sejam doces ou secos.</p>
+vinhos de maior qualidade. Ainda foi possível identificar por um gráfico de 
+distribuição de probabilidade para a variável <font color="red">`residual.sugar`
+</font> constatar que não há um padrão de maior qualidade associado
+a vinhos que sejam doces ou secos. Além disso, foi observado uma preponderência 
+de vinhos com qualidade alta possuírem menos valores de <font color='red'>`density`
+</font>.</p>
 
 <p align="justify">Além disso, dos aproxidamente 5000 vinhos disponíveis para 
 análise a grande maioria foram classificados entre 5 e 7 em uma escala até 10. 
 Foi tentado construir modelos lineares para predizer a qualidade dos vinhos a 
 partir de suas propriedades físico-químicas, todavia, os modelos não tiveram 
-bons ajustes. Desse modo, propõe em trabalho posterior a tentativa de utilizar
-funções não-lineares para modelagem dos dados na tentativa de obter melhores 
-resultados quanto ao ajuste dos dados disponíveis.</p>
+bons ajustes. 
+
+<p align="justify">Um dos pressupostos para o bom desempenho de um modelo
+de regressão linear é que exista uma relação linear entre as variáveis dependente
+e a independente, e como apresentado ao longo da análise essa condição não é
+satisfeita para muitas variáveis analisadas. Além disso, esse tipo de modelo
+é muito sensível a presença de outliers, que também foi possível identificar
+a partir dos boxplots apresentados.</p>
+
+<p align="justify">Além disso, dentro dos requisitos para um bom ajuste é a
+homogeneidade de variâncias, por exemplo, por meio dos boxplots de <font 
+color="red">`alcohol`</font> vs <font color="red">`quality`</font> e 
+<font color="red">`total.sulfur.dioxide`</font> vs <font color="red">`quality`
+</font> é possível identificar diferentes padrões de dispersão dos dados em 
+diferentes níveis de <font color="red">`quality`</font>. Desse modo, essas 
+observações são indícios de heterocedasticidade, possivelmente contribuindo
+para um ajuste não adequado do modelo aos dados.</p>
+
+Desse modo, propõe em trabalho posterior a tentativa de utilizar transformações
+nas variáveis disponívels, bem como o uso de algoritmos não-lineares para 
+modelagem dos dados na tentativa de obter melhores resultados quanto ao ajuste 
+dos dados disponíveis.</p>
 
 <h4 id="sec_7">**7. Bibliografia**</h4>
 
