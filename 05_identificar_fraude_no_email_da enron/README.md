@@ -59,13 +59,15 @@ Após a retirada dos 3 registros acima, o dataset resultou em 143 registros dos 
 
 > Give at least 2 evaluation metrics and your average performance for each of them.  Explain an interpretation of your metrics that says something human-understandable about your algorithm’s performance.
 
-
+<p align="center">
 
 |       ALGORITMO        | PRECISÃO | RECALL  |
 | :--------------------: | :------: | :-----: |
 | DecisionTreeClassifier | 0.30005  | 0.96750 |
 |   LogisticRegression   | 0.25924  | 0.59650 |
 | Support Vector Machine | 0.16689  | 0.06250 |
+
+</p>
 
 Os autores Jake Lever, Martin Krzywinski e Naomi Altman publicaram no período científico **[nature methods](http://www.nature.com/nmeth/journal/v13/n8/full/nmeth.3945.html)** um excelente artigo denominado *Points of Significance: Classification evaluation* o qual discorrem sobre a avaliação de algortimos de classificação. Os autores de forma didática apresentam no referido artigo a figura abaixo que, de forma muito didática, apresentam a matriz de confusão e as diversas métricas possíveis de obter a partir dela.
 
