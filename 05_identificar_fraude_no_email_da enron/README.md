@@ -35,7 +35,7 @@ A partir da análise dos dados disponibilizados foi possível constatar a exist�
 - `THE TRAVEL AGENCY IN THE PARK` : Definitivamente esse não é um nome associado a uma pessoa, logo, não irá colaborar com informação útil ao desenvolvimento do modelo.
 - `TOTAL ` : Esse registro ao que indica contem os valores agregados de todas as pessoas do *dataset*.
 
-Após a retirada dos 3 registros acima, o dataset resultou em 143 registros dos quais 13 são assinalados como sendo *<u>person of interest</u>*, desse modo o trabalho de modelagem apresenta-se como uma classificação supervisionada com classes desbalanceadas.
+Após a retirada dos 3 registros acima, o dataset resultou em 143 registros dos quais 18 são assinalados como sendo *<u>person of interest</u>*, desse modo o trabalho de modelagem apresenta-se como uma classificação supervisionada com classes desbalanceadas.
 
 > What features did you end up using in your POI identifier, and what selection process did you use to pick them? Did you have to do any scaling? Why or why not? As part of the assignment, you should attempt to engineer your own feature that does not come ready-made in the dataset -- explain what feature you tried to make, and the rationale behind it. (You do not necessarily have to use it in the final analysis, only engineer and test it.) In your feature selection step, if you used an algorithm like a decision tree, please also give the feature importances of the features that you use, and if you used an automated feature selection function like SelectKBest, please report the feature scores and reasons for your choice of parameter values.
 
@@ -59,14 +59,27 @@ Após a retirada dos 3 registros acima, o dataset resultou em 143 registros dos 
 
 A partir da construção do *Pipeline* com 3 algoritmos - *DecisionTree, LogisticRegression e Support Vector Machine* - bem como a otimização de alguns de seus parâmetros por meio do *GridSearchCV*, foi possível otimizar os algoritmos que tem seus respectivos desempenhos ilustrados pelas métricas *accuracy*, *precision* e *recall*. 
 
-|       ALGORITMO        | ACCURACY | PRECISION | RECALL  |
-| :--------------------: | :------: | :-------: | :-----: |
-| DecisionTreeClassifier | 0.69473  |  0.30005  | 0.96750 |
-|   LogisticRegression   | 0.71893  |  0.25924  | 0.59650 |
-| Support Vector Machine | 0.83340  |  0.16689  | 0.06250 |
+|       ALGORITMO        | ACCURACY | RECALL  | PRECISION |
+| :--------------------: | :------: | :-----: | :-------: |
+| DecisionTreeClassifier | 0.69473  | 0.96750 |  0.30005  |
+|   LogisticRegression   | 0.71893  | 0.59650 |  0.25924  |
+| Support Vector Machine | 0.83340  | 0.06250 |  0.16689  |
 
 No que concerne a avaliação de algoritmos de classificação, os autores Jake Lever, Martin Krzywinski e Naomi Altman publicaram no período científico **[nature methods](http://www.nature.com/nmeth/journal/v13/n8/full/nmeth.3945.html)** um excelente artigo denominado *Points of Significance: Classification evaluation* o qual discorrem sobre diversas métricas utilizadas na avaliação de algortimos de classificação. O referido artigo apresenta a figura abaixo que, de forma muito didática, explica a matriz de confusão e as diversas métricas possíveis de obter a partir dela.
 
 <p align="center"> <img src="https://github.com/netoferraz/udacity/blob/master/05_identificar_fraude_no_email_da%20enron/pics/confusion_matrix_paper.png">  </p>
 
-A métrica *accuracy* corresponde a fração das predições que foram realizadas corretamente. Dos três algoritmos otimizados o *Support Vector Machine* foi aquele que obteve um maior valor, apesar do fácil entendimento da interpretação dessa métrica, um maior *accuracy* não significa necessariamente um bom estimador. Essa métrica só é adequada quando o número de instâncias de cada classe no *dataset* é balanceada, caso exista uma assimetria na distribuição das classes esse estimador irá predizer a classe majoritária com maior frequência resultando em uma excelente performance em termos de *accuracy*, todavia, deixe a desejar como classificador.  
+A métrica *accuracy* corresponde a fração das predições que foram realizadas corretamente. Dos três algoritmos otimizados o *Support Vector Machine* foi aquele que obteve um maior valor, apesar do fácil entendimento da interpretação dessa métrica, um maior *accuracy* não significa necessariamente um bom estimador. Essa métrica só é adequada quando o número de instâncias de cada classe no *dataset* é balanceada, caso exista uma assimetria na distribuição das classes esse estimador irá predizer a classe majoritária com maior frequência resultando em uma excelente performance em termos de *accuracy*, todavia, deixa a desejar como classificador. 
+
+Para o caso particular da nossa análise menos de 15% do *dataset* corresponde a `POI's`, portanto, trata-se de uma distribuição bastante assimétrica. Nesse contexto, a ocorrência de **Falsos Positivos** (FP) e/ou **Falsos Negativos** torna-se ainda mais relevante e a métrica *accuracy* não informa nada a respeito da ocorrência dessas circunstâncias. 
+
+Desse modo, para o problema dos funcionários da Enron um **FP** significa que o classificador estará apontando uma pessoa como `POI`quando na realidade ela não é, enquanto que o **FN** é classificar um `POI`como inocente.
+
+O *Recall* ou sensibilidade representa a proporção dos `POIs` preditos corretamente em relação a todos aqueles que de fato são `POI`, essa métrica também é conhecida como *True Positive Rate* (TPR).
+$$
+Recall = \frac{TP}{TP+FN}
+$$
+Por último e não menos importante, temos a *Precision* que corresponde a proporção dos `POIs`preditos corretamente em relação a todos aqueles que são preditos como `POI`.
+$$
+Precision = \frac{TP}{TP+FP}
+$$
