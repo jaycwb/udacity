@@ -1,5 +1,6 @@
 from __future__ import division
-import sys
+import sys  
+sys.path.append("../tools/")
 import pickle
 import numpy as np
 import pandas as pd
@@ -16,7 +17,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.metrics import f1_score
 from sklearn.preprocessing import StandardScaler
 from aux_functions import *
-sys.path.append("..//tools//")
+
 
 ###lista de features
 features_list = [
