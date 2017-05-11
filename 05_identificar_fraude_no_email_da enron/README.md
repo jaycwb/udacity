@@ -20,7 +20,15 @@ O objetivo do projeto é o desenvolvimento de um modelo preditivo, a partir de d
 
 O *dataset* possui o atributo `POI` que é a indicação se uma determinada pessoa esteve envolvida na fraude ou não, portanto, como existe uma pré-classificação definida dos dados a melhor abordagem de *machine learning* se dá por algoritmos de classificação supervisionada.
 
-O *dataset* é composto por 146 registros cada um deles contendo 20 *features*, das quais 14 são características financeiras e as demais são derivadas de atributos dos emails, além do *label* `POI`.
+O *dataset* é composto por 146 registros cada um deles contendo 20 *features*, das quais 14 são características financeiras e as demais são derivadas de atributos dos emails, além do *label* `POI`. A seguir a listagem de todas as *features* originais do *dataset*.
+
+```
+atributos financeiros: ['salary', 'deferral_payments', 'total_payments', 'loan_advances', 'bonus', 'restricted_stock_deferred', 'deferred_income', 'total_stock_value', 'expenses', 'exercised_stock_options', 'other', 'long_term_incentive', 'restricted_stock', 'director_fees'] (todos em dólares americanos (USD))
+```
+
+```
+atributos de email: ['to_messages', 'email_address', 'from_poi_to_this_person', 'from_messages', 'from_this_person_to_poi', 'shared_receipt_with_poi'] (as unidades aqui são geralmente em número de emails; a exceção notável aqui é o atributo ‘email_address’, que é uma string)
+```
 
 A partir da análise dos dados disponibilizados foi possível constatar a existência de três registros que podem ser considerados como *outliers* dentro do contexto desse *dataset*.
 
@@ -31,3 +39,33 @@ A partir da análise dos dados disponibilizados foi possível constatar a exist�
 Após a retirada dos 3 registros acima, o dataset resultou em 143 registros dos quais 13 são assinalados como sendo *<u>person of interest</u>*, desse modo o trabalho de modelagem apresenta-se como uma classificação supervisionada com classes desbalanceadas.
 
 > What features did you end up using in your POI identifier, and what selection process did you use to pick them? Did you have to do any scaling? Why or why not? As part of the assignment, you should attempt to engineer your own feature that does not come ready-made in the dataset -- explain what feature you tried to make, and the rationale behind it. (You do not necessarily have to use it in the final analysis, only engineer and test it.) In your feature selection step, if you used an algorithm like a decision tree, please also give the feature importances of the features that you use, and if you used an automated feature selection function like SelectKBest, please report the feature scores and reasons for your choice of parameter values.
+
+
+
+> What algorithm did you end up using? What other one(s) did you try? How did model performance differ between algorithms?
+
+
+
+
+
+> What does it mean to tune the parameters of an algorithm, and what can happen if you don’t do this well?  How did you tune the parameters of your particular algorithm? (Some algorithms do not have parameters that you need to tune -- if this is the case for the one you picked, identify and briefly explain how you would have done it for the model that was not your final choice or a different model that does utilize parameter tuning, e.g. a decision tree classifier)
+
+
+
+> What is validation, and what’s a classic mistake you can make if you do it wrong? How did you validate your analysis?
+
+
+
+> Give at least 2 evaluation metrics and your average performance for each of them.  Explain an interpretation of your metrics that says something human-understandable about your algorithm’s performance.
+
+
+
+|       ALGORITMO        | PRECISÃO | RECALL  |
+| :--------------------: | :------: | :-----: |
+| DecisionTreeClassifier | 0.30005  | 0.96750 |
+|   LogisticRegression   | 0.25924  | 0.59650 |
+| Support Vector Machine | 0.16689  | 0.06250 |
+
+
+
+![confusion_matrix](https://drive.google.com/file/d/0B8JeTkdtm-M2Rjd0STItV2VWdkk/view?usp=sharing)
