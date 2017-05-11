@@ -80,6 +80,22 @@ $$
 Recall = \frac{TP}{TP+FN}
 $$
 Por último e não menos importante, temos a *Precision* que corresponde a proporção dos `POIs`preditos corretamente em relação a todos aqueles que são preditos como `POI`.
-$$
-Precision = \frac{TP}{TP+FP}
-$$
+
+Com os scores apresentados, podemos interpretar os classificadores de forma mais adequada. Vamos considerar que o objetivo é apresentar um modelo preditivo para a equipe encarregada da investigação do escândalo da Enron, portanto, o classificador deve indicar os nomes dos funcionários que devem ser investigados ao longo da operação.
+
+Dessa modo, investigar um inocente por considerá-lo um `POI` é mais tolerável do que deixar de investigar um criminoso por não considerá-lo um `POI`. O primeiro caso é o típico **FP** ou **Erro do Tipo I**, em contrapartida o segundo caso é um exemplo de **FN** ou **Erro do Tipo II**.
+
+
+
+```
+Pipeline(steps=[('scaler', StandardScaler(copy=True, with_mean=True, with_std=True)), ('feature_selection', PCA(copy=True, iterated_power='auto', n_components=1, random_state=None,
+  svd_solver='auto', tol=0.0, whiten=False)), ('clf', DecisionTreeClassifier(class_weight='balanced', criterion='gini', max_dept...plit=3, min_weight_fraction_leaf=0.0, presort=False, random_state=42, splitter='best'))])
+
+```
+
+             Accuracy: 0.69473   Precision: 0.30005   Recall: 0.96750 F1: 0.45804  F2: 0.66960
+
+```
+Total predictions: 15000          True positives: 1935                    False positives: 4514                          False negatives: 65   True negatives: 8486
+```
+
