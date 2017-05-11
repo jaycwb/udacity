@@ -27,7 +27,8 @@ atributos financeiros: ['salary', 'deferral_payments', 'total_payments', 'loan_a
 ```
 
 ```
-atributos de email: ['to_messages', 'email_address', 'from_poi_to_this_person', 'from_messages', 'from_this_person_to_poi', 'shared_receipt_with_poi'] (as unidades aqui são geralmente em número de emails; a exceção notável aqui é o atributo ‘email_address’, que é uma string)
+atributos de email: ['to_messages', 'email_address', 'from_poi_to_this_person', 'from_messages',
+'from_this_person_to_poi', 'shared_receipt_with_poi'] (as unidades aqui são geralmente em número de emails; a exceção notável aqui é o atributo ‘email_address’, que é uma string)
 ```
 
 A partir da análise dos dados disponibilizados foi possível constatar a existência de três registros que podem ser considerados como *outliers* dentro do contexto desse *dataset*.
@@ -66,6 +67,6 @@ Após a retirada dos 3 registros acima, o dataset resultou em 143 registros dos 
 |   LogisticRegression   | 0.25924  | 0.59650 |
 | Support Vector Machine | 0.16689  | 0.06250 |
 
+Os autores Jake Lever, Martin Krzywinski e Naomi Altman publicaram no período científico **[nature methods](http://www.nature.com/nmeth/journal/v13/n8/full/nmeth.3945.html)** um excelente artigo denominado *Points of Significance: Classification evaluation* o qual discorrem sobre a avaliação de algortimos de classificação. Os autores de forma didática apresentam no referido artigo a figura abaixo que, de forma muito didática, apresentam a matriz de confusão e as diversas métricas possíveis de obter a partir dela.
 
-
-![confusion_matrix](https://drive.google.com/file/d/0B8JeTkdtm-M2Rjd0STItV2VWdkk/view?usp=sharing)
+![confusion_matrix](/pics/confusion_matrix_paper.png)
