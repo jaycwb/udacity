@@ -4,21 +4,19 @@
 
 #### 1. Introdução
 
-Fundada em 1985 a Enron se dedicava a exploração de gás natural e produção de energia de diversos tipos, mas ao longo dos anos também começou a diversificar a sua carteira de investimentos, incluindo áreas como freqüência de internet, gerenciamento de risco e derivativo climático (um tipo de seguro climático para negócios sazonais). Seu crescimento chegou a ser tão assombroso que se converteram na sétima maior companhia norte-americana<sup>[1](http://www.marcosassi.com.br/grandes-fraudes-da-historia-o-caso-enron)</sup>. 
+Fundada em 1985 a Enron se dedicava a exploração de gás natural e produção de energia de diversos tipos, mas ao longo dos anos também começou a diversificar a sua carteira de investimentos, incluindo áreas como freqüência de internet, gerenciamento de risco, entre outros. Seu crescimento chegou a ser tão assombroso que se converteram na sétima maior companhia norte-americana<sup>[1](http://www.marcosassi.com.br/grandes-fraudes-da-historia-o-caso-enron)</sup>. 
 
-Mas foi no ano de 2001 que foi revelado ao mundo uma enorme fraude corporativa o qual revelou uma série de lucros não existentes que estavam sendo lançados nos registros contábeis da empresa.
+Mas foi no ano de 2001 que foi revelado ao mundo uma enorme fraude corporativa o qual revelou uma série de lucros não existentes que estavam sendo lançados nos registros contábeis da empresa. Tecnicamente, a Enron utilizou empresas coligadas e controladas para inflar seu resultado, uma prática comum nas empresas. Através de SPE´s (*Special Purpose Entities*), a empresa transferia passivos, camuflava despesas, alavancava empréstimos, leasings, securitizações e montava arriscadas operações com derivativos<sup>[2](http://www.provedor.nuca.ie.ufrj.br/eletrobras/artigos/schmitt1.htm)</sup>. 
 
-Tecnicamente, a Enron utilizou empresas coligadas e controladas para inflar seu resultado, uma prática comum nas empresas. Através de SPE´s (Special Purpose Entities), a empresa transferia passivos, camuflava despesas, alavancava empréstimos, leasings, securitizações e montava arriscadas operações com derivativos<sup>[2](http://www.provedor.nuca.ie.ufrj.br/eletrobras/artigos/schmitt1.htm)</sup>. 
-
-Dessa forma, o objetivo desse projeto é analisar um conjunto de dados que reúnem diversas informações sobre os funcionários que trabalhavam na Enron à época do escândalo e predizer quais desses funcionários são *person of interest* ("POI"). Para isso serão utilizados algoritmos de *machine learning* implementados por meio da biblioteca *[scikit-learn](http://scikit-learn.org/stable/)* uma biblioteca de *python*.
+Dessa forma, o objetivo desse projeto é analisar um conjunto de dados que reúnem diversas informações sobre os funcionários que trabalhavam na Enron à época do escândalo e predizer quais desses funcionários são *person of interest* ("POI"). Para isso serão utilizados algoritmos de *machine learning* implementados por meio da biblioteca *[scikit-learn](http://scikit-learn.org/stable/)* implementada em *python*.
 
 #### 2. Perguntas
 
 > Summarize for us the goal of this project and how machine learning is useful in trying to accomplish it. As part of your answer, give some background on the dataset and how it can be used to answer the project question. Were there any outliers in the data when you got it, and how did you handle those?  
 
-O objetivo do projeto é o desenvolvimento de um modelo preditivo, a partir de dados financeiros e de atributos de emails dos funcionários da Enron, que objetiva determinar se uma pessoa é uma *person of interest* (`POI`), isto é, se essa estava envolvida no escândalo deflagrado em 2001.
+O objetivo do projeto é o desenvolvimento de um modelo preditivo, a partir de dados financeiros e de atributos de emails dos funcionários da Enron, para determinar se uma pessoa é uma *person of interest* (`POI`), isto é, se essa estava envolvida no escândalo deflagrado em 2001.
 
-O *dataset* possui o atributo `POI` que é a indicação se uma determinada pessoa esteve envolvida na fraude ou não, portanto, como existe uma pré-classificação definida dos dados a melhor abordagem de *machine learning* se dá por algoritmos de classificação supervisionada.
+O *dataset* possui o *label* `POI` que é a indicação se uma pessoa esteve envolvida na fraude ou não, portanto, como existe uma pré-classificação definida dos dados a melhor abordagem se dará por algoritmos de classificação supervisionada.
 
 O *dataset* é composto por 146 registros cada um deles contendo 20 *features*, das quais 14 são características financeiras e as demais são derivadas de atributos dos emails, além do *label* `POI`. A seguir a listagem de todas as *features* originais do *dataset*.
 
@@ -59,19 +57,16 @@ Após a retirada dos 3 registros acima, o dataset resultou em 143 registros dos 
 
 > Give at least 2 evaluation metrics and your average performance for each of them.  Explain an interpretation of your metrics that says something human-understandable about your algorithm’s performance.
 
-<p align="center">
+A partir da construção do *Pipeline* com 3 algoritmos - *DecisionTree, LogisticRegression e Support Vector Machine* - bem como a otimização de alguns de seus parâmetros por meio do *GridSearchCV*, foi possível otimizar os algoritmos que tem seus respectivos desempenhos ilustrados pelas métricas *accuracy*, *precision* e *recall*. 
 
-|       ALGORITMO        | PRECISÃO | RECALL  |
-| :--------------------: | :------: | :-----: |
-| DecisionTreeClassifier | 0.30005  | 0.96750 |
-|   LogisticRegression   | 0.25924  | 0.59650 |
-| Support Vector Machine | 0.16689  | 0.06250 |
+|       ALGORITMO        | ACCURACY | PRECISION | RECALL  |
+| :--------------------: | :------: | :-------: | :-----: |
+| DecisionTreeClassifier | 0.69473  |  0.30005  | 0.96750 |
+|   LogisticRegression   | 0.71893  |  0.25924  | 0.59650 |
+| Support Vector Machine | 0.83340  |  0.16689  | 0.06250 |
 
-</p>
-
-Os autores Jake Lever, Martin Krzywinski e Naomi Altman publicaram no período científico **[nature methods](http://www.nature.com/nmeth/journal/v13/n8/full/nmeth.3945.html)** um excelente artigo denominado *Points of Significance: Classification evaluation* o qual discorrem sobre a avaliação de algortimos de classificação. Os autores de forma didática apresentam no referido artigo a figura abaixo que, de forma muito didática, apresentam a matriz de confusão e as diversas métricas possíveis de obter a partir dela.
+No que concerne a avaliação de algoritmos de classificação, os autores Jake Lever, Martin Krzywinski e Naomi Altman publicaram no período científico **[nature methods](http://www.nature.com/nmeth/journal/v13/n8/full/nmeth.3945.html)** um excelente artigo denominado *Points of Significance: Classification evaluation* o qual discorrem sobre diversas métricas utilizadas na avaliação de algortimos de classificação. O referido artigo apresenta a figura abaixo que, de forma muito didática, explica a matriz de confusão e as diversas métricas possíveis de obter a partir dela.
 
 <p align="center"> <img src="https://github.com/netoferraz/udacity/blob/master/05_identificar_fraude_no_email_da%20enron/pics/confusion_matrix_paper.png">  </p>
 
-
-
+A métrica *accuracy* corresponde a fração das predições que foram realizadas corretamente. Dos três algoritmos otimizados o *Support Vector Machine* foi aquele que obteve um maior valor, apesar do fácil entendimento da interpretação dessa métrica, um maior *accuracy* não significa necessariamente um bom estimador. Essa métrica só é adequada quando o número de instâncias de cada classe no *dataset* é balanceada, caso exista uma assimetria na distribuição das classes esse estimador irá predizer a classe majoritária com maior frequência resultando em uma excelente performance em termos de *accuracy*, todavia, deixe a desejar como classificador.  
