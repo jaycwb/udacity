@@ -69,4 +69,4 @@ Após a retirada dos 3 registros acima, o dataset resultou em 143 registros dos 
 
 Os autores Jake Lever, Martin Krzywinski e Naomi Altman publicaram no período científico **[nature methods](http://www.nature.com/nmeth/journal/v13/n8/full/nmeth.3945.html)** um excelente artigo denominado *Points of Significance: Classification evaluation* o qual discorrem sobre a avaliação de algortimos de classificação. Os autores de forma didática apresentam no referido artigo a figura abaixo que, de forma muito didática, apresentam a matriz de confusão e as diversas métricas possíveis de obter a partir dela.
 
-![confusion_matrix](/pics/confusion_matrix_paper.png)
+![confusion_matrix](https://github.com/netoferraz/udacity/blob/master/05_identificar_fraude_no_email_da%20enron/pics/confusion_matrix_paper.png)
