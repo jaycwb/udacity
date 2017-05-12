@@ -69,30 +69,28 @@ No que concerne a avaliação de algoritmos de classificação, os autores Jake 
 
 <p align="center"> <img src="https://github.com/netoferraz/udacity/blob/master/05_identificar_fraude_no_email_da%20enron/pics/confusion_matrix_paper.png">  </p>
 
-A métrica *accuracy* corresponde a fração das predições que foram realizadas corretamente. Dos três algoritmos otimizados o *Support Vector Machine* foi aquele que obteve um maior valor, apesar do fácil entendimento da interpretação dessa métrica, um maior *accuracy* não significa necessariamente um bom estimador. Essa métrica só é adequada quando o número de instâncias de cada classe no *dataset* é balanceada, caso exista uma assimetria na distribuição das classes esse estimador irá predizer a classe majoritária com maior frequência resultando em uma excelente performance em termos de *accuracy*, todavia, deixa a desejar como classificador. 
+A métrica *accuracy* corresponde a fração das predições que foram realizadas corretamente. Dos três algoritmos otimizados o *Support Vector Machine* foi aquele que obteve um maior valor, apesar da fácil interpretação dessa métrica, um maior *accuracy* não significa necessariamente um bom estimador. Essa métrica só é adequada quando o número de instâncias de cada classe no *dataset* é balanceada, caso exista uma assimetria na distribuição das classes esse estimador poderá predizer a classe majoritária com maior frequência resultando em uma excelente performance em termos de *accuracy*, todavia, deixa a desejar como classificador. 
 
 Para o caso particular da nossa análise menos de 15% do *dataset* corresponde a `POI's`, portanto, trata-se de uma distribuição bastante assimétrica. Nesse contexto, a ocorrência de **Falsos Positivos** (FP) e/ou **Falsos Negativos** torna-se ainda mais relevante e a métrica *accuracy* não informa nada a respeito da ocorrência dessas circunstâncias. 
 
 Desse modo, para o problema dos funcionários da Enron um **FP** significa que o classificador estará apontando uma pessoa como `POI`quando na realidade ela não é, enquanto que o **FN** é classificar um `POI`como inocente.
 
 O *Recall* ou sensibilidade representa a proporção dos `POIs` preditos corretamente em relação a todos aqueles que de fato são `POI`, essa métrica também é conhecida como *True Positive Rate* (TPR).
-$$
-Recall = \frac{TP}{TP+FN}
-$$
+
 Por último e não menos importante, temos a *Precision* que corresponde a proporção dos `POIs`preditos corretamente em relação a todos aqueles que são preditos como `POI`.
 
 Com os scores apresentados, podemos interpretar os classificadores de forma mais adequada. Vamos considerar que o objetivo é apresentar um modelo preditivo para a equipe encarregada da investigação do escândalo da Enron, portanto, o classificador deve indicar os nomes dos funcionários que devem ser investigados ao longo da operação.
 
 Dessa modo, investigar um inocente por considerá-lo um `POI` é mais tolerável do que deixar de investigar um criminoso por não considerá-lo um `POI`. O primeiro caso é o típico **FP** ou **Erro do Tipo I**, em contrapartida o segundo caso é um exemplo de **FN** ou **Erro do Tipo II**.
 
-
+A seguir encontra-se os dados  do *Pipeline* que foi otimizado com o algoritmo (*DecisionTreeClassifier*) que gerou o melhor resultado.
 
 ```
 Pipeline(steps=[('scaler', StandardScaler(copy=True, with_mean=True, with_std=True)), ('feature_selection', PCA(copy=True, iterated_power='auto', n_components=1, random_state=None,
   svd_solver='auto', tol=0.0, whiten=False)), ('clf', DecisionTreeClassifier(class_weight='balanced', criterion='gini', max_dept...plit=3, min_weight_fraction_leaf=0.0, presort=False, random_state=42, splitter='best'))])
 ```
 
-
+O resultado da matriz de confusão desse estimador no arquivo de validação/avaliação `tester.py` está apresentado abaixo:
 
 |  **True positives**   |   1935    |
 | :-------------------: | :-------: |
@@ -101,3 +99,8 @@ Pipeline(steps=[('scaler', StandardScaler(copy=True, with_mean=True, with_std=Tr
 |  **True negatives**   | **8486**  |
 | **Total predictions** | **15000** |
 
+O referido algortimo possui um Recall de 0,9675, isto é, em 96,75% das vezes aquelas pessoas que de fato são `POI` são preditas como `POI`. Portanto, uma incidência de **Falso Negativo** muito baixa. 
+
+Na simulação realizada pelo `tester.py` das 15000 predições realizadas, apenas 65 (0,43%) são **FN**. Desse modo, o classificador comete um **Erro do Tipo 2** em 3,25% das vezes que realiza uma predição, ou seja, aproximadamente a cada 100 pessoas que de fato são `POI`apenas 3 delas não são preditas como `POI`.
+
+Em contrapartida, o mesmo classificador possui uma *Precision* de 0.3000, isto significa que em 30% das vezes aqueles que são preditos como `POI` são de fato `POI`. Portanto, o nosso estimador possui um calcanhar de Aquiles que chama-se **Falsos Positivos**. No contexto dos dados da Enron, significa dizer que o classificador estará cometendo um **Erro do Tipo I** sete vezes a cada dez predições realizadas.
