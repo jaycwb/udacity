@@ -1,7 +1,5 @@
 ## P5 @ Identificar Fraude no Email da Enron
 
-------
-
 ##### por José Ferraz Neto
 
 #### 1. Introdução
