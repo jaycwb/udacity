@@ -26,7 +26,7 @@ atributos financeiros: ['salary', 'deferral_payments', 'total_payments', 'loan_a
 
 ```
 atributos de email: ['to_messages', 'email_address', 'from_poi_to_this_person', 'from_messages',
-'from_this_person_to_poi', 'shared_receipt_with_poi'] (as unidades aqui são geralmente em número de emails; a exceção notável aqui é o atributo ‘email_address’, que é uma string)
+'from_this_person_to_poi', 'shared_receipt_with_poi'] 
 ```
 
 A partir da análise dos dados disponibilizados foi possível constatar a existência de três registros que podem ser considerados como *outliers* dentro do contexto desse *dataset*.
@@ -39,13 +39,39 @@ Após a retirada dos 3 registros acima, o dataset resultou em 143 registros dos 
 
 > What features did you end up using in your POI identifier, and what selection process did you use to pick them? Did you have to do any scaling? Why or why not? As part of the assignment, you should attempt to engineer your own feature that does not come ready-made in the dataset -- explain what feature you tried to make, and the rationale behind it. (You do not necessarily have to use it in the final analysis, only engineer and test it.) In your feature selection step, if you used an algorithm like a decision tree, please also give the feature importances of the features that you use, and if you used an automated feature selection function like SelectKBest, please report the feature scores and reasons for your choice of parameter values.
 
+A partir dos dados originais foram criadas mais duas features:
 
+- from_this_person_to_poi_ratio
+- from_poi_to_this_person_ratio
+
+A primeira é a proporção dos emails enviados por uma dada pessoa com destino a algum `POI`em relação ao total de emails enviados pela pessoa, enquanto a segunda *feature* é a proporção dos emails recebidos de uma dada pessoa enviados por algum `POI`em relação ao total de emails recebidos pela dada pessoa.
+
+No processo de pré-processamento dos dados optou-se por realizar uma redução de dimensionalidade dos dados por meio do uso de PCA, portanto, para que não fosse perdido informação alguma e capturar a maior variância possível dos dados não foi realizado nenhum processo de *feature selection*, portanto, o PCA foi realizado no dataset com todas as features disponíveis, além das recém criadas. 
+
+Além disso, como as *features* possuem diferentes ordens de grandeza foi realizada uma padronização por meio do *StandardScaler()* de modo a evitar que uma *feature* que possua uma ordem de grandeza muito superior as demais seja a responsável por grande parte da variância dos dados.
+
+Para o modelo otimizado de acordo com *Pipeline* abaixo:
+
+```
+Pipeline(steps=[('scaler', StandardScaler(copy=True, with_mean=True, with_std=True)), ('feature_selection', PCA(copy=True, iterated_power='auto', n_components=1, random_state=None,
+ svd_solver='auto', tol=0.0, whiten=False)), ('clf', DecisionTreeClassifier(class_weight='balanced', criterion='gini',...plit=4, min_weight_fraction_leaf=0.0,presort=False, random_state=42, splitter='best'))])
+```
+
+O *GridSearchCV* otimizou o Pipeline de maneira que se utiliza apenas 1 componente principal da PCA e a `feature_importances_`do algoritmo *DecisionTreeClassifier* resultou que essa única dimensão representa 100% de importância.
 
 > What algorithm did you end up using? What other one(s) did you try? How did model performance differ between algorithms?
 
+- DecisionTreeClassifier()
+- LogisticRegression()
+- SVC()
 
+Pela tabela abaixo é possível constatar que o classificador DecisionTreeClassifier possui o melhor *Recall*, enquanto que o SVC registra a melhor métrica para *Precision*.
 
-
+|       ALGORITMO        | PRECISION | RECALL  |
+| :--------------------: | :-------: | :-----: |
+| DecisionTreeClassifier |  0.32358  | 0.41450 |
+|   LogisticRegression   |  0.48028  | 0.10350 |
+|          SVC           |  0.46881  | 0.11650 |
 
 > What does it mean to tune the parameters of an algorithm, and what can happen if you don’t do this well?  How did you tune the parameters of your particular algorithm? (Some algorithms do not have parameters that you need to tune -- if this is the case for the one you picked, identify and briefly explain how you would have done it for the model that was not your final choice or a different model that does utilize parameter tuning, e.g. a decision tree classifier)
 
@@ -58,6 +84,10 @@ Após a retirada dos 3 registros acima, o dataset resultou em 143 registros dos 
 > Give at least 2 evaluation metrics and your average performance for each of them.  Explain an interpretation of your metrics that says something human-understandable about your algorithm’s performance.
 
 A partir da construção do *Pipeline* com 3 algoritmos - *DecisionTree, LogisticRegression e Support Vector Machine* - bem como a otimização de alguns de seus parâmetros por meio do *GridSearchCV*, foi possível otimizar os algoritmos que tem seus respectivos desempenhos ilustrados pelas métricas *accuracy*, *precision* e *recall*. 
+
+##### ALGORITMO 1:
+
+
 
 |       ALGORITMO        | ACCURACY | RECALL  | PRECISION |
 | :--------------------: | :------: | :-----: | :-------: |
@@ -101,6 +131,6 @@ O resultado da matriz de confusão desse estimador no arquivo de validação/ava
 
 O referido algortimo possui um Recall de 0,9675, isto é, em 96,75% das vezes aquelas pessoas que de fato são `POI` são preditas como `POI`. Portanto, uma incidência de **Falso Negativo** muito baixa. 
 
-Na simulação realizada pelo `tester.py` das 15000 predições realizadas, apenas 65 (0,43%) são **FN**. Desse modo, o classificador comete um **Erro do Tipo 2** em 3,25% das vezes que realiza uma predição, ou seja, aproximadamente a cada 100 pessoas que de fato são `POI`apenas 3 delas não são preditas como `POI`.
+Na simulação realizada pelo `tester.py` das 15000 predições realizadas, apenas 65 (0,43%) são **FN**. Desse modo, o classificador comete um **Erro do Tipo 2** em 3,25% das vezes que realiza uma predição, ou seja, aproximadamente, a cada 100 pessoas que de fato são `POI`apenas 3 delas não são preditas como `POI`.
 
-Em contrapartida, o mesmo classificador possui uma *Precision* de 0.3000, isto significa que em 30% das vezes aqueles que são preditos como `POI` são de fato `POI`. Portanto, o nosso estimador possui um calcanhar de Aquiles que chama-se **Falsos Positivos**. No contexto dos dados da Enron, significa dizer que o classificador estará cometendo um **Erro do Tipo I** sete vezes a cada dez predições realizadas.
+Em contrapartida, o mesmo classificador possui uma *Precision* de 0.3000, isto significa que em 30% das vezes aqueles que são preditos como `POI` são de fato `POI`. Portanto, o nosso estimador possui um calcanhar de Aquiles que chama-se **Falsos Positivos**. No contexto dos dados da Enron, significa dizer que o classificador estará cometendo um **Erro do Tipo I** 
