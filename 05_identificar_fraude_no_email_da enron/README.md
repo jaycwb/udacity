@@ -61,9 +61,9 @@ O *GridSearchCV* otimizou o Pipeline de maneira que se utiliza apenas 1 componen
 
 > What algorithm did you end up using? What other one(s) did you try? How did model performance differ between algorithms?
 
-- DecisionTreeClassifier()
-- LogisticRegression()
-- SVC()
+- DecisionTreeClassifier
+- LogisticRegression
+- SVC
 
 Pela tabela abaixo é possível constatar que o classificador DecisionTreeClassifier possui o melhor *Recall*, enquanto que o SVC registra a melhor métrica para *Precision*.
 
@@ -75,7 +75,7 @@ Pela tabela abaixo é possível constatar que o classificador DecisionTreeClassi
 
 > What does it mean to tune the parameters of an algorithm, and what can happen if you don’t do this well?  How did you tune the parameters of your particular algorithm? (Some algorithms do not have parameters that you need to tune -- if this is the case for the one you picked, identify and briefly explain how you would have done it for the model that was not your final choice or a different model that does utilize parameter tuning, e.g. a decision tree classifier)
 
-
+O processo de *tunning* é importante porque ele otimiza a perfomance dos algoritmos. Para que seja possível mensurar a performance de um dado algoritmo é necessário testar a combinação de múltiplos parâmetros e avaliar/validar o resultado no conjunto de dados que esteja trabalhando. Desse modo, modificamos os algoritmos em sua natureza *default* onde se encontram em sua forma "genérica" e vamos testando os seus parâmetros para que possam se ajustar da melhor forma ao conjunto de dados de interesse.
 
 > What is validation, and what’s a classic mistake you can make if you do it wrong? How did you validate your analysis?
 
