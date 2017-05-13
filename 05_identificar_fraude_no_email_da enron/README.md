@@ -87,23 +87,40 @@ Ao final do processo iterativo de tunning e validação cruzada o melhor estimad
 
 > Give at least 2 evaluation metrics and your average performance for each of them.  Explain an interpretation of your metrics that says something human-understandable about your algorithm’s performance.
 
-A partir da construção do *Pipeline* com 3 algoritmos - *DecisionTree, LogisticRegression e Support Vector Machine* - bem como a otimização de alguns de seus parâmetros por meio do *GridSearchCV*, foi possível otimizar os algoritmos que tem seus respectivos desempenhos ilustrados pelas métricas *accuracy*, *precision* e *recall*. 
+A partir da construção doS *Pipeline*s com 3 algoritmos - *DecisionTree, LogisticRegression e Support Vector Machine* - bem como a otimização de alguns de seus parâmetros por meio do *GridSearchCV*, foi possível otimizar os algoritmos que tem seus respectivos desempenhos ilustrados pelas métricas *accuracy*, *precision* e *recall*. 
 
-##### ALGORITMO 1:
+##### PIPELINE 1:  Uso da função PCA() + scoring = "f1" no tunning
+
+> Pipeline(steps=[('scaler', StandardScaler(copy=True, with_mean=True, with_std=True)), ('feature_selection', PCA(copy=True, iterated_power='auto', n_components=1, random_state=None,
+>   svd_solver='auto', tol=0.0, whiten=False)), ('clf', DecisionTreeClassifier(class_weight='balanced', criterion='gini', max_dept...plit=3, min_weight_fraction_leaf=0.0,presort=False, random_state=42, splitter='best'))])
+
+##### PIPELINE 2 Uso da função PCA() + scoring ="precision" no tunning
+
+> Pipeline(steps=[('scaler', StandardScaler(copy=True, with_mean=True, with_std=True)), ('feature_selection', PCA(copy=True, iterated_power='auto', n_components=1, random_state=None,
+>   svd_solver='auto', tol=0.0, whiten=False)), ('clf', DecisionTreeClassifier(class_weight='balanced', criterion='gini', ...plit=4, min_weight_fraction_leaf=0.0, presort=False, random_state=42, splitter='best'))])
+
+##### PIPELINE 3 Uso da função KernelPCA() + scoring='f1' no tunning
+
+> Pipeline(steps=[('scaler', StandardScaler(copy=True, with_mean=True, with_std=True)), ('feature_selection', KernelPCA(alpha=1.0, coef0=1, copy_X=True, degree=3, eigen_solver='auto', fit_inverse_transform=False, gamma=None, kernel='poly', kernel_params=None, max_iter=None, n_components=3, n_jobs=1, ...plit=3, min_weight_fraction_leaf=0.0, presort=False, random_state=42, splitter='best'))])
+
+##### PIPELINE 4 Uso da função KernelPCA() + scoring="precision" no tunning
+
+> Pipeline(steps=[('scaler', StandardScaler(copy=True, with_mean=True, with_std=True)), ('feature_selection', KernelPCA(alpha=1.0, coef0=1, copy_X=True, degree=3, eigen_solver='auto',  fit_inverse_transform=False, gamma=None, kernel='linear', kernel_params=None, max_iter=None, n_components=10, n_jobs=...,  max_iter=-1, probability=False, random_state=None, shrinking=True, tol=0.001, verbose=False))])
 
 
 
-|       ALGORITMO        | ACCURACY | RECALL  | PRECISION |
-| :--------------------: | :------: | :-----: | :-------: |
-| DecisionTreeClassifier | 0.69473  | 0.96750 |  0.30005  |
-|   LogisticRegression   | 0.71893  | 0.59650 |  0.25924  |
-| Support Vector Machine | 0.83340  | 0.06250 |  0.16689  |
+| PIPELINES | ACCURACY | PRECISION | RECALL  |
+| :-------: | :------: | :-------: | :-----: |
+|     1     | 0.67800  |  0.28509  | 0.93850 |
+|     2     | 0.80640  |  0.32358  | 0.41450 |
+|     3     | 0.66013  |  0.27407  | 0.93950 |
+|     4     | 0.86460  |  0.46881  | 0.11650 |
 
 No que concerne a avaliação de algoritmos de classificação, os autores Jake Lever, Martin Krzywinski e Naomi Altman publicaram no período científico **[nature methods](http://www.nature.com/nmeth/journal/v13/n8/full/nmeth.3945.html)** um excelente artigo denominado *Points of Significance: Classification evaluation* o qual discorrem sobre diversas métricas utilizadas na avaliação de algortimos de classificação. O referido artigo apresenta a figura abaixo que, de forma muito didática, explica a matriz de confusão e as diversas métricas possíveis de obter a partir dela.
 
 <p align="center"> <img src="https://github.com/netoferraz/udacity/blob/master/05_identificar_fraude_no_email_da%20enron/pics/confusion_matrix_paper.png">  </p>
 
-A métrica *accuracy* corresponde a fração das predições que foram realizadas corretamente. Dos três algoritmos otimizados o *Support Vector Machine* foi aquele que obteve um maior valor, apesar da fácil interpretação dessa métrica, um maior *accuracy* não significa necessariamente um bom estimador. Essa métrica só é adequada quando o número de instâncias de cada classe no *dataset* é balanceada, caso exista uma assimetria na distribuição das classes esse estimador poderá predizer a classe majoritária com maior frequência resultando em uma excelente performance em termos de *accuracy*, todavia, deixa a desejar como classificador. 
+A métrica *accuracy* corresponde a fração das predições que foram realizadas corretamente. Das quatro *Pipelines* otimizados o de número 4 foi aquele que obteve um maior valor, apesar da fácil interpretação dessa métrica, um maior *accuracy* não significa necessariamente um bom estimador. Essa métrica só é adequada quando o número de instâncias de cada classe no *dataset* é balanceada, caso exista uma assimetria na distribuição das classes esse estimador poderá predizer a classe majoritária com maior frequência resultando em uma excelente performance em termos de *accuracy*, todavia, deixa a desejar como classificador. 
 
 Para o caso particular da nossa análise menos de 15% do *dataset* corresponde a `POI's`, portanto, trata-se de uma distribuição bastante assimétrica. Nesse contexto, a ocorrência de **Falsos Positivos** (FP) e/ou **Falsos Negativos** torna-se ainda mais relevante e a métrica *accuracy* não informa nada a respeito da ocorrência dessas circunstâncias. 
 
@@ -117,24 +134,29 @@ Com os scores apresentados, podemos interpretar os classificadores de forma mais
 
 Dessa modo, investigar um inocente por considerá-lo um `POI` é mais tolerável do que deixar de investigar um criminoso por não considerá-lo um `POI`. O primeiro caso é o típico **FP** ou **Erro do Tipo I**, em contrapartida o segundo caso é um exemplo de **FN** ou **Erro do Tipo II**.
 
-A seguir encontra-se os dados  do *Pipeline* que foi otimizado com o algoritmo (*DecisionTreeClassifier*) que gerou o melhor resultado.
+A seguir encontra-se os dados  do *Pipeline* 3 que gerou o melhor resultado em termos de *Recall*. O resultado da matriz de confusão desse estimador no arquivo de validação/avaliação `tester.py` está apresentado abaixo:
 
-```
-Pipeline(steps=[('scaler', StandardScaler(copy=True, with_mean=True, with_std=True)), ('feature_selection', PCA(copy=True, iterated_power='auto', n_components=1, random_state=None,
-  svd_solver='auto', tol=0.0, whiten=False)), ('clf', DecisionTreeClassifier(class_weight='balanced', criterion='gini', max_dept...plit=3, min_weight_fraction_leaf=0.0, presort=False, random_state=42, splitter='best'))])
-```
-
-O resultado da matriz de confusão desse estimador no arquivo de validação/avaliação `tester.py` está apresentado abaixo:
-
-|  **True positives**   |   1935    |
+|  **True positives**   |   1879    |
 | :-------------------: | :-------: |
-|  **False positives**  | **4514**  |
-|  **False negatives**  |  **65**   |
-|  **True negatives**   | **8486**  |
+|  **False positives**  | **4977**  |
+|  **False negatives**  |  **121**  |
+|  **True negatives**   | **8023**  |
 | **Total predictions** | **15000** |
 
-O referido algortimo possui um Recall de 0,9675, isto é, em 96,75% das vezes aquelas pessoas que de fato são `POI` são preditas como `POI`. Portanto, uma incidência de **Falso Negativo** muito baixa. 
+O referido algortimo possui um Recall de 0,9395, isto é, em 93,95% das vezes aquelas pessoas que de fato são `POI` são preditas como `POI`. Portanto, uma incidência de **Falso Negativo** muito baixa. 
 
-Na simulação realizada pelo `tester.py` das 15000 predições realizadas, apenas 65 (0,43%) são **FN**. Desse modo, o classificador comete um **Erro do Tipo 2** em 3,25% das vezes que realiza uma predição, ou seja, aproximadamente, a cada 100 pessoas que de fato são `POI`apenas 3 delas não são preditas como `POI`.
+Na simulação realizada pelo `tester.py` das 15000 predições realizadas, apenas 121 (0,81%) são **FN**. Desse modo, o classificador comete um **Erro do Tipo 2** em 6,05% das vezes que realiza uma predição, ou seja, aproximadamente, a cada 100 pessoas que de fato são `POI`apenas 6 delas não são preditas como `POI`.
 
-Em contrapartida, o mesmo classificador possui uma *Precision* de 0.3000, isto significa que em 30% das vezes aqueles que são preditos como `POI` são de fato `POI`. Portanto, o nosso estimador possui um calcanhar de Aquiles que chama-se **Falsos Positivos**. No contexto dos dados da Enron, significa dizer que o classificador estará cometendo um **Erro do Tipo I** 
+Em contrapartida, o mesmo classificador possui uma *Precision* de 0,2741, isto significa que em 27% das vezes aqueles que são preditos como `POI` são de fato `POI`. Portanto, o nosso estimador possui um calcanhar de Aquiles que chama-se **Falsos Positivos**. No contexto dos dados da Enron, significa dizer que o classificador estará cometendo um **Erro do Tipo I** 
+
+Todavia, a rúbrica do projeto exige a entrega de um classificador que tenha *Recall* e *Precision* de ao menos 0,3. Desse modo, o Pipeline 2 atende as exigências do projeto com uma *Precision* de 0.32358 e um *Recall* de 0.41450.
+
+#### 3. Referências Bibliográficas
+
+- [http://scikit-learn.org/stable/modules/pipeline.html#](http://scikit-learn.org/stable/modules/pipeline.html#)
+- [http://stackoverflow.com/questions/31572487/fitting-data-vs-transforming-data-in-scikit-learn](http://stackoverflow.com/questions/31572487/fitting-data-vs-transforming-data-in-scikit-learn)
+- [http://stackoverflow.com/questions/21338090/how-can-i-store-and-print-the-top-20-feature-names-and-scores](http://stackoverflow.com/questions/21338090/how-can-i-store-and-print-the-top-20-feature-names-and-scores)
+- [http://sebastianraschka.com/Articles/2014_about_feature_scaling.html](http://sebastianraschka.com/Articles/2014_about_feature_scaling.html)
+- [https://stats.stackexchange.com/questions/69157/why-do-we-need-to-normalize-data-before-analysis](https://stats.stackexchange.com/questions/69157/why-do-we-need-to-normalize-data-before-analysis)
+- [http://www.marcosassi.com.br/grandes-fraudes-da-historia-o-caso-enron](http://www.marcosassi.com.br/grandes-fraudes-da-historia-o-caso-enron)
+- [http://www.nature.com/nmeth/journal/v13/n8/full/nmeth.3945.html](http://www.nature.com/nmeth/journal/v13/n8/full/nmeth.3945.html)

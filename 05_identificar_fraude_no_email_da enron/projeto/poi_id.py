@@ -9,12 +9,10 @@ from tester import dump_classifier_and_data, main
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.linear_model import LogisticRegression
-from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import StratifiedShuffleSplit
 from sklearn.decomposition import KernelPCA, PCA
-from sklearn.feature_selection import SelectKBest
 from sklearn.pipeline import Pipeline 
 from sklearn.metrics import f1_score
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
