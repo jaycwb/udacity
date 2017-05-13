@@ -79,7 +79,11 @@ O processo de *tunning* é importante porque ele otimiza a perfomance dos algori
 
 > What is validation, and what’s a classic mistake you can make if you do it wrong? How did you validate your analysis?
 
+O processo de validação é importante porque nos permite avaliar o tradeoff  *bias-variance* de modo a buscar um equilíbrio, já que um alto viés significa que o modelo apresenta um *underfitting* em relação aos dados e uma alta variância é indicativo de *overfitting*. O melhor dos mundos é que um modelo tenha um excelente desempenho quando exposto a dados novos, ou seja, dados que não foram utilizados em seu treinamento. Para tanto, foi utilizado a função `train_test_split` o qual dividiu o dataset em: 70% para treinamento e os demais 30% para avaliação.
 
+Além disso, no processo de tunning (*GridSearchCV*) realizado foi incluído uma etapa de validação cruzada do tipo *StratifiedShuffleSplit*, que garante que os *tests sets* tenham um percentual de `POI`muito próximos ao conjunto original de dados, além disso foram realizados 20 *splits* os quais seus respectivos *test set* representem 50% dos dados. 
+
+Ao final do processo iterativo de tunning e validação cruzada o melhor estimador obtido pelo método `.best_estimator_` foi submetido ao script avaliador `tester.py` que também realiza uma validação cruzada por meio de StratifiedShuffleSplit com 1000 Folds e retorna diversas métricas para avaliação do desempenho do classificador.
 
 > Give at least 2 evaluation metrics and your average performance for each of them.  Explain an interpretation of your metrics that says something human-understandable about your algorithm’s performance.
 
