@@ -1,6 +1,6 @@
 from __future__ import division
 import sys  
-sys.path.append("../tools/")
+sys.path.append("..//tools//")
 import pickle
 import numpy as np
 import pandas as pd
@@ -16,7 +16,6 @@ from sklearn.decomposition import KernelPCA, PCA
 from sklearn.pipeline import Pipeline 
 from sklearn.metrics import f1_score
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
-
 from aux_functions import *
 
 
@@ -44,7 +43,7 @@ features_list = [
                  'shared_receipt_with_poi'
                  ]
 
-### carregar o dicionário contendo o dataset
+### CARREGAR O DATASET
 with open("final_project_dataset.pkl", "r") as data_file:
     data_dict = pickle.load(data_file)
 
@@ -55,6 +54,19 @@ data_dict.pop("LOCKHART EUGENE E") #NÃO HÁ NENHUMA ENTRADA DE DADOS PARA ESSA 
 
 #CARREGA OS DADOS EM UM DATAFRAME
 df = data_to_df(data_dict, features_list)
+
+#CRIA UMA LISTA EXCLUINDO O LABEL PARA CONTABILIZAR O NÚMERO DE NAN POR FEATURE                
+features_nan_count = df.columns.tolist()
+#EXCLUI POI
+del features_nan_count[-5]
+
+#TRANSFORMA O DATATYPE DAS FEATURES EM FLOAT
+for feature in features_nan_count:
+    df[feature] = df[feature].astype(float)
+
+#CONTABILIZA OS NAN DE CADA FEATURE E ARMAZENA EM UM DATAFRAME
+count_nan_df = pd.DataFrame(df.isnull().sum(), columns=['number_of_nan'])
+
 
 #SUBSTITUI NAN POR 0
 df = nan_handler(df)
