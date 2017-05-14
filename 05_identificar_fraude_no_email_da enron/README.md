@@ -10,6 +10,8 @@ Mas foi no ano de 2001 que foi revelado ao mundo uma enorme fraude corporativa o
 
 Dessa forma, o objetivo desse projeto é analisar um conjunto de dados que reúnem diversas informações sobre os funcionários que trabalhavam na Enron à época do escândalo e predizer quais desses funcionários são *person of interest* ("POI"). Para isso serão utilizados algoritmos de *machine learning* implementados por meio da biblioteca *[scikit-learn](http://scikit-learn.org/stable/)* implementada em *python*.
 
+O código implementando toda a análise encontra-se no arquivo `/projeto/poi_id.py`.
+
 #### 2. Perguntas
 
 > Summarize for us the goal of this project and how machine learning is useful in trying to accomplish it. As part of your answer, give some background on the dataset and how it can be used to answer the project question. Were there any outliers in the data when you got it, and how did you handle those?  
@@ -29,6 +31,31 @@ atributos de email: ['to_messages', 'email_address', 'from_poi_to_this_person', 
 'from_this_person_to_poi', 'shared_receipt_with_poi'] 
 ```
 
+Pela análise do *dataset* foi constatado que muitas instâncias possuíam *features* sem valores atribuídos. A tabela abaixo sumariza o quantitativo de valores ausentes por *feature*.
+
+|          FEATURE          | TOTAL DE VALORES AUSENTES |
+| :-----------------------: | :-----------------------: |
+|          salary           |            49             |
+|        to_messages        |            57             |
+|     deferral_payments     |            105            |
+|      total_payments       |            20             |
+|  exercised_stock_options  |            42             |
+|           bonus           |            62             |
+|       director_fees       |            127            |
+| restricted_stock_deferred |            126            |
+|     total_stock_value     |            18             |
+|         expenses          |            49             |
+|  from_poi_to_this_person  |            57             |
+|       loan_advances       |            140            |
+|       from_messages       |            57             |
+|           other           |            52             |
+|  from_this_person_to_poi  |            57             |
+|            poi            |             0             |
+|      deferred_income      |            95             |
+|  shared_receipt_with_poi  |            57             |
+|     restricted_stock      |            34             |
+|    long_term_incentive    |            78             |
+
 A partir da análise dos dados disponibilizados foi possível constatar a existência de três registros que podem ser considerados como *outliers* dentro do contexto desse *dataset*.
 
 - `LOCKHART EUGENE E` : Não há dados associados a essa pessoa, portanto, não há sentido de manter o registro para construção do modelo.
@@ -46,6 +73,8 @@ A partir dos dados originais foram criadas mais duas features:
 
 A primeira é a proporção dos emails enviados por uma dada pessoa com destino a algum `POI`em relação ao total de emails enviados pela pessoa, enquanto a segunda *feature* é a proporção dos emails recebidos de uma dada pessoa enviados por algum `POI`em relação ao total de emails recebidos pela dada pessoa.
 
+Um das evidências coletadas pelas autoridades para a investigação são os emails de diversos funcionários da Enron, dessa forma existe a possibilidade de haver uma maior incidência de emails entre duas pessoas que estejam envolvidas no esquema de corrupção, dessa forma as duas features criadas acima se apresentam como uma métrica adicional para tentar estabelecer *links* entre pessoas que estejam envolvidas no crime.
+
 No processo de pré-processamento dos dados optou-se por realizar uma redução de dimensionalidade dos dados por meio do uso de PCA, portanto, para que não fosse perdido informação alguma e capturar a maior variância possível dos dados não foi realizado nenhum processo de *feature selection*, portanto, o PCA foi realizado no dataset com todas as features disponíveis, além das recém criadas. 
 
 Além disso, como as *features* possuem diferentes ordens de grandeza foi realizada uma padronização por meio do *StandardScaler()* de modo a evitar que uma *feature* que possua uma ordem de grandeza muito superior as demais seja a responsável por grande parte da variância dos dados.
@@ -57,7 +86,14 @@ Pipeline(steps=[('scaler', StandardScaler(copy=True, with_mean=True, with_std=Tr
  svd_solver='auto', tol=0.0, whiten=False)), ('clf', DecisionTreeClassifier(class_weight='balanced', criterion='gini',...plit=4, min_weight_fraction_leaf=0.0,presort=False, random_state=42, splitter='best'))])
 ```
 
-O *GridSearchCV* otimizou o Pipeline de maneira que se utiliza apenas 1 componente principal da PCA e a `feature_importances_`do algoritmo *DecisionTreeClassifier* resultou que essa única dimensão representa 100% de importância.
+O *GridSearchCV* otimizou o Pipeline entre os parâmetros ajustados avaliou-se `n_components` entre 1 a 10 componentes e o melhor resultado foi com o uso de apeans 1 componente principal da PCA e a `feature_importances_`do algoritmo *DecisionTreeClassifier* resultou que essa única dimensão representa 100% de importância.
+
+Além disso,  testou-se a otimização via *GridSearchCV* apenas com as features originais, bem como utilizando as criadas durante a análise e não ouve ganho de desempenho, as métricas de avaliação *Accuracy*, *Precision* e *Recall* foram exatamente idênticas em ambas as abordagens.
+
+```
+Features originais: Accuracy: 0.80640       Precision: 0.32358      Recall: 0.41450
+Features originais + criadas: Accuracy: 0.80640       Precision: 0.32358      Recall: 0.41450
+```
 
 > What algorithm did you end up using? What other one(s) did you try? How did model performance differ between algorithms?
 
@@ -76,6 +112,33 @@ Pela tabela abaixo é possível constatar que o classificador DecisionTreeClassi
 > What does it mean to tune the parameters of an algorithm, and what can happen if you don’t do this well?  How did you tune the parameters of your particular algorithm? (Some algorithms do not have parameters that you need to tune -- if this is the case for the one you picked, identify and briefly explain how you would have done it for the model that was not your final choice or a different model that does utilize parameter tuning, e.g. a decision tree classifier)
 
 O processo de *tunning* é importante porque ele otimiza a perfomance dos algoritmos. Para que seja possível mensurar a performance de um dado algoritmo é necessário testar a combinação de múltiplos parâmetros e avaliar/validar o resultado no conjunto de dados que esteja trabalhando. Desse modo, modificamos os algoritmos em sua natureza *default* onde se encontram em sua forma "genérica" e vamos testando os seus parâmetros para que possam se ajustar da melhor forma ao conjunto de dados de interesse.
+
+No processo de *tunning* para os algoritmos abaixo buscou-se otimizar os seguintes parâmetros:
+
+ **LogisticRegression**
+
+```
+"clf__C": [0.05, 0.5, 1, 10, 10**2, 10**3, 10**5, 10**10, 10**15],
+"clf__tol":[10**-1, 10**-2, 10**-4, 10**-5, 10**-6, 10**-10, 10**-15],
+"clf__class_weight":[None,'balanced']
+```
+
+**DecisionTreeClassifier**
+
+```
+"clf__criterion": ["gini", "entropy"],
+"clf__max_depth":[None, 1, 2, 3, 4],
+"clf__min_samples_split":[3, 4, 5],
+"clf__class_weight":[None, 'balanced'],
+"clf__random_state":[42]
+```
+
+**SVC**
+
+```
+"clf__C": 10. ** np.arange(-3,3),
+"clf__gamma": 10. ** np.arange(-3,3)
+```
 
 > What is validation, and what’s a classic mistake you can make if you do it wrong? How did you validate your analysis?
 
