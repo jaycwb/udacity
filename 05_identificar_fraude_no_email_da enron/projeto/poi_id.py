@@ -9,13 +9,16 @@ from tester import dump_classifier_and_data, main
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.linear_model import LogisticRegression
+from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import StratifiedShuffleSplit
-from sklearn.decomposition import PCA
+from sklearn.decomposition import KernelPCA,PCA
+from sklearn.feature_selection import SelectKBest
 from sklearn.pipeline import Pipeline 
 from sklearn.metrics import f1_score
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
+
 from aux_functions import *
 
 
@@ -62,8 +65,8 @@ df = nan_handler(df)
 df['from_this_person_to_poi_ratio'] = df['from_this_person_to_poi'] / df['from_messages']
 df['from_this_person_to_poi_ratio'] = df['from_this_person_to_poi_ratio'].replace('NaN', 0)
 
-df['from_poi_to_this_person'] = df['from_this_person_to_poi'] / df['to_messages']
-df['from_poi_to_this_person'] = df['from_poi_to_this_person'].replace('NaN', 0)
+df['from_poi_to_this_person_ratio'] = df['from_poi_to_this_person'] / df['to_messages']
+df['from_poi_to_this_person_ratio'] = df['from_poi_to_this_person_ratio'].replace('NaN', 0)
 
 #INPUTAR A MEDIANA AS INSTÂNCIAS QUE POSSUEM FEATURES SEM VALOR ATRIBUÍDO 
 
@@ -89,13 +92,26 @@ data = featureFormat(my_dataset, features_list, sort_keys=True)
 labels, features = targetFeatureSplit(data)
 
 ##DIVIDE O DATASET EM DADOS DE TREINAMENTO E AVALIAÇÃO
-X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=0.3, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=0.3, random_state=40)
 
 #padronizacao dos dados
 scaler_std = StandardScaler()
+#minmax = MinMaxScaler()
+
+"""
+# Print features selected and their importances
+features_selected=[features_list[i+1] for i in clf.named_steps['feature_selection'].get_support(indices=True)]
+scores = clf.named_steps['feature_selection'].scores_
+importances = clf.named_steps['clf'].feature_importances_
+
+indices = np.argsort(importances)[::-1]
+print 'The ', len(features_selected), " features selected and their importances:"
+for i in range(len(features_selected)):
+    print "feature no. {}: {} ({}) ({})".format(i+1,features_selected[indices[i]],importances[indices[i]], scores[indices[i]])
+"""
 
 #SELEAÇÃO DE FEATURE E/OU REDUÇÃO DE DIMENSIONILIDADE
-feature_selection_pca = PCA()
+feature_selection_pca = KernelPCA()
 
 #DICIONÁRIO CONTENDO OS ESTIMADORES QUE SERÃO UTILIZADOS E O CONJUNTO DE POSSÍVES
 #VALORES PARA UMA SÉRIE DE PARÂMETROS QUE SERÃO OTIMIZADOS.
@@ -146,7 +162,9 @@ for i in range(0,len(estimators)):
 for i in range(0,len(estimators)):
     ##DEFINIR O ESTIMADOR
     clf = estimators[i]['estimator']
-    parameters = {'feature_selection__n_components':range(1,11)}
+    parameters = {'feature_selection__n_components':range(1,11),
+                  "feature_selection__kernel": ["linear","poly", "rbf", "sigmoid"]
+    }
     ##INTRODUZIR O ESTIMADOR NO STEP
     steps = [('scaler',scaler_std),
              ('feature_selection',feature_selection_pca),
@@ -158,7 +176,7 @@ for i in range(0,len(estimators)):
         
     #CRIAR OBJETO PIPELINE COM AS ETAPAS DE ANALISE
     pipe = Pipeline(steps)
-    gsearch = GridSearchCV(pipe,param_grid = parameters, cv=scv, scoring="f1", error_score=0)
+    gsearch = GridSearchCV(pipe,param_grid = parameters, cv=scv, scoring="precision", error_score=0)
     gsearch.fit(X_train, y_train)
     #OBTER O ESTIMADOR COM OS MELHORES PARÂMETROS
     clf = gsearch.best_estimator_
@@ -174,6 +192,9 @@ for i in range(0,len(estimators)):
 
 #SELECIONAR O MODELO COM O MELHOR DESEMPENHO
 clf = get_best_estimator(best_clf, clf_names)
+
+
+
 
 #SALVAR OS ARQUIVOS
 dump_classifier_and_data(clf, my_dataset, features_list)

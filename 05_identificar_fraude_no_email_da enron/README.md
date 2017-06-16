@@ -26,7 +26,7 @@ atributos financeiros: ['salary', 'deferral_payments', 'total_payments', 'loan_a
 
 ```
 atributos de email: ['to_messages', 'email_address', 'from_poi_to_this_person', 'from_messages',
-'from_this_person_to_poi', 'shared_receipt_with_poi'] (as unidades aqui são geralmente em número de emails; a exceção notável aqui é o atributo ‘email_address’, que é uma string)
+'from_this_person_to_poi', 'shared_receipt_with_poi'] 
 ```
 
 A partir da análise dos dados disponibilizados foi possível constatar a existência de três registros que podem ser considerados como *outliers* dentro do contexto desse *dataset*.
@@ -39,7 +39,16 @@ Após a retirada dos 3 registros acima, o dataset resultou em 143 registros dos 
 
 > What features did you end up using in your POI identifier, and what selection process did you use to pick them? Did you have to do any scaling? Why or why not? As part of the assignment, you should attempt to engineer your own feature that does not come ready-made in the dataset -- explain what feature you tried to make, and the rationale behind it. (You do not necessarily have to use it in the final analysis, only engineer and test it.) In your feature selection step, if you used an algorithm like a decision tree, please also give the feature importances of the features that you use, and if you used an automated feature selection function like SelectKBest, please report the feature scores and reasons for your choice of parameter values.
 
+A partir dos dados originais foram criadas mais duas features:
 
+- from_this_person_to_poi_ratio
+- from_poi_to_this_person_ratio
+
+A primeira é a proporção dos emails enviados por uma dada pessoa com destino a algum `POI`em relação ao total de emails enviados pela pessoa, enquanto a segunda *feature* é a proporção dos emails recebidos de uma dada pessoa enviados por algum `POI`em relação ao total de emails recebidos pela dada pessoa.
+
+No processo de pré-processamento dos dados optou-se por realizar uma redução de dimensionalidade dos dados por meio do uso de PCA, portanto, para que não fosse perdido informação alguma e capturar a maior variância possível dos dados não foi realizado nenhum processo de *feature selection*, portanto, foi o PCA foi realizado no dataset com todas as features disponíveis, além das recém criadas. 
+
+Além disso, como as *features* possuem diferentes ordens de grandeza foi realizada uma padronização por meio do *StandardScaler()* de modo a evitar que uma *feature* que possua uma ordem de grandeza muito superior as demais seja a responsável por grande parte da variância dos dados
 
 > What algorithm did you end up using? What other one(s) did you try? How did model performance differ between algorithms?
 
@@ -101,6 +110,6 @@ O resultado da matriz de confusão desse estimador no arquivo de validação/ava
 
 O referido algortimo possui um Recall de 0,9675, isto é, em 96,75% das vezes aquelas pessoas que de fato são `POI` são preditas como `POI`. Portanto, uma incidência de **Falso Negativo** muito baixa. 
 
-Na simulação realizada pelo `tester.py` das 15000 predições realizadas, apenas 65 (0,43%) são **FN**. Desse modo, o classificador comete um **Erro do Tipo 2** em 3,25% das vezes que realiza uma predição, ou seja, aproximadamente a cada 100 pessoas que de fato são `POI`apenas 3 delas não são preditas como `POI`.
+Na simulação realizada pelo `tester.py` das 15000 predições realizadas, apenas 65 (0,43%) são **FN**. Desse modo, o classificador comete um **Erro do Tipo 2** em 3,25% das vezes que realiza uma predição, ou seja, aproximadamente, a cada 100 pessoas que de fato são `POI`apenas 3 delas não são preditas como `POI`.
 
 Em contrapartida, o mesmo classificador possui uma *Precision* de 0.3000, isto significa que em 30% das vezes aqueles que são preditos como `POI` são de fato `POI`. Portanto, o nosso estimador possui um calcanhar de Aquiles que chama-se **Falsos Positivos**. No contexto dos dados da Enron, significa dizer que o classificador estará cometendo um **Erro do Tipo I** sete vezes a cada dez predições realizadas.
