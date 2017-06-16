@@ -32,9 +32,20 @@ var dadosOlac = void 0; // VARIÁVEL QUE ARMAZENARÁ OS DADOS DE PRODUCAO DA ANP
 var totalVolume = void 0; // VARIÁVEL QUE RECEBERÁ DADOS AGREGADOS (TOTAL) DE PRODUCAO DA ANP
 var totalPorCategoria = void 0; // VARIÁVEL QUE RECEBERÁ DADOS AGREGADOS POR CATEGORIA
 
-
-var listaVariaveis = ["volume_olac"]; //array of property keys
-var variavelAlvo = listaVariaveis[0]; //initial attribute
+//CRIA UM ARRAY COM O NOME DAS VARIÁVEIS
+var listaVariaveis = ["Ciclo Otto", 
+                      "Ciclo Diesel", 
+                      "Engrenagens e Sistemas Circulatórios",
+                      "Isolante Tipo A",
+                      "Isolante Tipo B",
+                      "Óleos Lubrificantes Marítimos",
+                      "Óleos Lubrificantes Ferroviários",
+                      "Óleos Lubrificantes para Aviação",
+                      "Motores 2 tempos",
+                      "Transmissões e Sistemas Hidráulicos",
+                      "Outros Óleos Lubrificantes Acabados"
+                      ]; 
+var variavelAlvo = listaVariaveis[0]; // VARIÁVEL SELECIONADA
 
 
 //the first function called once the html is loaded
@@ -178,7 +189,8 @@ function setMap(){
             
             });
         };
-
+        //ITERAR PELOS ESTADOS DO ARQUIVO JSON E INSERIR UM VALOR DE 0
+        //PARA AS CATEGORIAS QUE NÃO POSSUEM PRODUCAO.
         nomeCategoriaOlac.forEach(function(n) {
             for (var a=0; a<states.features.length; a++){ 
                 if (n in states.features[a].properties){
@@ -300,7 +312,7 @@ function choropleth(d, recolorMap){
     };
 };
 
-
+function
 
 
 </script>
