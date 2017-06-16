@@ -127,35 +127,11 @@ function setMap(){
 			for (var a=0; a<states.features.length; a++){
             //CHECAR SE O ID DO ARQUIVO JSON É ATRIBUÍDO A UF DE TOTALVOLUME		
     				if (states.features[a].id == strUF){
-                            states.features[a].properties['volume_olac'] = volumeUF.values;            
+                            states.features[a].properties['volumeTotal'] = volumeUF.values;            
                     }
             
             }
             
-        };
-
-        for (var i=0; i<totalPorCategoria.length; i++) {		
-            var dadoCategoria = totalPorCategoria[i]; // DADOS REFERENTE A UMA CATEGORIA
-            var nomeCategoria = dadoCategoria.key;  // ARMAZENA O NOME DA CATEGORIA
-
-            //ITERAR SOBRE OS ESTADOS QUE POSSUEM PRODUCAO DE UMA DADA CATEGORIA
-
-            dadoCategoria.values.forEach(function(v){
-                //console.log(nomeCategoria + "-" + v.key,v.values);
-
-            
-
-                //ITERAR SOBRE OS ESTADOS PARA INSERIR OS DADOS DE PRODUÇÃO PARA
-                //CADA UNIDADE DA FEDERAÇÃO.
-                for (var a=0; a<states.features.length; a++){
-                //CHECAR SE O ID DO ARQUIVO JSON É ATRIBUÍDO A UF DE TOTALVOLUME		
-                        if (states.features[a].id == v.key){
-                            states.features[a].properties[nomeCategoria] = v.values;            
-                        };
-                
-                };
-            
-            });
         };
 
         //CRIAR UM ARRAY PARA ARMEZAR AS UF'S COM PRODUCAO E SEM PRODUCAO DE OLAC
@@ -177,10 +153,44 @@ function setMap(){
         uf_sproducao.forEach(function(d) {
             for(var i = 0; i< states.features.length; i++) {
                 if(states.features[i].id == d) {
-                     states.features[i].properties['volume_olac'] = 0;
+                     states.features[i].properties['volumeTotal'] = 0;
                 }
             }
         });
+
+        for (var i=0; i<totalPorCategoria.length; i++) {		
+            var dadoCategoria = totalPorCategoria[i]; // DADOS REFERENTE A UMA CATEGORIA
+            var nomeCategoria = dadoCategoria.key;  // ARMAZENA O NOME DA CATEGORIA
+
+            //ITERAR SOBRE OS ESTADOS QUE POSSUEM PRODUCAO DE UMA DADA CATEGORIA
+
+            dadoCategoria.values.forEach(function(v){          
+
+                //ITERAR SOBRE OS ESTADOS PARA INSERIR OS DADOS DE PRODUÇÃO POR
+                //CATEGORIA
+                for (var a=0; a<states.features.length; a++){
+                //CHECAR SE O ID DO ARQUIVO JSON É ATRIBUÍDO A UF DE dadoCategoria		
+                        if (states.features[a].id == v.key){
+                            states.features[a].properties[nomeCategoria] = v.values;            
+                        };
+                
+                };
+            
+            });
+        };
+
+        nomeCategoriaOlac.forEach(function(n) {
+            for (var a=0; a<states.features.length; a++){ 
+                if (n in states.features[a].properties){
+                    continue          
+                } else {
+                    states.features[a].properties[n] = 0; 
+                }
+                
+            }
+
+        });
+
 
         console.log(states)
 
