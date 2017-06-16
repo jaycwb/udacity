@@ -134,6 +134,30 @@ function setMap(){
             
         };
 
+        for (var i=0; i<totalPorCategoria.length; i++) {		
+            var dadoCategoria = totalPorCategoria[i]; // DADOS REFERENTE A UMA CATEGORIA
+            var nomeCategoria = dadoCategoria.key;  // ARMAZENA O NOME DA CATEGORIA
+
+            //ITERAR SOBRE OS ESTADOS QUE POSSUEM PRODUCAO DE UMA DADA CATEGORIA
+
+            dadoCategoria.values.forEach(function(v){
+                //console.log(nomeCategoria + "-" + v.key,v.values);
+
+            
+
+                //ITERAR SOBRE OS ESTADOS PARA INSERIR OS DADOS DE PRODUÇÃO PARA
+                //CADA UNIDADE DA FEDERAÇÃO.
+                for (var a=0; a<states.features.length; a++){
+                //CHECAR SE O ID DO ARQUIVO JSON É ATRIBUÍDO A UF DE TOTALVOLUME		
+                        if (states.features[a].id == v.key){
+                            states.features[a].properties[nomeCategoria] = v.values;            
+                        };
+                
+                };
+            
+            });
+        };
+
         //CRIAR UM ARRAY PARA ARMEZAR AS UF'S COM PRODUCAO E SEM PRODUCAO DE OLAC
         var uf_producao = [];
         var uf_sproducao = [];
