@@ -107,7 +107,16 @@ function setMap(){
         totalPorCategoria[8]['key'] = "Transmissões e Sistemas Hidráulicos"
         console.log(totalPorCategoria);
 
+        //CRIA UM ARRAY PARA ARMAZENAR TODAS AS CATEGORIAS DE ÓLEO LUBRIFICANTE ACABADO
+        var nomeCategoriaOlac = [];
 
+        //ADICIONA AS STRINGS NO ARRAY
+        totalPorCategoria.forEach(function (d) {
+            nomeCategoriaOlac.push(d.key)
+        
+        });
+
+        console.log(nomeCategoriaOlac)
 
         for (var i=0; i<totalVolume.length; i++) {		
             var volumeUF = totalVolume[i]; // DADOS REFERENTE A UM ESTADO
@@ -148,6 +157,7 @@ function setMap(){
                 }
             }
         });
+
         console.log(states)
 
         // Setup the scale and translate
