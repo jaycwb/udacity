@@ -1,0 +1,12 @@
+base
+RevoUtilsMath
+ggplot2
+ggthemes
+gridExtra
+corrplot
+lattice
+RColorBrewer
+latticeExtra
+car
+scales
+png

@@ -1,0 +1,996 @@
+```{r echo=FALSE, message=FALSE, warning=FALSE, packages}
+# Carregue aqui todos os pacotes utilizados 
+# na sua análise realizada neste arquivo fonte.
+
+# Note que o parâmetro "echo" foi definido como FALSE neste código.
+# Isso previne que o código apresente resultados formatados em HTML.
+# Você deve definir echo=FALSE para todos os blocos de código no seu arquivo.
+
+library(ggplot2)
+library(ggthemes)
+library(gridExtra)
+library(corrplot)
+library(lattice)
+library(latticeExtra)
+library("car")
+library(scales)
+library(png)
+library(grid)
+```
+## **Projeto 4: Explore e resuma os dados**
+
+#### **Autor:** *José Ferraz Neto*
+<center>
+[<img src="./pics/foto_perfil.png" height="80" width="80">]()
+</center>
+<center>
+<!-- Carrega o logo da linkedin. -->
+[<img src="./pics/Logo-2C-14px.png">](https://www.linkedin.com/in/joseferrazneto/)
+</center>
+#### **Sumário:**
+<!-- FORTAMAÇÃO DO SUMÁRIO DO DOCUMENTO -->
+<h6><a href="#sec_1">1. Visão geral do conjunto de dados</a></h6>
+<h6><a href="#sec_2">2. Análise Univariada</a></h6>
+<ul>
+
+<li><h6><a href="#sec_21">2.1 Qual é a estrutura do conjunto de dados?</h6></a>
+</li>
+
+<li><h6><a href="#sec_22">2.2 Quais são os principais atributos de interesse 
+deste conjunto de dados?</h6></a></li>
+
+<li><h6><a href="#sec_23">2.3 Quais outros atributos você acha que podem lhe 
+auxiliar na investigação destes atributos de interesse?</h6></a></li>
+
+<li><h6><a href="#sec_24">2.4 Você criou novas variáveis a partir dos atributos 
+existentes no conjunto de dados?</h6></a></li>
+
+<li><h6><a href="#sec_25">2.5 Dos atributos investigados, distribuições incomuns
+foram encontradas? Você aplicou operações nos dados para limpá-los, ajustá-los 
+ou mudar a forma dos dados? Se sim, por quê?</h6></a></li></ul>
+
+<h6><a href="#sec_3">3. Análise Bivariada</a></h6>
+<ul><li><h6><a href="#sec_31">3.1 Discuta sobre alguns dos relacionamentos 
+observados nesta parte da investigação. Como os atributos de interesse variaram 
+no conjunto de dados?</h6></a></li>
+
+<li><h6><a href="#sec_32">3.2 Você observou algum relacionamento interessante 
+entre os outros atributos (os que não são de interesse)?</h6></a></li>
+
+<li><h6><a href="#sec_33">3.3 Qual foi o relacionamento mais forte encontrado?
+</h6></a></li></ul>
+<h6><a href="#sec_4">4. Seção de Gráficos Multivariados</a></h6>
+<h6><a href="#sec_41">4.1  Análise Multivariada</h6></a>
+<ul><li><h6><a href="#sec_411">4.1.1 Discuta sobre os relacionamentos observados
+nesta parte da investigação. Quais atributos que fortaleceram os demais na 
+observação das variáveis de interesse?</h6></a></li>
+<li><h6><a href="#sec_412">4.1.2 Interações surpreendentes e/ou interessantes 
+foram encontradas entre os atributos?</h6></a></li><li>
+
+<h6><a href="#sec_413">4.1.3 Modelos foram criados usando este conjunto de dados?
+Discuta sobre os pontos fortes e as limitações do seu modelo.</h6></a></li></ul>
+<h6><a href="#sec_5">5. Gráficos Finais e Sumário</a></h6>
+<h6><a href="#sec_51">5.1 Primeiro Gráfico</a></h6>
+<ul>
+<li><h6><a href="#sec_511">5.1.1 Descrição do Primeiro Gráfico</h6></a></li>
+</ul>
+<h6><a href="#sec_52">5.2 Segundo Gráfico</a></h6>
+<ul>
+<li><h6><a href="#sec_521">5.2.1 Descrição do Segundo Gráfico</h6></a></li>
+</ul>
+<h6><a href="#sec_53">5.3 Terceiro Gráfico</a></h6>
+<ul>
+<li><h6><a href="#sec_531">5.3.1 Descrição do Terceiro Gráfico</a></h6></li>
+</ul>
+<h6><a href="#sec_6">6. Reflexão</a></h6>
+<h6><a href="#sec_7">7. Bibliografia</a></h6>
+<br>
+<h4 id="sec_1">**1. Visão geral do conjunto de dados**</h4>
+<p align="justify">Este conjunto de dados contém 4898 vinhos brancos com 11 
+variáveis que representam propriedades físico-químicas de vinhos, mais 
+especificamente da variedade branca. Ao menos 3 especialistas em vinhos avaliaram 
+cada vinho, fornecendo uma nota entre 0 (muito ruim) e 10 (muito excelente). 
+Além disso, para maiores informações sobre o <i>dataset</i> deve-se consultar o 
+seguinte <a href="https://s3.amazonaws.com/udacity-hosted-downloads/ud651/wineQualityInfo.txt">
+link</a>.</p>
+  
+<p align="justify">Para iniciar a análise, iremos começar pelo carregamento 
+do *dataset* em um dataframe.</p>
+```{r}
+wine <- read.csv('wineQualityWhites.csv')
+```
+<br>
+<p align="justify">Iniciaremos a análise avaliando os tipos de variáveis 
+existentes no dataset. Em seguida, podemos explorar se há variáveis que não 
+possuem valores atribuídos, ou seja, *Non Available Data* (NA's).</p>
+
+```{r echo=FALSE, cache=TRUE}
+# Explorar o tipo de variáveis existentes no dataset
+str(wine)
+```
+
+```{r echo=FALSE, cache=TRUE}
+#CRIA UMA FUNÇÃO PARA DETERMINAR A QUANTIDADE DE NAN NAS VARIÁVEIS
+na_count <-sapply(wine, function(y) sum(length(which(is.na(y)))))
+na_count <- data.frame(na_count)
+print(na_count)
+
+```
+<p align="justify">Constatando que não será necessário tratar os dados para 
+retirar valores inexistentes no dataset, podemos avaliar algumas características
+das variáveis por meio de algumas medidas de posição e dispersão.</p>
+```{r echo=FALSE, cache=TRUE}
+#APRESENTA UM SUMÁRIO ESTATÍSTICO EXCLUINDO A VARIÁVEL INDEX (X)
+summary(subset(wine, select = -c(X)))
+```
+<p align="justify">Após uma análise do sumário acima, é possível constatar que 
+algumas variáveis possuem valores máximos e mínimos muito díspares em relação as
+suas respectivas médias e/ou medianas, por exemplo, <font color="red">
+`fixed.acidity`</font>, <font color="red">`free.sulfur.dioxide`</font>, entre 
+outras. Diante dos fatos, é prudente realizarmos uma análise exploratória por 
+meio de boxplots em cada variável.
+<br><br>
+É possível observar que existem algumas variáveis que possuem muitas observações
+que encontram-se fora do intervalo interquartil (IQR), isto é, abaixo do primeiro
+quartil ou acima do terceiro quartil, como é o caso da variável 
+<font color="red">`chlorides`</font>.</p>
+
+```{r echo=FALSE, fig.align="center", cache=TRUE}
+#PRODUZ UMA SÉRIE DE BOXPLOTS PARA SEREM APRESENTADOS EM CONJUNTO.
+bxp1 <- bwplot(~fixed.acidity,data =wine,
+        par.settings = ggplot2like(),axis=axis.grid)
+
+bxp2 <- bwplot(~volatile.acidity,data =wine,
+        par.settings = ggplot2like(),axis=axis.grid)
+
+bxp3 <- bwplot(~citric.acid,data =wine,
+        par.settings = ggplot2like(),axis=axis.grid)
+
+bxp4 <- bwplot(~residual.sugar,data =wine,
+        par.settings = ggplot2like(),axis=axis.grid)
+
+bxp5 <- bwplot(~chlorides,data =wine,
+        par.settings = ggplot2like(),axis=axis.grid)
+
+bxp6 <- bwplot(~free.sulfur.dioxide,data =wine,
+        par.settings = ggplot2like(),axis=axis.grid)
+
+bxp7 <- bwplot(~total.sulfur.dioxide,data =wine,
+        par.settings = ggplot2like(),axis=axis.grid)
+
+bxp8 <- bwplot(~density,data =wine,
+        par.settings = ggplot2like(),axis=axis.grid)
+
+bxp9 <- bwplot(~pH,data =wine,
+        par.settings = ggplot2like(),axis=axis.grid)
+
+bxp10 <- bwplot(~sulphates,data =wine,
+        par.settings = ggplot2like(),axis=axis.grid)
+
+bxp11 <- bwplot(~alcohol,data =wine,
+        par.settings = ggplot2like(),axis=axis.grid)
+
+bxp12 <- bwplot(~quality,data =wine,
+        par.settings = ggplot2like(),axis=axis.grid)
+
+grid.arrange(bxp1,bxp2,bxp3,bxp4)
+grid.arrange(bxp5,bxp6,bxp7,bxp8)
+grid.arrange(bxp9,bxp10,bxp11,bxp12)
+```
+<p align="justify">Como observado acima, há situações no qual o boxplot apresenta
+um *overplotting* na região externa ao IQR, assim não é possível quantificar pelo
+gráfico o total de observações que estão fora do IQR. Desse modo, se torna mais 
+apropriado verificar a distribuição dos valores de uma determinada variável por 
+meio de histogramas.</p>
+<p align="justify">Pela análise do conjunto de histogramas abaixo, é possível 
+identificar que a existência de regiões com poucas observações, que acabam por 
+distorcer o gráfico, por exemplo as variáveis <font color="red">
+`volatile.acidity`</font>, <font color="red">`citric.acid`</font> e 
+<font color="red">`residual.sugar`</font></p>
+
+```{r echo = FALSE, fig.align="center", cache=TRUE} 
+#PRODUZ UMA SÉRIE DE HISTOGRAMAS
+ht1 <- ggplot(data=wine, aes(x=fixed.acidity))+
+  geom_histogram(binwidth = .1)
+
+ht2 <- ggplot(data=wine, aes(x=volatile.acidity))+
+  geom_histogram(binwidth = .025)
+
+ht3 <- ggplot(data=wine, aes(x=citric.acid))+
+  geom_histogram(binwidth = .025)
+
+ht4 <- ggplot(data=wine, aes(x=residual.sugar))+
+  geom_histogram(binwidth = 0.2)
+
+ht5 <- ggplot(data=wine, aes(x=chlorides))+
+  geom_histogram(binwidth = .001)
+
+ht6 <- ggplot(data=wine, aes(x=free.sulfur.dioxide))+
+  geom_histogram(binwidth = 3)
+
+ht7 <- ggplot(data=wine, aes(x=total.sulfur.dioxide))+
+  geom_histogram(binwidth = 5)
+
+ht8 <- ggplot(data=wine, aes(x=density))+
+  geom_histogram(binwidth = .0005)
+
+ht9 <- ggplot(data=wine, aes(x=pH))+
+  geom_histogram(binwidth = .05)
+
+ht10 <- ggplot(data=wine, aes(x=sulphates))+
+  geom_histogram(binwidth = .030)
+
+ht11 <- ggplot(data=wine, aes(x=alcohol))+
+  geom_histogram(binwidth = .1)
+
+grid.arrange(ht1,ht2,ht3,ht4,ht5,ht6,ht7,ht8,ht9,ht10,ht11)
+
+```
+ <p align="justify">Uma possível justicativa para a presença desse tipo de 
+ valores pode ser explicado pela presença de outliers no conjunto de dados. Logo,
+ para melhor avaliar a distribuição de dados dessas variáveis é possível plotar 
+ histogramas que contemplem apenas as observações inferiores ao 99° percentil.</p>
+
+```{r echo = FALSE, fig.align="center", cache=TRUE} 
+#PRODUZ UMA SÉRIE DE HISTOGRAMAS NO QUAL SE RETIRA O PRIMEIRO PERCENTIL SUPERIOR
+ht1p <- ggplot(data=subset(wine, fixed.acidity < quantile(fixed.acidity, 0.99)),
+        aes(x=fixed.acidity))+
+          geom_histogram(binwidth = .1)
+
+ht2p <- ggplot(data=subset(wine, volatile.acidity < quantile(volatile.acidity, 
+        0.99)), aes(x=volatile.acidity))+
+          geom_histogram(binwidth = .025)
+
+ht3p <- ggplot(data=subset(wine, citric.acid < quantile(citric.acid, 0.99)), 
+        aes(x=citric.acid))+
+          geom_histogram(binwidth = .025)
+
+ht4p <- ggplot(data=subset(wine, residual.sugar < quantile(residual.sugar, 0.99)),
+        aes(x=residual.sugar))+
+          geom_histogram(binwidth = 0.2)
+
+ht5p <- ggplot(data=subset(wine, chlorides < quantile(chlorides, 0.99)), 
+        aes(x=chlorides))+
+          geom_histogram(binwidth = .001)
+
+ht6p <- ggplot(data=subset(wine, free.sulfur.dioxide < quantile(free.sulfur.dioxide,
+        0.99)), aes(x=free.sulfur.dioxide))+
+          geom_histogram(binwidth = 3)
+
+ht7p <- ggplot(data=subset(wine, total.sulfur.dioxide < quantile(total.sulfur.dioxide,
+        0.99)), aes(x=total.sulfur.dioxide))+
+          geom_histogram(binwidth = 5)
+
+ht8p <- ggplot(data=subset(wine, density < quantile(density, 0.99)), aes(x=density))+
+          geom_histogram(binwidth = .0005)
+
+ht9 <- ggplot(data=wine, aes(x=pH))+
+        geom_histogram(binwidth = .05)
+
+ht10 <- ggplot(data=wine, aes(x=sulphates))+
+        geom_histogram(binwidth = .030)
+
+ht11 <- ggplot(data=wine, aes(x=alcohol))+
+          geom_histogram(binwidth = .1)
+
+grid.arrange(ht1p,ht2p,ht3p,ht4p,ht5p,ht6p,ht7p,ht8p,ht9,ht10,ht11)
+
+```
+<p align="justify">Das variáveis plotadas acima, a maioria dos histogramas 
+aparentam seguir uma distribuição normal, um dos casos que claramente foge a 
+esse padrão é a <font color="red">`residual.sugar`</font> que apresenta uma forte
+assimetria à direita. Diante disso, é possível tentar uma transformação 
+logaritímica no eixo x para que seja possível mudar essa assimetria nos dados da
+variável.</p>
+
+```{r echo=FALSE, fig.align="center", cache=TRUE}
+#PRODUZ UM HISTOGRAMA E UM POLÍGONO DE FREQUÊNCIAS
+res_sugar <- ggplot(data=subset(wine, residual.sugar < quantile(residual.sugar,
+            0.99)), aes(x=residual.sugar))+
+              geom_histogram(binwidth = 0.05)+
+                scale_x_log10()
+
+freq_poly_sugar <- ggplot(data=subset(wine, residual.sugar < quantile(
+                   residual.sugar, 0.99)), aes(x=residual.sugar))+
+                    geom_freqpoly(binwidth = 0.05)+
+                      scale_x_log10()
+
+grid.arrange(res_sugar,freq_poly_sugar, ncol=1)
+```
+
+<p align="justify">Após a transformação dos dados é possível confirmar que o 
+formato da distribuição em nada se assemelha a normal, e pela presença dos dois 
+picos é mais característico de uma distribuição bimodal. O resultado da plotagem
+do polígono de frequências reforça esse fato.</p><p align="justify">Além disso, 
+iremos criar uma segunda variável qualitativa que irá categorizar as bebidas em 
+qualidade "baixa", "média" e "alta". Como mostra o resultado abaixo, após a 
+criação da variável <font color="red">`quality.sense`</font> a maioria (3655) 
+dos vinhos estão categorizados como de qualidade Média.</p>
+
+```{r echo=FALSE, cache=TRUE}
+#CRIA UMA NOVA VARIÁVEL DISCRETA QUALITY.SENSE A PARTIR DO DADOS DE QUALITY
+wine$quality.sense <- cut(wine$quality, c(3,4,6,10), labels = c("baixa","média",
+                      "alta"), include.lowest = T)
+
+summary(wine$quality.sense)
+
+```
+<p align="justify">O dióxido de enxofre (SO~2~) exerce diversas funções desde 
+agente antioxidante, além da ajudar a preservar o frescor da bebida. O dataset 
+apresenta os teores totais (<font color="red">`total.sulfur.dioxide`</font>) e 
+livre de dióxido de enxofre (<font color="red">`free.sulfur.dioxide`</font>), 
+todavia, é possível determinar a forma ligada ou *bound* da espécie. Assim, 
+iremos criar uma nova variável <font color="red">`bound.sulfur.dioxide`</font>.
+</p>
+```{r echo=FALSE, cache=TRUE}
+#PRODUZ UMA NOVA VARIÁVEL A PARTIR DE TOTAL.SULFUR.DIOXIDE E FREE.SULFUR.DIOXIDE
+wine$bound.sulfur.dioxide <- wine$total.sulfur.dioxide - wine$free.sulfur.dioxide
+
+summary(wine$bound.sulfur.dioxide)
+
+```
+
+<p align="justify">Em seguida, é possível verificar os gráficos de barra das 
+variáveis <font color="red">`quality`</font> e <font color="red">`quality sense`
+</font>. Para o caso da primeira a maior parte dos vinhos possuem nota variando 
+de 5 a 7. Além disso, há o gráfico da função de distribuição de probabilidade 
+para as variáveis <font color='red'>`total.sulfur.dioxide`</font>, 
+<font color='red'>`free.sulfur.dioxide`</font> e <font color='red'>
+`bound.sulfur.dioxide`</font>. É possível identificar que a distribuiçao de 
+<font color='red'>`total.sulfur.dioxide`</font> é bem mais dispersa, enquanto a 
+de <font color='red'>`free.sulfur.dioxide`</font> muito mais concentrada em um 
+região menor de concentrações.</p>
+
+```{r echo=FALSE, fig.align="center", cache=TRUE}
+#PRODUZ GRÁFICOS DE BARRA DAS VARIÁVEIS QUALITATIVAS DISPONÍVEIS NO DATASET
+bar1 <- ggplot(data=wine, aes(x=quality))+
+  geom_bar()
+
+bar2 <- ggplot(data=wine, aes(x=quality.sense))+
+  geom_bar()
+
+grid.arrange(bar1,bar2,ncol=2)
+```
+```{r echo=FALSE, fig.align="center", cache=TRUE}
+#COMPILA OS DADOS DAS DIFERENTES VARIÁVEIS DE SULFUR DIOXIDE
+total.sulfur.df <- data.frame(concentracao=wine$total.sulfur.dioxide, 
+                              especie="total.sulfur.dioxide")
+free.sulfur.df <- data.frame(concentracao=wine$free.sulfur.dioxide, 
+                             especie="free.sulfur.dioxide")
+bound.sulfur.df <- data.frame(concentracao=wine$bound.sulfur.dioxide, 
+                              especie="bound.sulfur.dioxide")
+
+all.sulfur.df <- rbind(total.sulfur.df,free.sulfur.df,bound.sulfur.df)
+```
+
+
+```{r echo=FALSE, fig.align="center", cache=TRUE}
+#PRODUZ UMA GRÁFICO DE DISTRIBUIÇÃO DE PROBABILIDADE PARA AS TRÊS DIFERENTES VARIÁVEIS DE SULFUR DIOXIDE
+ggplot(data=all.sulfur.df, aes(x=concentracao, fill=especie))+
+  geom_density(alpha=.5, position="identity")
+
+
+```
+<h4 id="sec_2">**2. Análise Univariada**</h4>
+<br>
+<h5 id="sec_21">**2.1 Qual é a estrutura do conjunto de dados?**</h5>
+
+<p align="justify">Esse conjunto de dados possui 1 variável index <font 
+color="red">`X`</font>, 1 variável reposta <font color="red">`quality`</font> 
+e outras 11 preditoras. Essas últimas são propriedade físico-químicas associadas
+aos vinhos. A variável resposta é a nota atribuída ao vinho e varia desde 3 até 
+9, além disso vale ressaltar que a variável <font color="red">`quality`</font> 
+é do tipo discreta ordenada.</p>
+<br>
+<h5 id="sec_22">
+**2.2 Quais são os principais atributos de interesse deste conjunto de dados?**</h5>
+<p align="justify">O principal atributo desse dataset é a variável resposta 
+<font color="red">`quality`</font> que é a consolidação da qualidade atribuida 
+por um especialista a um determinado vinho. Além disso, após uma análise de 
+correlação entre as variáveis preditoras e a resposta será possível constatar 
+se alguma das propriedades físico-químicas do vinho possuem alguma influência na
+determinação da qualidade da bebida.</p>
+<br>
+<h5 id="sec_23">
+**2.3 Quais outros atributos você acha que podem lhe auxiliar na investigação destes atributos de interesse?**</h5>
+<p align="justify">Acredito que uma melhor qualidade dos vinhos poderá estar 
+relacionada as variáveis <font color="red">`alcohol`</font> que determina o 
+teor alcólico da bebida, bem como com o <font color="red">`pH`</font> que é um 
+indicador de acidez do vinho.</p>
+<br>
+<h5 id="sec_24">
+**2.4 Você criou novas variáveis a partir dos atributos existentes no conjunto de dados?**</h5>
+<p align="justify">Foram criados uma variável qualitativa ordenada baseada nos 
+dados de <font color="red">`quality`</font> denominada <font color="red">
+`quality.sense`</font> e os respectivos níveis são: <u>baixa</u>, <u>média</u> 
+e <u>alta</u>. Além disso, foi criado a variável <font color="red">
+`bound.sulfur.dioxide`</font> que representa a concentração de outra espécie 
+química de dióxido de enxofre.</p>
+<br>
+<h5 id="sec_25">**2.5 Dos atributos investigados, distribuições incomuns foram encontradas? Você aplicou operações nos dados para limpá-los, ajustá-los ou mudar a forma dos dados? Se sim, por quê?**</h5>
+<p align="justify">Das variáveis preditoras a única que muito diferiu da 
+normalidade, foi a <font color="red">`residual.sugar`</font> que possui uma forte
+assimetria à direita. De modo a minimizar essa distorçar foi realizado uma 
+transformação logaritímica no eixo x, resultado em uma distribuição similar a 
+uma bimodal. Além disso, na plotagem dos histogramas para melhor ajustar os dados
+foram retirados o 1° percentil superior de cada variável de modo a melhor 
+visualizar as respectivas distribuições, resultando em gráficos semelhantes 
+aos esperados por uma distribuição normal.</p>
+<br>
+<h4 id="sec_3">**3. Análise Bivariada**</h4>
+<br>
+<h5 id="sec_31">**3.1 Discuta sobre alguns dos relacionamentos observados nesta parte da investigação. Como os atributos de interesse variaram no conjunto de dados?**</h5>
+```{r echo=FALSE, cache=TRUE}
+#ARMEZENA O COEFICIENTE DE CORRELAÇÃO PARA SER UTILIZADO NA DISCUSSÃO DOS DADOS
+corr1 <- cor(wine$residual.sugar, wine$density)
+corr2 <- cor(wine$free.sulfur.dioxide, wine$total.sulfur.dioxide)
+corr3 <- cor(wine$quality, wine$alcohol)
+corr4 <- cor(wine$alcohol, wine$density)
+```
+
+<p align="justify">A seguir iremos explorar possíveis associações entre as 
+diversas variáveis disponíveis no dataset, para esse fim iremos utilizar um plot
+de correlação que sumariza o coeficiente de pearson entre as variáveis de 
+interesse. A partir da análise do gráfico abaixo, é possível constarar uma forte
+correlação positiva entre os pares (<font color="red">`residual.sugar`</font> e 
+<font color="red">`density`</font>) e (<font color="red">`total.sulfur.dioxide`
+</font> e <font color="red">`free.sulfur.dioxide`</font>), por exemplo. Além 
+disso, em relação as variáveis preditoras e a variável resposta <font 
+color="red">`quality`</font>, aquela que apresenta o maior coefieciente de 
+correlação foi <font color="red">`alcohol`</font>.</p>
+
+```{r echo=FALSE, fig.align="center", cache=TRUE}
+#seleciona as variáveis para criar o plot de correlação
+wine_slice <- wine[,c("fixed.acidity","volatile.acidity", "citric.acid",
+                      "residual.sugar","chlorides","free.sulfur.dioxide",
+                      "total.sulfur.dioxide","density","pH","sulphates","alcohol"
+                      ,"quality")] 
+#cria um dataframe com os valores dos coeficientes de correlação entre variáveis.
+calc_corr <- cor(wine_slice) 
+corrplot(calc_corr, method="color") #plota a matrix de correlação.
+
+```
+<br>
+<p align="justify">Após uma leitura do gráfico é possível constatar uma forte 
+correlação positiva entre as variáveis:</p>
+<ul>
+<li> <font color="red">`residual.sugar`</font> e <font color="red">`density`
+</font>: `r max(corr1)`</li>
+<li> <font color="red">`free.sulfur.dioxide`</font> e <font color="red">
+`total.sulfur.dioxide`</font>: `r max(corr2)`</li>
+<li> <font color="red">`quality`</font> e <font color="red">`alcohol`</font>:
+`r max(corr3)`</li>
+</ul>
+<p align="justify">Além disso, é válido descatar uma forte correlação negativa 
+entre:</p>
+<ul>
+<li><font color="red">`alcohol`</font> e <font color="red">`density`</font>:
+`r max(corr4)`</li>
+</ul><br>
+<p align="justify">Por conseguinte, é possível produzir uma matriz de 
+gráficos de dispersão onde verifica-se em um única visualização o padrão
+de comportamento dos dados de múltiplas variáveis. A partir de uma primeira
+análise, é possível confirmar um bom ajuste para um modelo linear para as
+variáveis <font color="red">`residual.sugar`</font> e <font color="red">`density`
+</font>, corroborando o alto valor do coeficiante de correlação previamente
+mencionado. Além de <font color="red">`alcohol`</font> e <font color="red">
+`density`</font> que os dados claramente confirmam a relação inversa existente
+entre essas variáveis. As demais variáveis analisadas aparentemente não
+apresentam nenhum padrão a ser destacado nessa matriz.
+</p>
+
+```{r echo=FALSE, fig.align="center", cache=TRUE}
+#SCATTERPLOT MATRIX
+
+scatterplotMatrix(wine[c("residual.sugar","free.sulfur.dioxide","density","pH",
+                         "alcohol")])
+```
+<p align="justify">A matriz de gráficos de dispersão é eficiente para uma
+análise exploratória prévia, todavia, é mais aconselhável plotar gráficos
+individuais para melhor avaliar a relação entre duas variáveis.
+O gráfico de dispersão abaixo foi plotado retirando o 5° percentil superior
+de ambas as variáveis e pode-se verificar que apresenta um ajuste razoável 
+para um modelo de regressão linear.</p>
+
+```{r echo=FALSE, fig.align="center", cache=TRUE}
+#SCATTERPLOT
+ggplot(data=subset(wine, alcohol < quantile(alcohol, 0.95) & density < 
+  quantile(density, .95)), aes(y=alcohol, x = density))+
+  stat_smooth(method = "lm")+
+    geom_point(alpha = .25,position='jitter')
+
+```
+<p align="justify">O gráfico abaixo apresenta uma tendência de crescimento dos
+dados de <font color='red'>`residual.sugar`</font> e <font color='red'>
+`density`</font>, todavia, há um platô de pontos abaixo de 2.5 g / dm^3^
+de <font color='red'>`residual.sugar`</font> que claramente distorce da 
+tendência do restante do conjunto de dados.
+</p>
+```{r echo=FALSE, fig.align="center", cache=TRUE}
+#SCATTERPLOT
+ggplot(data=subset(wine, residual.sugar < quantile(residual.sugar, 0.95) & 
+  density < quantile(density, .95)), aes(y=residual.sugar, x = density))+
+  geom_smooth()+
+    geom_point(alpha = .25,position='jitter')
+```
+<p align="justify">Pela plotagem individual de gráficos de dispersão para 
+<font color="red">`free.sulfur.dioxide`</font> vs <font color="red">`pH`</font>
+e de <font color="red">`alcohol`</font> vs <font color="red">`residual.sugar`
+</font> é possível confirmar que não existe nenhum padrão aparente entre essas
+variáveis.</p>
+```{r echo=FALSE, fig.align="center", cache=TRUE}
+#SCATTERPLOT
+ggplot(data=subset(wine, free.sulfur.dioxide < quantile(free.sulfur.dioxide, 
+  0.95) & pH < quantile(pH, .95)), aes(y=free.sulfur.dioxide, x = pH))+
+    geom_point(alpha = .25,position='jitter')
+
+```
+```{r echo=FALSE, fig.align="center", cache=TRUE}
+#SCATTERPLOT
+ggplot(data=subset(wine, alcohol < quantile(alcohol, 
+  0.95) & residual.sugar < quantile(residual.sugar, .95)), aes(y=alcohol, x = residual.sugar))+
+    geom_point(alpha = .25,position='jitter')
+
+```
+<p align="justify">Por uma plotagem de boxplots é possível determinar algumas
+tendências interessantes. O primeiro gráfico é de <font color="red">`alcohol`
+</font> vs <font color="red">`quality`</font> que apresenta uma tendêcia de 
+crescimento da mediana do teor de álcool com a qualidade do vinho. Enquanto o 
+segundo apresenta uma plotagem de <font color="red">`total.sulfur.dioxide`
+</font> vs <font color="red">`quality`</font> o qual a mediana da concentração
+total de dióxido de enxofre possui uma tendência de estabilização da mediana ao
+longo dos diferentes graus de qualidade, todavia, o IQR parece diminuir a medida
+que a qualidade dos vinhos aumenta, isto é, a maior parte dos vinhos de maior
+qualidade possui uma faixa de concentração total de dióxido de enxofre
+menos dispersa que aqueles vinhos de menor qualidade.</p>
+```{r echo=FALSE, fig.align="center", cache=TRUE}
+#BOXPLOT
+ggplot(data=subset(wine, alcohol < quantile(alcohol, 0.95)), aes(factor
+  (quality),alcohol))+
+    geom_boxplot()
+```
+
+```{r echo=FALSE, fig.align="center", cache=TRUE}
+#BOXPLOT
+ggplot(data=subset(wine, total.sulfur.dioxide < quantile(total.sulfur.dioxide, 
+  0.95)), aes(factor(quality),total.sulfur.dioxide))+
+    geom_boxplot()
+```
+<h5 id="sec_32">**3.2 Você observou algum relacionamento interessante entre os outros atributos (os que não são de interesse)?**</h5>
+<p align="justify">Pelos gráficos de dispersão acima é possível visualizar a 
+correlação negativa existentes entre <font color="red">`alcohol`</font> e 
+<font color="red">`density`</font>, a medida que o teor de álcool dos vinhos 
+decresce, uma clara tendência da densidade das respectivas bebidas aumentar. 
+De forma contrária, as variáveis <font color="red">`residual.sugar`</font> e 
+<font color="red">`density`</font> apresentam uma tendência que o acréscimo em 
+uma variável, em sua maioria corresponde a um acréscimo também nos valores de 
+densidade dos vinhos.</p>
+
+<p align="justify">Além disso, o boxplot de <font color="red">`alcohol`</font> 
+e <font color="red">`quality`</font> apresenta algumas informações relevantes. 
+Os vinhos que receberam uma nota 9 em <font color="red">`quality`</font> são 
+aqueles que apresentam a maior mediana para <font color="red">`alcohol`</font> 
+dentre todos os vinhos, enquanto aqueles que receberam uma nota 5 em 
+<font color="red">`quality`</font> possuem a menor mediana para <font color="red">
+`alcohol`</font> dentre todos.</p>
+
+<p align="justify">A plotagem de um histograma de <font color="red">`alcohol`
+</font> segregando por nota recebida em <font color="red">`quality`</font> pode 
+nos ajudar a dicernir se as informações contidas no boxplot obtido pela amostragem
+obtida no dataset estudado podem ser estrapoladas para uma população de vinhos. 
+O histograma abaixo revela que os vinhos que receberam 9 em sua avaliação são 
+pouquíssimos, portanto, afirmar que os vinhos melhor avaliados possuem de fato 
+uma mediana de <font color="red">`alcohol`</font> superior aos demais, é no 
+mínimo, temerário, pela provável não representativa da amostragem em relação 
+a sua população.</p>
+
+```{r echo=FALSE, fig.align="center", cache=TRUE}
+ggplot(data=subset(wine, alcohol < quantile(alcohol, 0.95)), aes(x=alcohol))+
+  geom_histogram(binwidth = 0.1)+
+  facet_wrap(~quality)
+```
+<p align="justify">Em relação a variável <font color="red">`residual sugar`
+</font> abaixo está o histograma destacado para as diferentes categorias de 
+<font color="red">`quality.sense`</font> e a característica bimodal da 
+distribuição permanece mesmo quando separado por categoria de avaliação de 
+<font color="red">`quality.sense`</font>.</p>
+
+```{r echo=FALSE, fig.align="center", cache=TRUE}
+ggplot(data=subset(wine, residual.sugar < quantile(residual.sugar, 0.99)), 
+aes(x=residual.sugar))+
+  geom_histogram(aes(color = quality.sense),fill = "white",position = "dodge",
+  binwidth = 0.1)+
+    scale_x_log10()
+```
+
+
+<h5 id="sec_33">**3.3 Qual foi o relacionamento mais forte encontrado?**</h5>
+<p align="justify"></p>As variáveis mais fortemente correlacionadas foram: 
+<font color="red">`residual.sugar`</font> e <font color="red">`density`</font>:
+`r max(corr1)`</p>
+
+<h4 id="sec_4">**4. Seção de Gráficos Multivariados**</h4>
+<p align="justify">A partir de gráficos multivaridos é possível determinar
+possíveis relações de múltiplas variáveis. Abaixo está plotado um gráfico de
+dispersão de <font color="red">`alcohol`</font> vs <font color="red">`pH`</font>
+no qual foi adicionado um terceira dimensão por meio da codificação em cores da 
+variável <font color="red">`quality.sense`</font>. Todavia, não possível
+determinar nenhuma segregação de qualidade baseada nas variáveis preditoras
+plotadas.</p>
+
+```{r echo=FALSE, fig.align="center", cache=TRUE}
+#scatterplot
+ggplot(data=subset(wine, alcohol < quantile(alcohol, 0.95) & pH < quantile(pH,
+  .95)), aes(y=alcohol, x = pH)) + 
+  geom_point(aes(color=quality.sense)) + 
+    scale_colour_brewer(type="seq", palette=8)
+
+```
+<p align="justify">O gráfico abaixo apresenta uma tendência dos vinhos avaliados
+como alta estarem concentrados em maiores teores de <font color="red">`alcohol`
+</font>.</p>
+```{r echo=FALSE, fig.align="center", cache=TRUE}
+#scatterplot
+ggplot(data=subset(wine, alcohol < quantile(alcohol, 0.95) & density < quantile
+(density, .95)), aes(y=alcohol, x = density)) + 
+  geom_point(aes(color=quality.sense)) + 
+    scale_colour_brewer(type="seq", palette=8)
+
+```
+<p align="justify">Com o gráfico de dispersão abaixo é possível identificar
+que a maior parte dos vinhos melhores avaliados possuem valores de <font color="red">
+`density`</font> menores que 0.993.</p>
+```{r echo=FALSE, fig.align="center", cache=TRUE}
+#scatterplot
+ggplot(data=subset(wine, density < quantile(density, 0.95) & pH < quantile(pH,
+.95)), aes(y=density, x = pH)) + 
+  geom_point(aes(color=quality.sense)) + 
+    scale_colour_brewer(type="seq", palette=8)
+
+```
+<p align="justify">Apesar da tendência de crescimento existente entre os dados
+de <font color="red">`density`</font> e <font color="red">`residual.sugar`</font>
+ não é possível distinguir nenhum padrão em relação a <font color="red">
+ `quality.sense`</font>.</p>
+```{r echo=FALSE, fig.align="center", cache=TRUE}
+#scatterplot
+ggplot(data=subset(wine, density < quantile(density, 0.95) & residual.sugar < 
+quantile(residual.sugar, .95)), aes(y=density, x = residual.sugar)) + 
+  geom_point(aes(color=quality.sense))+
+    scale_colour_brewer(type="seq", palette=8)
+
+```
+<p align="justify">Nesse gráfico não há nehum padrão entre as variáveis plotadas
+nos eixos x/y e tão pouco em relação a variável codificada pelas cores da legenda.</p>
+```{r echo=FALSE, fig.align="center", cache=TRUE}
+#scatterplot
+ggplot(data=subset(wine, fixed.acidity < quantile(fixed.acidity, 0.95) & 
+citric.acid < quantile(citric.acid, .95)), aes(y=fixed.acidity, x = citric.acid))+
+  geom_point(aes(color=quality.sense)) + 
+    scale_colour_brewer(type="seq", palette=8)
+
+```
+<p align="justify">Apesar da tendência de crescimento apresentada pelo gráfico
+de dispersão abaixo, não é possível identificar nenhuma tendência de 
+segregação em relação a variável <font color="red">`quality.sense`</font>.</p>
+```{r echo=FALSE, fig.align="center", cache=TRUE}
+#scatterplot
+ggplot(data=subset(wine, free.sulfur.dioxide < quantile(free.sulfur.dioxide, 0.95) 
+& total.sulfur.dioxide < quantile(total.sulfur.dioxide, .95)), 
+aes(y=free.sulfur.dioxide, x = total.sulfur.dioxide)) + 
+  geom_point(aes(color=quality.sense)) +
+    scale_colour_brewer(type="seq", palette=8)
+
+```
+
+<h4 id="sec_41">**4.1 Análise Multivariada**</h4>
+
+<p align="justify">Para criarmos um modelo de regressão linear múltiplo, iremos 
+criar versões centradas na média para todas as variáveis preditoras. Esse novo 
+conjunto de variáveis irão terminar em **.center** em seus nomes. Essa 
+transformação tem o objetivo que seja possível obter uma interpretação 
+significativa do valor estimado para o intercepto do modelo. Em seguida, é 
+possível verificar um sumário de medidas de posição e dispersão para esse novo 
+conjunto de variáveis.</p>
+
+```{r echo=FALSE, cache=TRUE}
+#Organizar um novo dataframe com as variáveis centradas pela média
+fixed.acidity.center <- scale(wine$fixed.acidity, center=TRUE, scale=FALSE)
+volatile.acidity.center <- scale(wine$volatile.acidity, center=TRUE, scale=FALSE)
+citric.acid.center <- scale(wine$citric.acid, center=TRUE, scale=FALSE)
+residual.sugar.center <- scale(wine$residual.sugar, center=TRUE, scale=FALSE)
+chlorides.center <- scale(wine$chlorides, center=TRUE, scale=FALSE)
+free.sulfur.dioxide.center <- scale(wine$free.sulfur.dioxide, center=TRUE, 
+                                    scale=FALSE)
+total.sulfur.dioxide.center <- scale(wine$total.sulfur.dioxide, center=TRUE, 
+                                     scale=FALSE)
+density.center <- scale(wine$density, center=TRUE, scale=FALSE)
+pH.center <- scale(wine$pH, center=TRUE, scale=FALSE)
+sulphates.center <- scale(wine$sulphates, center=TRUE, scale=FALSE)
+alcohol.center <- scale(wine$alcohol, center=TRUE, scale=FALSE)
+
+centerset <- data.frame(cbind(wine$quality, fixed.acidity.center, 
+volatile.acidity.center, citric.acid.center,residual.sugar.center,chlorides.center,
+free.sulfur.dioxide.center,total.sulfur.dioxide.center,density.center,pH.center,
+sulphates.center,alcohol.center))
+
+colnames(centerset)[1:12] <- c("quality","fixed.acidity.center",
+"volatile.acidity.center","citric.acid.center","residual.sugar.center",
+"chlorides.center", "free.sulfur.dioxide.center", "total.sulfur.dioxide.center",
+"density.center","pH.center","sulphates.center","alcohol.center")
+
+summary(centerset)
+
+```
+<p align="justify">Primeiramente, iremos criar um modelo univariado com a
+preditora que possui o maior valor do coeficiente de correlação, <font 
+color="red">`alcohol`</font>. Em seguida, iremos criar um modelo de regressão 
+múltipla com todas as variáveis preditoras centradas pela média.</p>
+
+<h5><font color="red">`Modelo 1.`</font></h5>
+
+```{r echo=FALSE, cache=TRUE}
+#criação de um modelo de regressão linear
+alcofit <- lm(quality ~ alcohol, data=wine)
+summary(alcofit)
+
+```
+<h5><font color="red">`Modelo 2.`</font></h5>
+```{r echo=FALSE, cache=TRUE}
+#criar um novo modelo de regressão linear
+fit <- lm(quality ~ fixed.acidity.center+volatile.acidity.center+
+citric.acid.center+residual.sugar.center+chlorides.center+
+  free.sulfur.dioxide.center+total.sulfur.dioxide.center+density.center+
+  pH.center+sulphates.center+alcohol.center,data=centerset)
+
+summary(fit)
+
+```
+<h5><font color="red">`Modelo 3.`</font></h5>
+
+```{r echo=FALSE, cache=TRUE}
+#criar um novo modelo de regressão linear
+fit2 <- lm(quality ~ fixed.acidity.center+volatile.acidity.center+
+residual.sugar.center+free.sulfur.dioxide.center+density.center+pH.center+
+sulphates.center+alcohol.center,data=centerset)
+
+summary(fit2)
+
+```
+
+<br>
+<h5 id="sec_411">**4.1.1 Discuta sobre os relacionamentos observados nesta parte da investigação. Quais atributos que fortaleceram os demais na observação das variáveis de interesse?**</h5>
+
+<p align="justify">Foram avaliados algumas relações entre as diferentes variáveis
+preditoras, bem como entre essas e a variável resposta. Foi observado uma relação
+negativa entre <font color="red">`alcohol`</font> e <font color="red">`density`
+</font> em que valores elevados de <font color="red">`alcohol`</font> estão 
+associados a menores valores de <font color="red">`density`</font>. Além disso, 
+pode-se observar que vinhos que possuem classificação <b>alta</b> em <font 
+color="red">`quality.sense`</font> tendem a possuir valores mais elevados de 
+<font color="red">`alcohol`</font> e consequentemente menores valores de <font 
+color="red">`density`</font>.</p>
+
+<p align="justify">De modo distinto, apesar do alto valor do coeficiente de 
+correlação entre <font color="red">`density`</font> e <font color="red">
+`residual.sugar`</font> não foi possível distinguir um padrão de segregação de  
+<font color='red'>`quality.sense`</font> quando se avaliou o <i>scatterplot</i> 
+adicionando essa dimensal adicional ao gráfico.</font></p>
+
+<p align="justify">De forma similar, apesar do elevado coeficiente de correlação
+entre <font color="red">`free.sulfur.dioxide`</font> e <font color="red">
+`total.sulfur.dioxide`</font> não observou-se nenhum padrão em relação aos 
+diferentes níveis de <font color="red">`quality.sense`</font>. Dessa forma, 
+é possível cogitar que as relações existentes por essas variáveis preditoras 
+não são explicadas pela qualidade do vinho.</p><br>
+
+<h5 id="sec_412">**4.1.2 Interações surpreendentes e/ou interessantes foram encontradas entre os atributos?**</h5>
+
+<p align="justify">Foi surpreendente observar que dez das onze variáveis 
+preditoras possuem coeficientes de correlação próximos de zero ou mesmo negativo
+em relação a variável resposta <font color="red">`quality`</font>. Além disso, 
+a variável <font color="red">`alcohol`</font> estar positivamente correlacionada
+a qualidade em um primeiro momento parece ser contrassensual, porque não 
+necessariamente altos teores álcoolicos estão associados a um sabor 
+sensorialmente agradável. Todavia, essa relação entre <font color="red">
+`alcohol`</font>/<font color="red">`quality`</font> pode ser mais um exemplo da
+máxima que diz: **correlação não implica por si só em causalidade**, isto é, um 
+vinho ser categorizado com uma boa nota não implica que essa qualidade tenha
+sido atribuída devido a um elevado teor alcoólico.</p><br>
+
+
+<h5 id="sec_413">**4.1.3 Modelos foram criados usando este conjunto de dados? Discuta sobre os pontos fortes e as limitações do seu modelo.**</h5>
+
+<p align="justify">Foram criados ao todo 3 modelos, no qual o primeiro foi uma 
+regressão linear de <font color='red'>`quality`</font> e <font color="red">
+`alcohol`</font> que apresentou um R^2^ de apenas 0.1897, isto é, apenas 18.97% 
+da variância apresentada pela variável resposta <font color='red'>`quality`
+</font> pode ser explicada pela variável preditora <font color="red">`alcohol`
+</font>. Essa estatística revela que o modelo criado não é adequado para modelar
+os dados e predizer com acurácia a qualidade dos vinhos.</p>
+
+<p align="justify">A partir da constatação que o modelo linear baseado apenas 
+em <font color="red">`alcohol`</font> não foi efetivo, propomos um modelo de
+regressão linear múltipla baseada em todas as variáveis preditoras disponíveis 
+no dataset. Por conseguinte, foi realizado uma transformação nas variáveis de 
+modo a deixá-las centradas pela média.</p>
+<p align="justify">Assim, o <font color="red">`modelo 2`</font> obteve um 
+R^2^~adj~ de 0.2803 que é levemente superior ao obtido pelo modelo univariado. 
+Além disso, o intercepto do modelo nos informa que um vinho terá uma nota média 
+de 5.878 quando todas as variáveis preditoras do modelo tiverem seus respectivos
+valores médios.</p>
+
+<p align="justify">Além disso, o *Residual Standard Error* que é uma medida da 
+qualidade do ajuste da regressão linear registrou o valor de 0.7514 que é uma 
+medida de quão distante a nota de <font color='red'>`quality`</font> prevista
+pelo modelo desvia da linha de regressão verdadeira. Dessa maneira, como a nota 
+média de todos vinhos é 5.878 e o *Residual Standard Error* é 0.7514 podemos 
+afirmar que o erro percentual dos valores preditos pelo modelo é de 12.78%.</p>
+
+<p align="justify">Dos parâmetros disponíveis para avaliar o ajuste do modelo, 
+a *F-Statistic* é um indicador se há relação entre as variáveis preditoras e a 
+variável resposta, nesse contexto quão maior que um for o número, melhor. Dessa
+forma, o <font color="red">`modelo 2`</font> obteve uma *F-Statistic* de 174.3 
+que é um bom indicativo do ajuste do modelo.</p>
+
+<p align="justify">No sumário de avaliação dos coeficientes das variáveis 
+preditores há o atributo *Pr(>|t|)*, que deve ser interpretado com a 
+probabilidade de observamos uma possível relação entre o preditor e a resposta 
+devido simplesmente a sorte, ou seja, quão menor esse número for, melhor, pois
+mais improvável será que a relação seja devido a sorte. Normalmente, se confronta
+o valor com um nível de significância de 5%. Assim, constatamos que as variáveis
+<font color="red">`citric.acid.center`</font>, <font color="red">
+`chlorides.center`</font> e <font color="red">`total.sulfur.dioxide.center`
+</font> possuem o <i>Pr(>|t|)</i> maior que 5%. Desse modo, foi criado um 
+<font color="red">`modelo 3`</font> que não possui essas variáveis na modelagem.
+</p>
+
+<p align="justify">Ao analisarmos o output do <font color="red">`modelo 3`</font>
+verficamos que todas as variáveis preditoras possuem <i>Pr(>|t|)</i> menor que 
+o nível de significância adotado, além disso a *F-Statistic* subiu de 174.3 para
+239.7, além disso, o R^2^~adj~ aumentou de 0.2803 e 0.2806. Além disso, o 
+*Residual Standard Error* reduziu de 0.7514 para 0.7512 também uma mudança 
+discreta.</p>
+
+<p align="justify">Dessa forma, mesmo com uma melhora do modelo ainda não temos
+um bom ajuste destes aos dados. Assim, acredito que isso revele uma relação não 
+linear entre as variáveis preditoras e a resposta. Por fim, uma possível melhora,
+seja aumentar a amostragem do dataset ou ainda buscar transformações nas variáveis
+disponíveis de modo a buscar uma melhora na relação entre essas e a variável 
+resposta.</p>
+
+
+<h4 id="sec_5">**5. Gráficos Finais e Sumário**</h4>
+<h5 id="sec_51">**5.1 Primeiro Gráfico**</h5><br>
+```{r echo=FALSE, fig.align="center", cache=TRUE}
+#boxplots
+ggplot(aes(factor(quality),alcohol), data=wine)+
+  geom_boxplot(aes(fill=factor(quality)))+
+  theme_minimal()+
+  scale_fill_discrete(name="Qualidade")+
+  ggtitle("Teores de álcool em vinhos brancos de diferentes qualidades")+
+  xlab("Qualidade dos vinhos brancos")+
+  ylab("Teor de álcool / % por volume")
+
+```
+<br>
+<h5 id="sec_511">**5.1.1 Descrição do Primeiro Gráfico**</h5>
+<p align="justify">O boxplot apresenta um compilado final da relação positiva 
+existente entre <font color="red">`alcohol`</font> e <font color="red">`quality`
+</font>. É possível constatar pelo gráfico que uma tendência crescente de álcool 
+a medida que a qualidade dos vinhos aumenta. Apesar do intervalo entre 3 e 5 de 
+<font color="red">`quality`</font> haver uma redução do valor mediano de <font 
+color="red">`alcohol`</font>, a tendência geral do conjunto de dados é de aumento
+da mediana de <font color="red">`alcohol`</font>. É interessante observar a 
+robustez da mediana frente a valores extremos para o caso dos vinhos de 
+classificação 5, essa categoria apresenta diversos vinhos com altos teores de 
+<font color="red">`alcohol`</font>, todavia, a mediana desses vinhos é menor do
+que aqueles vinhos com classificação 3 e 4.</p><br>
+
+<h5 id="sec_52">**5.2 Segundo Gráfico**</h5><br>
+
+```{r echo=FALSE, fig.align="center", cache=TRUE}
+#polígono de frequências
+hist_subset <- subset(wine, residual.sugar < quantile(residual.sugar, 0.99))
+ggplot(data=hist_subset, aes(x=residual.sugar, 
+  fill=factor(hist_subset$quality.sense)))+
+    geom_density(alpha=.5,position="identity")+
+      scale_x_continuous(trans = log10_trans(), breaks = c(seq(1,11,2)))+
+        theme_minimal()+
+          scale_fill_discrete(name="Qualidade")+
+            ggtitle("Distribuição de probabilidade para teores de\n açúcares residuais para diferentes qualidades de vinhos")+
+              ylab("Densidade")+
+                xlab(bquote('Concentração de Açucar Residual (g /'~dm^{3}~')'))
+```
+<h5 id="sec_521">**5.2.1 Descrição do Segundo Gráfico**</h5>
+<p align="justify">O gráfico acima representa a função de distribuição de 
+probabilidade para a variável <font color="red">`residual.sugar`</font>. Essa 
+característica físico-química quantifica o teor de açucar proveninente das uvas 
+que estão presentes após o término da fermentação do vinho. Dessa forma, uma 
+maior quantidade de açucar resulta em um vinho mais doce, enquanto menos 
+resultará em vinhos mais secos. Dessa forma, há existencia de dois picos de 
+<font color="red">`residual.sugar`</font> para cada categoria de <font 
+color="red">`quality.sense`</font> nos informa que não há um padrão de 
+qualidade **baixa** ou **alta** no que diz respeito ao vinho ser seco ou doce.
+</p>
+<br>
+<h5 id="sec_53">**5.3 Terceiro Gráfico**</h5><br>
+
+```{r echo=FALSE, fig.align="center", cache=TRUE}
+#scatterplot
+ggplot(data=subset(wine, alcohol < quantile(alcohol, 0.95) & density < 
+quantile(density, .95)), aes(y=alcohol, x = density, color=quality.sense)) +     
+  geom_jitter(alpha=1/4, aes(color=quality.sense))+
+    scale_x_continuous(breaks = c(seq(0.99,0.997,0.003)))+
+      theme_minimal()+
+        facet_wrap(~quality.sense)+
+          geom_smooth(colour='black')+
+            ggtitle("Gráfico de dispersão de Alcohol vs Density \n em diferentes qualidades de vinhos")+
+              ylab("Teor de álcool / % por volume")+
+                xlab(bquote('Densidade (g /'~cm^{3}~')'))
+```
+
+<h5 id="sec_531">**5.3.1 Descrição do Terceiro Gráfico**</h5>
+<p align="justify">O gráfico apresenta a relação existente entre as variáveis 
+<font color="red">`alcohol`</font> e <font color="red">`density`</font> que 
+possuem um coeficiente de correlação de <b>-0.78</b> mostrando a forte relação 
+inversa entre as variáveis. Desse modo, pela adição de mais uma dimensão no 
+gráfico (<font color="red">`quality.sense`</font>) foi possível constatar que 
+essa tendência dos dados é semelhante independente da qualidade do vinho, 
+ressaltando, que é possível ver uma maior concentração de vinhos avaliados como
+alta em menores valores de <font color="red">`density`</font>, e consequentemente,
+ maiores valores de <font color="red">`alcohol`</font>.</p>
+
+<h4 id="sec_6">**6. Reflexão**</h4>
+
+<p align="justify">Foi analisado um *dataset* que contém informações relativas 
+as notas atribuídas por especialistas a diferentes vinhos branco, além de 
+informações relativas a propriedades fisíco-químicas dessas bebidas. Foi 
+realizado uma análise exploratória de modo verificar a existência de relações 
+entre as propriedades físico-químicas do vinho e as notas atribuídas pelos 
+especialistas.</p>
+
+<p align="justify">A análise foi feito utilizando o *package ggplot2* e foi 
+possível verificar que maiores teores de álcool do vinhos estavam associados aos
+vinhos de maior qualidade. Ainda foi possível identificar por um gráfico de 
+distribuição de probabilidade para a variável <font color="red">`residual.sugar`
+</font> constatar que não há um padrão de maior qualidade associado
+a vinhos que sejam doces ou secos. Além disso, foi observado uma preponderência 
+de vinhos com qualidade alta possuírem menos valores de <font color='red'>`density`
+</font>.</p>
+
+<p align="justify">Além disso, dos aproxidamente 5000 vinhos disponíveis para 
+análise a grande maioria foram classificados entre 5 e 7 em uma escala até 10. 
+Foi tentado construir modelos lineares para predizer a qualidade dos vinhos a 
+partir de suas propriedades físico-químicas, todavia, os modelos não tiveram 
+bons ajustes. 
+
+<p align="justify">Um dos pressupostos para o bom desempenho de um modelo
+de regressão linear é que exista uma relação linear entre as variáveis dependente
+e a independente, e como apresentado ao longo da análise essa condição não é
+satisfeita para muitas variáveis analisadas. Além disso, esse tipo de modelo
+é muito sensível a presença de outliers, que também foi possível identificar
+a partir dos boxplots apresentados.</p>
+
+<p align="justify">Além disso, dentro dos requisitos para um bom ajuste é a
+homogeneidade de variâncias, por exemplo, por meio dos boxplots de <font 
+color="red">`alcohol`</font> vs <font color="red">`quality`</font> e 
+<font color="red">`total.sulfur.dioxide`</font> vs <font color="red">`quality`
+</font> é possível identificar diferentes padrões de dispersão dos dados em 
+diferentes níveis de <font color="red">`quality`</font>. Desse modo, essas 
+observações são indícios de heterocedasticidade, possivelmente contribuindo
+para um ajuste não adequado do modelo aos dados.</p>
+
+Desse modo, propõe em trabalho posterior a tentativa de utilizar transformações
+nas variáveis disponívels, bem como o uso de algoritmos não-lineares para 
+modelagem dos dados na tentativa de obter melhores resultados quanto ao ajuste 
+dos dados disponíveis.</p>
+
+<h4 id="sec_7">**7. Bibliografia**</h4>
+
+<ul>
+<li>http://docs.ggplot2.org/current/</li>
+<li>https://www.winecurmudgeon.com/residual-sugar-in-wine-with-charts-and-graphs/</li>
+<li>http://www.aromadictionary.com/articles/sulfurdioxide_article.html</li>
+<li>http://www.wineskills.co.uk/winemaking/winemaking-knowledge-base/chemical-composition</li>
+</ul>
