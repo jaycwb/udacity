@@ -12,16 +12,19 @@
     border-style: solid;
     border-width: 1px;
     border-color: #ccc;
+    margin-left: 20px;
   }
 
 #menu {
       float: left;  
       background: white;
+      margin-left: 10px;
 }
 
 #map {
     overflow: hidden; 
-    background: white;}
+    background: white;
+    }
   </style>
 </head>
 <body onload="initialize();">
@@ -43,7 +46,8 @@ var totalVolume = void 0; // VARIÁVEL QUE RECEBERÁ DADOS AGREGADOS (TOTAL) DE 
 var totalPorCategoria = void 0; // VARIÁVEL QUE RECEBERÁ DADOS AGREGADOS POR CATEGORIA
 
 //CRIA UM ARRAY COM O NOME DAS VARIÁVEIS
-var listaVariaveis = ["Ciclo Otto", 
+var listaVariaveis = ["volumeTotal",
+                      "Ciclo Otto", 
                       "Ciclo Diesel", 
                       "Engrenagens e Sistemas Circulatórios",
                       "Isolante Tipo A",
@@ -55,7 +59,7 @@ var listaVariaveis = ["Ciclo Otto",
                       "Transmissões e Sistemas Hidráulicos",
                       "Outros Óleos Lubrificantes Acabados"
                       ]; 
-var variavelAlvo = listaVariaveis[0]; // VARIÁVEL SELECIONADA
+var variavelAlvo = listaVariaveis[11]; // VARIÁVEL SELECIONADA
 
 
 //the first function called once the html is loaded
@@ -259,13 +263,13 @@ function setMap(){
         var brazil = void 0; // VARIÁVEL QUE SERÁ UTILIZADA PARA ARMAZENAR OS DADOS GEOGRÁFICOS
         var map = svg.append('g').attr('class', 'boundary');
         brazil = map.selectAll('path').data(states.features);
-        recolorMap = colorScale(totalVolume); //retrieve color scale generator
+        recolorMap = colorScale(dadosGeo, variavelAlvo); //retrieve color scale generator
 
         //Enter
         brazil.enter()
         .append('path')
         .attr('d', path)
-        .attr("class", function(d) {return d.id;})
+        .attr("class", function(d) {return d.id + " estado";})
         .style("fill", function(d){ return choropleth(d,recolorMap)});
 
         svg.selectAll('text')
@@ -293,7 +297,7 @@ function setMap(){
 
 };
 
-function colorScale(totalVolume) {
+function colorScale(dadosGeo, variavelAlvo) {
 
     //CRIAR UMA ESCALA DE CORES
     var color = d3.scale.quantile()
@@ -305,27 +309,42 @@ function colorScale(totalVolume) {
     //a two-value array to domain() with just the minimum and maximum values of the expressed attribute). 
 
     var domainArray = [];
-    totalVolume.forEach(function(d){domainArray.push(d.values)})
-
+    dadosGeo.features.forEach(function(v){
+        domainArray.push(v.properties[variavelAlvo])
+    })
+    console.log(domainArray)
     color.domain(domainArray)
     return color;
 };
 
 function choropleth(d, recolorMap){
-    //OBTER O VALOR ATRIBUÍDO A VARIÁVEL 
-    var value = d.properties[variavelAlvo]
-
-    if(value) {
-        return recolorMap(value);
+    if(d instanceof Array){
+        //OBTER O VALOR ATRIBUÍDO A VARIÁVEL
+        d.forEach(function(v){
+            var value = v.properties[variavelAlvo]
+            if(value) {
+                return recolorMap(value);
+            } else {
+                return d3.interpolateYlOrBr(0.02);
+            }
+        })
     } else {
-        return d3.interpolateYlOrBr(0.02);
-    };
-};
+        var value = d.properties[variavelAlvo]
+            if(value) {
+                return recolorMap(value);
+            } else {
+                return d3.interpolateYlOrBr(0.02);
+            }
+    }
+};  
 
 function criarMenu(dadosOlac){
     var menu = d3.select("#menu")
                 .html("<h3>Selecione a Categoria</h3>")
                 .append("select")
+                .on("change", function(){
+                    mudarVariavel(this.value, dadosGeo)
+                })
 
     menu.selectAll("options")
         .data(listaVariaveis)
@@ -337,6 +356,15 @@ function criarMenu(dadosOlac){
 
 }
 
+function mudarVariavel(variavel,dadosGeo) {
+    variavelAlvo = variavel;
+    d3.selectAll("path.estado")
+    .style("fill",function(){return choropleth(dadosGeo.features)})
+    //.text(function(){return console.log(dadosGeo.features)})
+        
+    
+
+};
 </script>
 </body>
 </html>
