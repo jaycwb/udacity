@@ -24,7 +24,7 @@
 #map {
     overflow: hidden; 
     background: white;
-    }
+}   
   </style>
 </head>
 <body onload="initialize();">
@@ -37,6 +37,7 @@
   <script src="https://d3js.org/d3-color.v1.min.js"></script>
   <script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
   <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+  <script src="https://d3js.org/d3-scale.v1.min.js"></script>
 <script>
 
 //global variables
@@ -59,7 +60,7 @@ var listaVariaveis = ["volumeTotal",
                       "Transmissões e Sistemas Hidráulicos",
                       "Outros Óleos Lubrificantes Acabados"
                       ]; 
-var variavelAlvo = listaVariaveis[11]; // VARIÁVEL SELECIONADA
+var variavelAlvo = listaVariaveis[0]; // VARIÁVEL SELECIONADA
 
 
 //the first function called once the html is loaded
@@ -300,9 +301,17 @@ function setMap(){
 function colorScale(dadosGeo, variavelAlvo) {
 
     //CRIAR UMA ESCALA DE CORES
-    var color = d3.scale.quantile()
-                    .range(colorbrewer.YlOrBr["6"])
-
+    var quantileScale = d3.scale.quantile()
+    .range([
+    d3.rgb(8,48,107),
+    d3.rgb(222,235,247), 
+    d3.rgb(198,219,239),
+    d3.rgb(158,202,225),
+    d3.rgb(107,174,214),
+    d3.rgb(66,146,198),
+    d3.rgb(33,113,181),
+    d3.rgb(8,81,156),
+    d3.rgb(8,48,107)])
     //To determine the quantile class breaks properly, the domain array must include 
     //all of the attribute values for the currently expressed attribute 
     //(note: an equal-interval classification can be created by instead passing 
@@ -312,9 +321,8 @@ function colorScale(dadosGeo, variavelAlvo) {
     dadosGeo.features.forEach(function(v){
         domainArray.push(v.properties[variavelAlvo])
     })
-    console.log(domainArray)
-    color.domain(domainArray)
-    return color;
+    quantileScale.domain(domainArray);
+    return quantileScale;
 };
 
 function choropleth(d, recolorMap){
@@ -325,7 +333,7 @@ function choropleth(d, recolorMap){
             if(value) {
                 return recolorMap(value);
             } else {
-                return d3.interpolateYlOrBr(0.02);
+                return d3.rgb(247,251,255);
             }
         })
     } else {
@@ -333,7 +341,7 @@ function choropleth(d, recolorMap){
             if(value) {
                 return recolorMap(value);
             } else {
-                return d3.interpolateYlOrBr(0.02);
+                return d3.rgb(247,251,255);
             }
     }
 };  
