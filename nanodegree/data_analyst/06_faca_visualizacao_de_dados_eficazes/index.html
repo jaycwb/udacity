@@ -2,17 +2,18 @@
 <head>
 <meta charset="utf-8">
 <style>
-  .boundary {
+.boundary {
     fill: #fff;
     stroke: #ccc;
     stroke-linejoin: round;
     stroke-width: 2px;
   }
-  svg {
+svg {
     border-style: solid;
     border-width: 1px;
     border-color: #ccc;
     margin-left: 20px;
+    position: absolute;
   }
 
 #menu {
@@ -24,6 +25,38 @@
 #map {
     overflow: hidden; 
     background: white;
+}
+
+.legenda {
+    position: absolute;
+    width: 200px;
+    height: 50px;
+    color: #fff;
+    background-color: #000;
+    border: solid thin #fff;
+    padding: 5px;
+
+}
+
+.legenda h1 {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    line-height: 1em;
+
+}
+
+.legenda b{
+    float: left;
+
+}
+
+.nome_legenda {
+    display: inline-block;
+    margin: -25px 0px 0px 40px;
+    font-size: 1em;
+    font-weight: bold;
+    position: absolute;
 }   
 </style>
 </head>
@@ -69,7 +102,7 @@ function initialize(){
 };
 
 
-//set choropleth map parameters
+//PARAMETROS DO MAPA
 function setMap(){
     // DEFINIÇÃO DAS DIMENSÕES DO SVG E DA PROJEÇÃO QUE SERÁ UTILIZADA
     var height = 600;
@@ -271,7 +304,12 @@ function setMap(){
         .append('path')
         .attr('d', path)
         .attr("class", function(d) {return d.id + " estado";})
-        .style("fill", function(d){ return choropleth(d,recolorMap)});
+        .style("fill", function(d){ return choropleth(d,recolorMap)})
+        .on("mouseover", highlight)
+        .on("mouseout", dehighlight)
+        .on("mousemove", moveLabel)
+        .append("desc")
+        .text(function(d){return choropleth(d,recolorMap)});
 
         svg.selectAll('text')
         .data(states.features)
@@ -285,13 +323,6 @@ function setMap(){
                 'font-size': '10pt'
         });
 
-        //Update
-        //brazil.attr('fill', '#eee');
-
-        //Exit
-        //brazil.exit().remove();
-
-
         criarMenu(dadosOlac);        
   
     };
@@ -300,7 +331,7 @@ function setMap(){
 
 function colorScale(dadosGeo, variavelAlvo) {
 
-    //CRIAR UMA ESCALA DE CORES
+    //CRIAR UMA ESCALA DE CORES BASEADA EM QUANTIS
     var quantileScale = d3.scale.quantile()
     .range([
     d3.rgb(8,48,107),
@@ -368,10 +399,53 @@ function mudarVariavel(variavel,dadosGeo) {
     variavelAlvo = variavel;
     d3.selectAll("path.estado")
     .style("fill",function(d){return choropleth(d, colorScale(dadosGeo,variavelAlvo))})
-    //.text(function(){return console.log(dadosGeo.features)})
-        
+    .select("desc")
+    .text(function(d){ return choropleth(d, colorScale(dadosGeo,variavelAlvo))})
+};
+
+function highlight(data){
+    
+    var id_estado = data.features.id
+    var prop_estado = data.features.properties
+    d3.select("#"+id_estado) // SELECIONA O ESTADO NO DOM
+        .style("fill", "#000");
+    //CONTEÚDO DA LEGENDA
+    var conteudo_legenda = "<h1>"+prop_estado[variavelAlvo]+"</h1><br><b>"+variavelAlvo+"</b>"
+    
+    var nome_legenda = prop_estado.nome;
+
+    //CRIAR UM DIV PARA RECEBER A LEGENDA
+    var legenda = d3.select("body")
+                        .append("div")
+                        .attr("class", "legenda")
+                        .attr("id", nome_legenda+"legenda")
+                        .attr(conteudo_legenda)
+                        .append("div")
+                        .attr("class","nomelegenda")
+                        .html(nome_legenda);
+
     
 
+};
+
+function dehighlight(data){
+    var id_estado = data.features.id
+    var prop_estado = data.features.properties
+    var estado = d3.select("#"+id_estado)
+    var adicionarCor = estado.select("desc").text();
+    estado.style("fill", adicionarCor)
+    d3.select("#"+nome_legenda+"legenda").remove()
+    
+};
+
+function moveLabel() {
+
+    var x = d3.event.clientX+10; //horizontal label coordinate
+    var y = d3.event.clientY-75; //vertical label coordinate
+		
+    d3.select(".legenda") //select the label div for moving
+        .style("margin-left", x+"px") //reposition label horizontal
+        .style("margin-top", y+"px"); //reposition label vertical
 };
 </script>
 </body>
