@@ -1,7 +1,7 @@
 <html>  
 <head>
 <meta charset="utf-8">
-  <style>
+<style>
   .boundary {
     fill: #fff;
     stroke: #ccc;
@@ -13,9 +13,19 @@
     border-width: 1px;
     border-color: #ccc;
   }
+
+#menu {
+      float: left;  
+      background: white;
+}
+
+#map {
+    overflow: hidden; 
+    background: white;}
   </style>
 </head>
 <body onload="initialize();">
+  <div id="menu"></div>
   <div id="map"></div>
   <script src="http://d3js.org/d3.v3.min.js"></script>
   <script src="http://d3js.org/topojson.v1.min.js"></script>
@@ -58,7 +68,7 @@ function initialize(){
 function setMap(){
     // DEFINIÇÃO DAS DIMENSÕES DO SVG E DA PROJEÇÃO QUE SERÁ UTILIZADA
     var height = 600;
-    var width = 900;
+    var width = 800;
     var projection = d3.geo.mercator();
 
     // Special d3 helper that converts geo coordinates to paths
@@ -313,9 +323,7 @@ function choropleth(d, recolorMap){
 };
 
 function criarMenu(dadosOlac){
-    var menu = d3.select("body")
-                .append("div")
-                .attr("class", "menu")
+    var menu = d3.select("#menu")
                 .html("<h3>Selecione a Categoria</h3>")
                 .append("select")
 
