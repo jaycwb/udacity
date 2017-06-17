@@ -78,7 +78,7 @@ function setMap(){
 	function callback(error, csvData, brasilData){
 		var states = topojson.feature(brasilData, brasilData.objects.estados);
         console.log('brasil', states)
-        dadosOlac =csvData;
+        dadosOlac = csvData;
         dadosGeo = states;
         
         //CRIA UMA LISTA PARA RECEBER TODAS AS UF'S DO BRASIL
@@ -98,7 +98,7 @@ function setMap(){
                                 return data.volume; 
                 })
             })
-            .entries(csvData);
+            .entries(dadosOlac);
 
         totalVolume = aggVolume
 
@@ -277,7 +277,7 @@ function setMap(){
         brazil.exit().remove();
 
 
-            
+        criarMenu(dadosOlac);        
   
     };
 
@@ -312,8 +312,22 @@ function choropleth(d, recolorMap){
     };
 };
 
-function
+function criarMenu(dadosOlac){
+    var menu = d3.select("body")
+                .append("div")
+                .attr("class", "menu")
+                .html("<h3>Selecione a Categoria</h3>")
+                .append("select")
 
+    menu.selectAll("options")
+        .data(listaVariaveis)
+        .enter()
+        .append("option")
+        .attr("value", function(d){return d})
+        .text(function(d) { 
+            return d });
+
+}
 
 </script>
 </body>
