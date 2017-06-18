@@ -4,9 +4,9 @@
 <style>
 .boundary {
     fill: #fff;
-    stroke: #ccc;
+    stroke: #000;
     stroke-linejoin: round;
-    stroke-width: 2px;
+    stroke-width: 1px;
   }
 svg {
     border-style: solid;
@@ -32,7 +32,7 @@ svg {
     width: 200px;
     height: 50px;
     color: #fff;
-    background-color: #000;
+    background-color: #336688;
     border: solid thin #fff;
     padding: 5px;
 
@@ -410,9 +410,10 @@ function highlight(data){
     d3.select("."+id_estado) // SELECIONA O ESTADO NO DOM
         .style("fill", "#FF9900")
     //CONTEÚDO DA LEGENDA
-    var conteudo_legenda = "<h1>"+prop_estado[variavelAlvo]+" L"+"</h1><br><b>"+variavelAlvo+"</b>"
-    
     var nome_legenda = prop_estado.nome;
+    var conteudo_legenda = "<h1>"+prop_estado[variavelAlvo]+" L"+"</h1><br>"
+    
+    
 
     //CRIAR UM DIV PARA RECEBER A LEGENDA
     var legenda = d3.select("body")
@@ -422,7 +423,7 @@ function highlight(data){
                         .html(conteudo_legenda)
                         .append("div")
                         .attr("class","nomelegenda")
-                        .html(": "+nome_legenda);
+                        .html("Volume de Produção de OLAC");
 
     
 
