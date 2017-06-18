@@ -405,8 +405,8 @@ function mudarVariavel(variavel,dadosGeo) {
 
 function highlight(data){
     
-    var id_estado = data.features.id
-    var prop_estado = data.features.properties
+    var id_estado = data.id
+    var prop_estado = data.properties
     d3.select("#"+id_estado) // SELECIONA O ESTADO NO DOM
         .style("fill", "#000");
     //CONTEÚDO DA LEGENDA
@@ -418,8 +418,8 @@ function highlight(data){
     var legenda = d3.select("body")
                         .append("div")
                         .attr("class", "legenda")
-                        .attr("id", nome_legenda+"legenda")
-                        .attr(conteudo_legenda)
+                        .attr("id", id_estado+"legenda")
+                        .html(conteudo_legenda)
                         .append("div")
                         .attr("class","nomelegenda")
                         .html(nome_legenda);
@@ -429,12 +429,13 @@ function highlight(data){
 };
 
 function dehighlight(data){
-    var id_estado = data.features.id
-    var prop_estado = data.features.properties
-    var estado = d3.select("#"+id_estado)
+    var id_estado = data.id
+    var prop_estado = data.properties
+    var estado = d3.select("."+id_estado)
+    console.log(estado)
     var adicionarCor = estado.select("desc").text();
     estado.style("fill", adicionarCor)
-    d3.select("#"+nome_legenda+"legenda").remove()
+    d3.select("#"+id_estado+"legenda").remove()
     
 };
 
