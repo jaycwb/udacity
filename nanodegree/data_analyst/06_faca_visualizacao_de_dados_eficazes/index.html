@@ -407,8 +407,8 @@ function highlight(data){
     
     var id_estado = data.id
     var prop_estado = data.properties
-    d3.select("#"+id_estado) // SELECIONA O ESTADO NO DOM
-        .style("fill", "#000");
+    d3.select("."+id_estado) // SELECIONA O ESTADO NO DOM
+        .style("fill", "#FFCC00")
     //CONTEÚDO DA LEGENDA
     var conteudo_legenda = "<h1>"+prop_estado[variavelAlvo]+"</h1><br><b>"+variavelAlvo+"</b>"
     
@@ -432,9 +432,9 @@ function dehighlight(data){
     var id_estado = data.id
     var prop_estado = data.properties
     var estado = d3.select("."+id_estado)
-    console.log(estado)
     var adicionarCor = estado.select("desc").text();
     estado.style("fill", adicionarCor)
+    estado.style("fill-opacity", 1)
     d3.select("#"+id_estado+"legenda").remove()
     
 };
