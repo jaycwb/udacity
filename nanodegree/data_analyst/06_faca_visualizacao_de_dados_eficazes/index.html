@@ -8,6 +8,7 @@
     stroke-linejoin: round;
     stroke-width: 1px;
   }
+
 svg {
     border-style: solid;
     border-width: 1px;
@@ -18,8 +19,11 @@ svg {
 
 #menu {
       float: left;  
-      background: white;
+      background: #ECECEA;
       margin-left: 10px;
+      border-style: solid;
+      border-width: 1px;
+      border-color: black;
 }
 
 #map {
@@ -57,7 +61,19 @@ svg {
     font-size: 1em;
     font-weight: bold;
     position: absolute;
-}   
+}
+ body {
+    background-color: #ECECEA;
+}
+
+select {
+    background-color: #D9853B;
+}
+
+h3 {
+    text-align: center;
+}
+   
 </style>
 </head>
 <body onload="initialize();">
@@ -80,7 +96,7 @@ var totalVolume = void 0; // VARIÁVEL QUE RECEBERÁ DADOS AGREGADOS (TOTAL) DE 
 var totalPorCategoria = void 0; // VARIÁVEL QUE RECEBERÁ DADOS AGREGADOS POR CATEGORIA
 
 //CRIA UM ARRAY COM O NOME DAS VARIÁVEIS
-var listaVariaveis = ["volumeTotal",
+var listaVariaveis = ["Volume Total OLAC",
                       "Ciclo Otto", 
                       "Ciclo Diesel", 
                       "Engrenagens e Sistemas Circulatórios",
@@ -186,7 +202,7 @@ function setMap(){
 			for (var a=0; a<states.features.length; a++){
             //CHECAR SE O ID DO ARQUIVO JSON É ATRIBUÍDO A UF DE TOTALVOLUME		
     				if (states.features[a].id == strUF){
-                            states.features[a].properties['volumeTotal'] = volumeUF.values;            
+                            states.features[a].properties['Volume Total OLAC'] = volumeUF.values;            
                     }
             
             }
@@ -212,7 +228,7 @@ function setMap(){
         uf_sproducao.forEach(function(d) {
             for(var i = 0; i< states.features.length; i++) {
                 if(states.features[i].id == d) {
-                     states.features[i].properties['volumeTotal'] = 0;
+                     states.features[i].properties['Volume Total OLAC'] = 0;
                 }
             }
         });
