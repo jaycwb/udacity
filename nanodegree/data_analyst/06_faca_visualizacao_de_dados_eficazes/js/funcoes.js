@@ -54,7 +54,6 @@ function setMap(){
 
 	function callback(error, csvData, brasilData){
 		var states = topojson.feature(brasilData, brasilData.objects.estados);
-        console.log('brasil', states)
         dadosOlac = csvData;
         dadosGeo = states;
         
@@ -93,7 +92,6 @@ function setMap(){
         totalPorCategoria = aggPorCategoria;
         totalPorCategoria[0]['key'] = "Engrenagens e Sistemas Circulatórios"
         totalPorCategoria[8]['key'] = "Transmissões e Sistemas Hidráulicos"
-        console.log(totalPorCategoria);
 
         //CRIA UM ARRAY PARA ARMAZENAR TODAS AS CATEGORIAS DE ÓLEO LUBRIFICANTE ACABADO
         var nomeCategoriaOlac = [];
@@ -104,7 +102,6 @@ function setMap(){
         
         });
 
-        console.log(nomeCategoriaOlac)
 
         for (var i=0; i<totalVolume.length; i++) {		
             var volumeUF = totalVolume[i]; // DADOS REFERENTE A UM ESTADO
