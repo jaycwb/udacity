@@ -11,6 +11,7 @@ svg {
     border-color: #ccc;
     margin-left: 20px;
     position: absolute;
+    margin-top:100px;
   }
 
 #menu {
@@ -20,6 +21,7 @@ svg {
       border-style: solid;
       border-width: 1px;
       border-color: black;
+      margin-top:100px;
 }
 
 #map {
@@ -31,7 +33,7 @@ svg {
     position: absolute;
     width: 200px;
     height: 50px;
-    color: #3C6478;
+    color: white;
     background-color: #336688;
     border: solid thin #fff;
     padding: 5px;
@@ -69,4 +71,15 @@ select {
 h3 {
     text-align: center;
     color: #D3B53D
+}
+
+#head {
+    padding: 2rem 15px;
+    color: #cdbfe3;
+    text-align: center;
+    background-color: #107896;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    margin-bottom: 3rem;
+    text-align: left;
 }
