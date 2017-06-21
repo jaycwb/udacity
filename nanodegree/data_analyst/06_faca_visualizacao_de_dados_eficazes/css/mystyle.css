@@ -15,7 +15,7 @@ svg {
 
 #menu {
       float: left;  
-      background: #ECECEA;
+      background: #1496BB;
       margin-left: 10px;
       border-style: solid;
       border-width: 1px;
@@ -31,7 +31,7 @@ svg {
     position: absolute;
     width: 200px;
     height: 50px;
-    color: #fff;
+    color: #3C6478;
     background-color: #336688;
     border: solid thin #fff;
     padding: 5px;
@@ -59,7 +59,7 @@ svg {
     position: absolute;
 }
  body {
-    background-color: #ECECEA;
+    background-color: #3C6478;
 }
 
 select {
@@ -68,4 +68,5 @@ select {
 
 h3 {
     text-align: center;
+    color: #D3B53D
 }

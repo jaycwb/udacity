@@ -243,7 +243,8 @@ function setMap(){
                 x: function(d) { return path.centroid(d)[0]; },
                 y: function(d) { return path.centroid(d)[1]; },
                 'text-anchor': 'middle',
-                'font-size': '10pt'
+                'font-size': '10pt',
+                'fill' : "black"
         });
 
         criarMenu(dadosOlac);        
