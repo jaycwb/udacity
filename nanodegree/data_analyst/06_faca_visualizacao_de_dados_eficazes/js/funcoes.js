@@ -1,3 +1,8 @@
+// CRÉDITOS SÃO DEVIDOS A IMPLEMENTAÇÃO DO CÓDIGO ABAIXO AS OBRAS E TUTORIAIS ABAIXO:
+// # https://www.packtpub.com/web-development/learning-d3js-mapping
+// # https://www.packtpub.com/web-development/d3js-cutting-edge-data-visualization
+// # http://www.cartographicperspectives.org/index.php/journal/article/view/cp78-sack-et-al/1359
+
 //global variables
 var dadosGeo = void 0; // VARIÁVEL QUE ARMANEZERÁ OS DADOS GEOGRÁFICOS
 var dadosOlac = void 0; // VARIÁVEL QUE ARMAZENARÁ OS DADOS DE PRODUCAO DA ANP
@@ -20,7 +25,7 @@ var listaVariaveis = ["Volume Total OLAC",
                       ]; 
 var variavelAlvo = listaVariaveis[0]; // VARIÁVEL SELECIONADA
 
-//the first function called once the html is loaded
+//FUNCAO QUE SERÁ CARREGADA QUANDO O HTML CARREGAR
 function initialize(){
     setMap();
 };
@@ -174,9 +179,6 @@ function setMap(){
             }
 
         });
-
-
-        console.log(states)
 
         // Setup the scale and translate
         var b, s, t;
