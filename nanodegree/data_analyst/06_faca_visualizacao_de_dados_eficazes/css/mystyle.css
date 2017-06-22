@@ -6,9 +6,6 @@
   }
 
 svg {
-    border-style: solid;
-    border-width: 1px;
-    border-color: #ccc;
     margin-left: 80px;
     position: absolute;
     margin-top:50px;
@@ -18,16 +15,17 @@ svg {
 #menu {
       float: left;  
       background: rgb(39,92,157);
-      margin-left: 50px;
+      margin-left: 5.5%;
       border-style: solid;
       border-width: 1px;
       border-color: black;
-      margin-top:50px;
+      margin-top:2.5%;
 }
 
 #map {
     overflow: hidden; 
     background: white;
+    margin-left: 25%;
 }
 
 .legenda {
