@@ -91,8 +91,8 @@ h3 {
     overflow: auto;
     overflow-x: hidden;
     overflow-y: hidden;
-    height: auto;  
-    width: auto;
+    height: 96%;  
+    width: 96%;
 }
 
 #prod {
@@ -166,4 +166,9 @@ blockquote em{
 
 p { 
      font-family: 'Titillium Web', sans-serif;
+}
+
+#conteudo {
+    width: 95%;
+    margin-left: 2.5%
 }
