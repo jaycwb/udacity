@@ -1,31 +1,43 @@
 <html>  
-<head>
-<link rel="stylesheet" type="text/css" href="./css/mystyle.css"/>
-<link href="https://fonts.googleapis.com/css?family=Days+One" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Bungee+Inline" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
-<meta charset="utf-8">
+    <head>
+        <link rel="stylesheet" type="text/css" href="./css/mystyle.css"/>
+        <link href="https://fonts.googleapis.com/css?family=Days+One" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Bungee+Inline" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=PT+Mono" rel="stylesheet">
+        <meta charset="utf-8">
 
-</head>
-<body onload="initialize();">
-  <div id="head" style="height:100px;">
-      <h2>ÓLEOS LUBRIFICANTES</h2>
-      <h2 id="prod">DADOS DE PRODUÇÃO</h2>
-  </div>
-    <div id="conteudo">
-      <p>Quando uma superfície desliza sobre outra, há sempre alguma resistência ao movimento. Esta força de resistência é conhecida como atrito. 
-        Qualquer substância que reduza o atrito é conhecida como lubrificante - que pode ser sólido, líquido ou gasoso.
+    </head>
+    <body onload="initialize();">
+        <div id="head" style="height:100px;">
+            <h2>ÓLEOS LUBRIFICANTES</h2>
+            <h2 id="prod">DADOS DE PRODUÇÃO</h2>
+        </div>
+        <div id="conteudo">
+            <p>   Quando uma superfície desliza sobre outra, há sempre alguma resistência ao movimento. Esta força de resistência é conhecida como atrito. 
+                  Qualquer substância que reduza o atrito é conhecida como lubrificante - que pode ser sólido, líquido ou gasoso.Óleos lubrificantes podem 
+                  ser definidos como substâncias que se interpõem entre superfícies, formando uma película que evita ou minimiza o atrito, diminuindo o 
+                  desgaste. Os óleos lubrificantes apresentam características que lhes são conferidas pela composição e pelos aditivos adicionados. 
+                  Entre as diversas funções dos aditivos, destacam-se:
+            </p>
+            
+            <blockquote><a href="http://www.anp.gov.br/wwwanp/">A Agência Nacional do Petróleo, Gás Natural e Biocombustíveis - ANP</a> 
+                        tem por finalidade promover a regulação, a contratação e a fiscalização das atividades econômicas integrantes da indústria do 
+                        petróleo. A agência por meio da <a href="http://nxt.anp.gov.br/NXT/gateway.dll/leg/resolucoes_anp/2009/junho/ranp%2018%20-%202009.xml?f=templates&fn=document-frameset.htm">
+                        Resolução ANP n° 18/2009</a> estabelece os requisitos necessários à autorização para o exercício da atividade de produção de óleo lubrificante acabado, 
+                        e a sua regulação.
+            </blockquote>  
+        </div>
+        <div id="images">
+          <img src="./pics/lubricant.jpg" style="width: 30%; float:right">
+        </div>
+        <div id="menu">
 
-Óleos lubrificantes podem ser definidos como substâncias que se interpõem entre superfícies, formando uma película que evita ou minimiza o atrito, diminuindo o desgaste. Os óleos lubrificantes apresentam características que lhes são conferidas pela composição e pelos aditivos adicionados. Entre as diversas funções dos aditivos, destacam-se:</p>
-      <blockquote><a href="http://www.anp.gov.br/wwwanp/">A Agência Nacional do Petróleo, Gás Natural e Biocombustíveis - ANP</a> tem por finalidade promover a regulação, a contratação e 
-      a fiscalização das atividades econômicas integrantes da indústria do petróleo. A agência por meio da <a href="http://nxt.anp.gov.br/NXT/gateway.dll/leg/resolucoes_anp/2009/junho/ranp%2018%20-%202009.xml?f=templates&fn=document-frameset.htm">
-      Resolução ANP n° 18/2009</a> estabelece os requisitos necessários à autorização para o exercício da atividade de produção de óleo lubrificante acabado, e a sua regulação.</blockquote>
+        </div>
+        <div id="map">
 
-    </div>
-    <div id="menu"></div>
-    <div id="map"></div>
-  
+        </div>
   <script src="http://d3js.org/d3.v3.min.js"></script>
   <script src="http://d3js.org/topojson.v1.min.js"></script>
   <script src="https://d3js.org/d3-queue.v3.min.js"></script>
