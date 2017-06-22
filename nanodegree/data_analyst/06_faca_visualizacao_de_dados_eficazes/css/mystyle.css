@@ -163,3 +163,7 @@ blockquote a:hover{
 blockquote em{
   font-style: italic;
 }
+
+p { 
+     font-family: 'Titillium Web', sans-serif;
+}
