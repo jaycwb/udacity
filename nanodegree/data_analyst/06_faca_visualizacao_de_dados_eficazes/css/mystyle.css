@@ -9,7 +9,7 @@ svg {
     border-style: solid;
     border-width: 1px;
     border-color: #ccc;
-    margin-left: 20px;
+    margin-left: 80px;
     position: absolute;
     margin-top:50px;
     text-align: middle !important
@@ -18,7 +18,7 @@ svg {
 #menu {
       float: left;  
       background: rgb(39,92,157);
-      margin-left: 10px;
+      margin-left: 50px;
       border-style: solid;
       border-width: 1px;
       border-color: black;
@@ -63,7 +63,7 @@ svg {
 }
  body {
     background-color: rgb(255,255,255);
-    padding-bottom: 700px;
+    padding-bottom: 1000px;
 }
 
 select {
