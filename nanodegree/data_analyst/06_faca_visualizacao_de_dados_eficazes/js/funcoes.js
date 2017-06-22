@@ -35,16 +35,20 @@ function initialize(){
 function setMap(){
     // DEFINIÇÃO DAS DIMENSÕES DO SVG E DA PROJEÇÃO QUE SERÁ UTILIZADA
     var height = 600;
-    var width = 800;
+    var width = 400;
     var projection = d3.geo.mercator();
 
     // Special d3 helper that converts geo coordinates to paths
     // based on a projection
     var path = d3.geo.path().projection(projection);
     var svg = d3.select("#map")
+        .classed("svg-container", true)
         .append("svg")
-        .attr("width", width)
-        .attr("height", height);
+       // .attr("width", width)
+        //.attr("height", height);
+        .attr("preserveAspectRatio", "xMinYMin meet")
+        .attr("viewBox", "-10 100 500 500")
+        .classed("svg-content-responsive", true); 
 
     //use queue.js to parallelize asynchronous data loading
     d3.queue()
