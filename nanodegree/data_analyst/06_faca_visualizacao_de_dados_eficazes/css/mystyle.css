@@ -12,6 +12,7 @@ svg {
     margin-left: 20px;
     position: absolute;
     margin-top:100px;
+    text-align: middle !important
   }
 
 #menu {
@@ -61,7 +62,7 @@ svg {
     position: absolute;
 }
  body {
-    background-color: #3C6478;
+    background-color: rgb(255,255,255);
 }
 
 select {
@@ -77,7 +78,7 @@ h3 {
     padding: 2rem 15px;
     color: #cdbfe3;
     text-align: center;
-    background-color: #107896;
+    background-color: rgb(255,192,0);
     padding-top: 4rem;
     padding-bottom: 4rem;
     margin-bottom: 3rem;
