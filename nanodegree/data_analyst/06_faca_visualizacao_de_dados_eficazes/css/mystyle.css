@@ -197,3 +197,6 @@ p {
 
 }
 
+a:visited {
+    color: rgb(39,92,157)
+}
