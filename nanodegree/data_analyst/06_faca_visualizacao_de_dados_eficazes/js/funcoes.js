@@ -367,7 +367,7 @@ function dehighlight(data){
 function moveLabel() {
 
     var x = d3.event.clientX+10; //horizontal label coordinate
-    var y = d3.event.clientY-25; //vertical label coordinate
+    var y = d3.event.clientY-10; //vertical label coordinate
 		
     d3.select(".legenda") //select the label div for moving
         .style("margin-left", x+"px") //reposition label horizontal

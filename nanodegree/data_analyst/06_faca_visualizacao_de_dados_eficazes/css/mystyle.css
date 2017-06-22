@@ -12,7 +12,7 @@ svg {
     margin-left: 80px;
     position: absolute;
     margin-top:50px;
-    text-align: middle !important
+    text-align: middle !important;
   }
 
 #menu {
@@ -88,4 +88,18 @@ h3 {
     border: solid black;
     font-family: 'Days One', sans-serif;
     font-size: 30px;
+    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    height: auto;  
+    width: auto;
+}
+
+#prod {
+    font-family: 'Bungee Inline', cursive;
+    font-size: 30px;
+}
+
+h2 {
+    margin-top: -15px;
 }
