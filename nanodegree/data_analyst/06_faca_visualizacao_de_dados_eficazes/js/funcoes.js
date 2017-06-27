@@ -52,7 +52,7 @@ function setMap(){
 
     //use queue.js to parallelize asynchronous data loading
     d3.queue()
-        .defer(d3.csv, "./data/producao_olac.csv") //load attributes from csv
+        .defer(d3.csv, "./data/producao_olac_litros.csv") //load attributes from csv
         .defer(d3.json, "./data/br-states.json") //load geographic data
         .await(callback); //trigger callback function once data is loaded
 
