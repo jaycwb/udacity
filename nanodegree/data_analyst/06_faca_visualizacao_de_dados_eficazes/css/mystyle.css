@@ -67,7 +67,7 @@ svg {
 
  body {
     background-color: rgb(255,255,255);
-    padding-bottom: 100px;
+    padding-bottom: 20px;
 }
 
 select {
@@ -181,7 +181,7 @@ p {
     display: inline-block;
     position: relative;
     width: 100%;
-    padding-bottom: 100%;
+    padding-bottom: 60%;
     vertical-align: top;
     overflow: hidden;
 }
