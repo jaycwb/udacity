@@ -339,7 +339,7 @@ function highlight(data){
         .style("fill", "#FF9900")
     //CONTEÚDO DA LEGENDA
     var nome_legenda = prop_estado.nome;
-    var conteudo_legenda = "<h1>"+prop_estado[variavelAlvo]+" M³"+"</h1><br>"
+    var conteudo_legenda = "<h1>"+prop_estado[variavelAlvo]+" m³"+"</h1><br>"
     
     
 
