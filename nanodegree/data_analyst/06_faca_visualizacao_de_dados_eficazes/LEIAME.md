@@ -14,13 +14,17 @@ O conjunto de dados utilizado no projeto possui dimensão espacial. Dessa forma,
 
 Dentro dos possíveis mapas a ser produzido, optou-se pelo [coroplético](https://pt.wikipedia.org/wiki/Mapa_coropl%C3%A9tico), que pode se utilizar de cores para codificar diferentes grandezas associadas a uma determinada região do mapa.
 
+Em decorrência ao feedback recebido do Thiago Karashima optou-se por alterar a unidade dos dados volumétricos apresentados. Pela ordem de grandeza destes, a unidade metros cúbicos torna-se mais conveniente para apresentação dos mesmos.
+
+Além disso, para uma melhor navegação na página os links que direcionam para outros sites, foram setados para abrirem em aba adicional do navegador. Por conseguinte, adicionou-se um pequeno texto apresentando detalhes sobre o período o qual os dados dizem respeito, além de um um link para os leitores que desejam ter informações mais detalhadas sobre óleos lubrificantes.
+
 ### 3. FEEDBACK
 
 #### 3.1 THIAGO KARASHIMA
 
 - **O que você percebeu na visualização?**
   1. Ao clicar nos links (SIMP e Boletim), eu saio da visualização. Para manter o foco no seu conteúdo, seria melhor que abrisse uma nova aba no navegador. 
-  2. Os volumes estão em L. Pela magnitude dos valores, seria melhor se estivessem em m3.
+  2. Os volumes estão em L. Pela magnitude dos valores, seria melhor se estivessem em m³.
   3. A caixa que informa o volume de cada estado está muito distante do cursor. Dependendo da posição vertical do mapa na tela, a caixa fica oculta.
 
 
@@ -44,4 +48,24 @@ Dentro dos possíveis mapas a ser produzido, optou-se pelo [coroplético](https:
   Não.
 
 
+**3.2 CRISTIANE COSTA**
 
+- **O que você percebeu na visualização?**
+
+  Uma explicação rápida da produção de óleos lubrificantes acabados no país.
+
+- **Que perguntas você tem sobre os dados?**
+
+  O que são os vários tons de azul no mapa?
+
+- **Que relacionamentos você percebeu?**
+
+  A medida que se escolhe os tipos de óleos, podemos perceber em quais estados são produzidos.
+
+- **O que você acha que é o principal destaque dessa visualização?**
+
+  A localização de produção dos diversos tipos de óleos registrados na ANP.
+
+- **Existe algo que você não entende no gráfico?**
+
+  Os tons de azul no gráfico. Acredito que tenha faltado uma legenda.
