@@ -18,6 +18,8 @@ Em decorrência ao feedback recebido do Thiago Karashima optou-se por alterar a 
 
 Além disso, para uma melhor navegação na página os links que direcionam para outros sites, foram setados para abrirem em aba adicional do navegador. Por conseguinte, adicionou-se um pequeno texto apresentando detalhes sobre o período o qual os dados dizem respeito, além de um um link para os leitores que desejam ter informações mais detalhadas sobre óleos lubrificantes.
 
+Apesar da sugestão recebida no feedback de Cristiane Costa sobre a inserção de uma legenda no gráfico, optou-se por não inserir uma paleta de cores na forma de legenda. A escala utilizada no gráfico se dá por quantis, portanto, a seleção de diferentes categorias de óleos lubrificantes acarreta em domínios distintos que por sua vez produzem intervalos de quantis diversos, produzindo mais um elemento dinâmico na visualização, podendo assim gerar um elemento de confusão no gráfico. Dessa forma, um texto explicando o conceito de mapas coropléticos é suficiente para o leitor ter consciência que cores mais escuras estão associados a maiores volumes de OLAC e vice versa.  Além disso, ao posicionar o mouse sobre uma unidade da federação, aparecerá uma legenda flutuante com o volume produzido naquele dado estado.
+
 ### 3. FEEDBACK
 
 #### 3.1 THIAGO KARASHIMA
@@ -48,7 +50,7 @@ Além disso, para uma melhor navegação na página os links que direcionam para
   Não.
 
 
-**3.2 CRISTIANE COSTA**
+#### **3.2 CRISTIANE COSTA**
 
 - **O que você percebeu na visualização?**
 
