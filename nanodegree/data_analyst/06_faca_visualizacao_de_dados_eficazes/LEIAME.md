@@ -18,6 +18,8 @@ Além disso, para uma melhor navegação na página os links que direcionam para
 
 Apesar da sugestão recebida no feedback de Cristiane Costa sobre a inserção de uma legenda no gráfico, optou-se por não inserir uma paleta de cores na forma de legenda. A escala utilizada no gráfico se dá por quantis, portanto, a seleção de diferentes categorias de óleos lubrificantes acarreta em domínios distintos que por sua vez produzem intervalos de quantis diversos, produzindo mais um elemento dinâmico na visualização, podendo assim gerar um elemento de confusão no gráfico. Dessa forma, um texto explicando o conceito de mapas coropléticos é suficiente para o leitor ter consciência que cores mais escuras estão associados a maiores volumes de OLAC e vice-versa.  Além disso, ao posicionar o mouse sobre uma unidade da federação, aparecerá uma legenda flutuante com o volume produzido naquele dado estado.
 
+Apenas um feedback (Silvio Frank) relatou incômodo com a adoção de cores destacadas e fontes diferentes para realçar certos aspectos do texto, portanto, decidiu-se manter esses elmentos para chamar a atenção a conceitos chaves na apresentação da visualização.
+
 ### 3. FEEDBACK
 
 #### 3.1 THIAGO KARASHIMA
@@ -74,7 +76,7 @@ Apesar da sugestão recebida no feedback de Cristiane Costa sobre a inserção d
 
 - **O que você percebeu na visualização?**
 
-  Os textos destacados, apresentam fontes diferentes o que causa desconforto na leitura:
+  Os textos destacados, apresentam fontes diferentes o que causa desconforto na leitura.
 
 
 - **Que relacionamentos você percebeu?**
