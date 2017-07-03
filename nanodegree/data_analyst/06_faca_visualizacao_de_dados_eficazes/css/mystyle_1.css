@@ -166,7 +166,7 @@ blockquote em{
 }
 
 p { 
-     font-family: 'Roboto', sans-serif;;
+     font-family: 'Roboto', sans-serif;
 }
 
 #conteudo {
@@ -178,9 +178,9 @@ p {
     display: inline-block;
     position: relative;
     width: 100%;
-    padding-bottom: 60%;
     vertical-align: top;
     overflow: hidden;
+    padding-bottom: 45%;
 }
 .svg-content-responsive {
     display: inline-block;
@@ -204,4 +204,16 @@ a:link {
 
 .footer {
     text-align: center
+}
+
+li {
+    font-family: 'Roboto', sans-serif;
+}
+
+#sankey p{
+    margin-left: 2.5%
+}
+
+#sankey li{
+    margin-left: 3.0%
 }

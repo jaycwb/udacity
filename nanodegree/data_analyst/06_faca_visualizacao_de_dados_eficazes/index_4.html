@@ -6,6 +6,7 @@
         <link href="https://fonts.googleapis.com/css?family=Bungee+Inline" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=PT+Mono" rel="stylesheet">
+
         <meta charset="utf-8">
 
     </head>
@@ -62,19 +63,30 @@
 
         </div>
         <div id="sankey">
+            <p>Além dos volumes de produção de OLAC, a <strong style="color: rgb(255,120,37)">ANP</strong> disponibiliza os dados declaratórios de vendas das empresas. Sendo assim, uma dada empresa pode vender um produto cuja origem se enquadra em uma das seguintes categorias:</p>
+            <ul>
+                <li>OLAC produzido pela própria empresa em território nacional;</li>
+                <li>OLAC produzido em empresa diversa em território nacional;</li>
+                <li>OLAC produzido por empresa localizada fora do país, isto é, o produto é importado;</li>
+            </ul>
+            <p>
+                O ANEXO H do Boletim de Lubrificantes fornece um conjunto de dados que reune as informações declaratórias do volume de OLAC vendido para um determinado estado do Brasil. Dessa forma, cruzando os dados do ANEXO H com aqueles disponíveis no ANEXO E é possível inferir a origem
+                da maioria das transações do ANEXO H.   
+            </p>
             <p align="center"><iframe src="./graphs/sankey_diagram.html" width="1400" height="900"></iframe></p>
             
         </div>
-  <script src="http://d3js.org/d3.v3.min.js"></script>
-  <script src="http://d3js.org/topojson.v1.min.js"></script>
-  <script src="https://d3js.org/d3-queue.v3.min.js"></script>
-  <script src="https://d3js.org/d3-color.v1.min.js"></script>
-  <script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
-  <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
-  <script src="https://d3js.org/d3-scale.v1.min.js"></script>
-  <script src="./js/funcoes_1.js"></script>
-  <footer class="footer">
-    <p>A visualização foi produzida utilizando a biblioteca <a target="_tab" href="https://github.com/d3/d3/wiki">D3.js</a> o qual é compatível com a maioria dos browsers modernos, exceto IE8 e versões anteriores.</p>
-  </footer>
+        <footer class="footer">
+            <p>A visualização foi produzida utilizando a biblioteca <a target="_tab" href="https://github.com/d3/d3/wiki">D3.js</a> o qual é compatível com a maioria dos browsers modernos, exceto IE8 e versões anteriores.</p>
+        </footer>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://d3js.org/topojson.v1.min.js"></script>
+    <script src="https://d3js.org/d3-queue.v3.min.js"></script>
+    <script src="https://d3js.org/d3-color.v1.min.js"></script>
+    <script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+    <script src="https://d3js.org/d3-scale.v1.min.js"></script>
+    <script src="./js/funcoes_1.js"></script>
+
 </body>
 </html>
