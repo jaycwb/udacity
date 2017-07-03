@@ -195,11 +195,11 @@ p {
 }
 
 a:visited {
-    color: red
+    color: #097054;
 }
 
 a:link {
-    color: rgb(39,92,157)
+    color: #003366;
 }
 
 .footer p{
