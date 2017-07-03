@@ -1,0 +1,76 @@
+<html>  
+    <head>
+        <link rel="stylesheet" type="text/css" href="./css/mystyle_1.css"/>
+        <link href="https://fonts.googleapis.com/css?family=Days+One" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Bungee+Inline" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=PT+Mono" rel="stylesheet">
+        <meta charset="utf-8">
+
+    </head>
+    <body onload="initialize();">
+        <div id="head" style="height:100px;">
+            <h2>ÓLEOS LUBRIFICANTES</h2>
+            <h2 id="prod">DADOS DE PRODUÇÃO</h2>
+        </div>
+        <div id="conteudo">
+            <p>   
+                Quando uma superfície desliza sobre outra, há sempre alguma resistência ao movimento. Esta força de resistência é conhecida como atrito. 
+                Qualquer substância que reduza o atrito é conhecida como <strong style="color: rgb(255,120,37)">lubrificante</strong> - que pode ser sólido, líquido ou gasoso. <strong style="color: rgb(255,120,37)"> Óleos lubrificantes</strong> podem ser 
+                definidos como substâncias que se interpõem entre superfícies, formando uma película que evita ou minimiza o atrito, diminuindo o desgaste.
+            </p>
+            
+            <blockquote>
+                <a target="_tab" href="http://www.anp.gov.br/wwwanp/">A Agência Nacional do Petróleo, Gás Natural e Biocombustíveis - ANP</a> 
+                tem por finalidade promover a regulação, a contratação e a fiscalização das atividades econômicas integrantes da indústria do 
+                petróleo. A <a target="_tab" href="http://www.anp.gov.br/wwwanp/"><strong style="color: rgb(255,120,37)">ANP</strong></a> por meio da 
+                Resolução ANP n° 18/2009 estabelece os requisitos necessários à autorização para o exercício da atividade de produção de óleo lubrificante acabado (<strong>OLAC</strong>), 
+                e a sua regulação.
+            </blockquote>
+            <p> 
+                Para promover uma adequada regulação do mercado de <strong style="color: rgb(255,120,37)">lubrificantes</strong>, a <a target="_tab" href="http://www.anp.gov.br/wwwanp/">
+                <strong style="color: rgb(255,120,37)">ANP</strong></a> instuiu um sistema denominado <a target="_tab" href="http://www.anp.gov.br/SITE/EXTRAS/SITE_SIMP/INDEX.asp">SIMP 
+                (Sistema de Informações de Movimentação de Produtos)</a> que tem por objetivo monitorar dados de produção e movimentação de produtos regulados pela ANP, na cadeia de midstream e downstream da indústria de petróleo.
+            </p>  
+            <p>
+                A <a target="_tab" href="http://www.anp.gov.br/wwwanp/"><strong style="color: rgb(255,120,37)">ANP</strong></a> por meio da da Superintendência de Abastecimento (SAB) 
+                publica o <a target="_tab" href="http://www.anp.gov.br/wwwanp/publicacoes/boletins-anp/3551-boletim-de-lubrificantes">Boletim de Lubrificantes</a> fornecendo informações atualizadas sobre o mercado brasileiro de lubrificantes com dados retirados do sistema SIMP. Em conjunto com o Boletim,
+                é fornecido uma série de Anexos, que são os dados brutos utilizados na produção do referido documento. Com os dados disponibilizados propõe-se a criação de um mapa interativo com os dados de produção de OLAC declarados à ANP no ano de 2016 por unidade da federação. Para maiores informações sobre
+                óleos lubrificantes e suas respectivas categorias recomendamos acessar o seguinte <a target="_tab" href="http://www.anp.gov.br/wwwanp/petroleo-e-derivados2/lubrificantes">link</a>.
+            </p>
+
+            <p>
+                Os dados disponibilizados pela <strong style="color: rgb(255,120,37)">ANP</strong> informam que para o ano de 2016 haviam 64 plantas industriais autorizadas pelo órgão a produzir OLAC, das quais a grande maioria (41) encontra-se
+                localizadas no estado de São Paulo. Todavia, apesar do estado do Rio de Janeiro ter apenas 11 plantas autorizadas a produzir, esse concentra a maior parte da produção de lubrificantes do país. Para o ano em análise, a produção realizada no RJ
+                representou 61,5% de todo óleo lubrificante acabado produzido no Brasil.
+                
+            </p>  
+
+            <p>
+                O mapa temático abaixo trata-se de um <a target="_tab" href="https://pt.wikipedia.org/wiki/Mapa_coropl%C3%A9tico">coroplético</a> que utiliza-se de cores para codificar grandezas associadas as regiões do mapa.
+                Para o caso em questão se estabeleceu uma ordem visual crescente, com valores mais escuros associados a maiores volumes de produção e vice-versa.
+            </p>
+  
+        </div>
+        <div id="images">
+            <img src="./pics/lubricant.jpg" style="width: 20%; float:right">
+        </div>
+        <div id="container">
+            <div id="menu"></div>
+            <div id="map"></div>
+
+        </div>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="http://d3js.org/topojson.v1.min.js"></script>
+  <script src="https://d3js.org/d3-queue.v3.min.js"></script>
+  <script src="https://d3js.org/d3-color.v1.min.js"></script>
+  <script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
+  <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+  <script src="https://d3js.org/d3-scale.v1.min.js"></script>
+  <script src="./js/funcoes_1.js"></script>
+  <footer class="footer">
+    <p>A visualização foi produzida utilizando a biblioteca <a target="_tab" href="https://github.com/d3/d3/wiki">D3.js</a> o qual é compatível com a maioria dos browsers modernos, exceto IE8 e versões anteriores.</p>
+  </footer>
+</body>
+</html>
