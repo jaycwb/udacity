@@ -9,7 +9,7 @@ var dadosOlac = void 0; // VARIÁVEL QUE ARMAZENARÁ OS DADOS DE PRODUCAO DA ANP
 var totalVolume = void 0; // VARIÁVEL QUE RECEBERÁ DADOS AGREGADOS (TOTAL) DE PRODUCAO DA ANP
 var totalPorCategoria = void 0; // VARIÁVEL QUE RECEBERÁ DADOS AGREGADOS POR CATEGORIA
 
-//CRIA UM ARRAY COM O NOME DAS VARIÁVEIS
+
 var listaVariaveis = ["Volume Total OLAC",
                       "Ciclo Otto", 
                       "Ciclo Diesel", 
@@ -61,16 +61,16 @@ function setMap(){
         dadosOlac = csvData;
         dadosGeo = states;
         
-        //CRIA UMA LISTA PARA RECEBER TODAS AS UF'S DO BRASIL
+        //AGREGAÇÃO DO SOMATÓRIO DE VOLUME POR UNIDADE DA FEDERAÇÃO
         var listUF = [];
-        // ADICIONA CADA UF AO ARRAY listUF
+        
         states.features.forEach(function (d) {listUF.push(d.id)});
             
             csvData.forEach(function(d){
-            d.volume = parseInt(d.volume); // TRANSFORMA O DADO DE VOLUME EM INTEIRO
+            d.volume = parseInt(d.volume);
 
         });
-        // CRIA UMA AGREGAÇÃO DO SOMATÓRIO DE VOLUME POR UNIDADE DA FEDERAÇÃO
+        
         var aggVolume = d3.nest()
             .key(function(d) { return d.uf })
             .rollup(function (v){ 
@@ -97,10 +97,10 @@ function setMap(){
         totalPorCategoria[0]['key'] = "Engrenagens e Sistemas Circulatórios"
         totalPorCategoria[8]['key'] = "Transmissões e Sistemas Hidráulicos"
 
-        //CRIA UM ARRAY PARA ARMAZENAR TODAS AS CATEGORIAS DE ÓLEO LUBRIFICANTE ACABADO
+        //ARMAZENAR TODAS AS CATEGORIAS DE ÓLEO LUBRIFICANTE ACABADO
         var nomeCategoriaOlac = [];
 
-        //ADICIONA AS STRINGS NO ARRAY
+        
         totalPorCategoria.forEach(function (d) {
             nomeCategoriaOlac.push(d.key)
         
@@ -109,7 +109,7 @@ function setMap(){
 
         for (var i=0; i<totalVolume.length; i++) {		
             var volumeUF = totalVolume[i]; // DADOS REFERENTE A UM ESTADO
-            var strUF = volumeUF.key;  // ARMZENA A UF DO REFERIDO ESTADO
+            var strUF = volumeUF.key;  // ARMAZENA A UF DO REFERIDO ESTADO
                 
         	//ITERAR SOBRE OS ESTADOS PARA INSERIR OS DADOS DE PRODUÇÃO PARA
             //CADA UNIDADE DA FEDERAÇÃO.
@@ -123,7 +123,7 @@ function setMap(){
             
         };
 
-        //CRIAR UM ARRAY PARA ARMEZAR AS UF'S COM PRODUCAO E SEM PRODUCAO DE OLAC
+        //AGREGAR DADOS PARA ESTADOS COM PRODUÇÃO E SEM PRODUÇÃO DE OLAC
         var uf_producao = [];
         var uf_sproducao = [];
 
@@ -228,27 +228,27 @@ function setMap(){
 
         //Enter
         brazil.enter()
-        .append('path')
-        .attr('d', path)
-        .attr("class", function(d) {return d.id + " estado";})
-        .style("fill", function(d){ return choropleth(d,recolorMap)})
-        .on("mouseover", highlight)
-        .on("mouseout", dehighlight)
-        .on("mousemove", moveLabel)
-        .append("desc")
-        .text(function(d){return choropleth(d,recolorMap)});
+            .append('path')
+            .attr('d', path)
+            .attr("class", function(d) {return d.id + " estado";})
+            .style("fill", function(d){ return choropleth(d,recolorMap)})
+            .on("mouseover", highlight)
+            .on("mouseout", dehighlight)
+            .on("mousemove", moveLabel)
+            .append("desc")
+            .text(function(d){return choropleth(d,recolorMap)});
 
         svg.selectAll('text')
-        .data(states.features)
-        .enter()
-        .append('text')
-        .text(function(d) { return d.id; })
-        .attr({
-                x: function(d) { return path.centroid(d)[0]; },
-                y: function(d) { return path.centroid(d)[1]; },
-                'text-anchor': 'middle',
-                'font-size': '10pt',
-                'fill' : "black"
+            .data(states.features)
+            .enter()
+            .append('text')
+            .text(function(d) { return d.id; })
+            .attr({
+                    x: function(d) { return path.centroid(d)[0]; },
+                    y: function(d) { return path.centroid(d)[1]; },
+                                    'text-anchor': 'middle',
+                                    'font-size': '10pt',
+                                    'fill' : "black"
         });
 
         criarMenu(dadosOlac);        
@@ -326,9 +326,9 @@ function criarMenu(dadosOlac){
 function mudarVariavel(variavel,dadosGeo) {
     variavelAlvo = variavel;
     d3.selectAll("path.estado")
-    .style("fill",function(d){return choropleth(d, colorScale(dadosGeo,variavelAlvo))})
-    .select("desc")
-    .text(function(d){ return choropleth(d, colorScale(dadosGeo,variavelAlvo))})
+        .style("fill",function(d){return choropleth(d, colorScale(dadosGeo,variavelAlvo))})
+        .select("desc")
+        .text(function(d){ return choropleth(d, colorScale(dadosGeo,variavelAlvo))})
 };
 
 function highlight(data){
@@ -343,15 +343,15 @@ function highlight(data){
     
     
 
-    //CRIAR UM DIV PARA RECEBER A LEGENDA
+    //DIV PARA RECEBER A LEGENDA
     var legenda = d3.select("#container")
-                        .append("div")
-                        .attr("class", "legenda")
-                        .attr("id", id_estado+"legenda")
-                        .html(conteudo_legenda)
-                        .append("div")
-                        .attr("class","nomelegenda")
-                        .html("Volume de Produção de OLAC");
+                    .append("div")
+                    .attr("class", "legenda")
+                    .attr("id", id_estado+"legenda")
+                    .html(conteudo_legenda)
+                    .append("div")
+                    .attr("class","nomelegenda")
+                    .html("Volume de Produção de OLAC");
 
     
 
