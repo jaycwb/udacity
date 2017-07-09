@@ -1,0 +1,75 @@
+.boundary {
+    fill: #fff;
+    stroke: #000;
+    stroke-linejoin: round;
+    stroke-width: 1px;
+
+  }
+
+svg {
+    margin-left: 80px;
+    position: absolute;
+    margin-top:50px;
+    text-align: middle !important;
+
+  }
+
+.svg-container {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+    vertical-align: top;
+    overflow: hidden;
+}
+.svg-content-responsive {
+    display: inline-block;
+    position: absolute;
+    top: 10px;
+    left: 0;
+}
+
+#container {
+    display: flex;
+
+}
+
+#map {
+    overflow: hidden; 
+    background: white;
+    margin-left: 25%;
+    left: -125px;
+    position: relative
+}
+
+.legenda {
+    position: absolute;
+    width: 200px;
+    height: 50px;
+    color: white;
+    background-color: rgb(39,92,157);
+    border: solid thin #fff;
+    padding: 5px;
+
+}
+
+.legenda h1 {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    line-height: 1em;
+
+}
+
+.legenda b{
+    float: left;
+
+}
+
+.nome_legenda {
+    display: inline-block;
+    margin: -25px 0px 0px 40px;
+    font-size: 1em;
+    font-weight: bold;
+    position: absolute;
+}
