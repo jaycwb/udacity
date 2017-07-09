@@ -44,11 +44,11 @@ function setMap(){
     var svg = d3.select("#map")
         .classed("svg-container", true)
         .append("svg")
-       // .attr("width", width)
-        //.attr("height", height);
-        .attr("preserveAspectRatio", "xMinYMin meet")
-        .attr("viewBox", "0 0 " + width + " " + height)
-        .classed("svg-content-responsive", true); 
+        .attr("width", width)
+        .attr("height", height);
+        //.attr("preserveAspectRatio", "xMinYMin meet")
+        //.attr("viewBox", "0 0 " + width + " " + height)
+        //.classed("svg-content-responsive", true); 
 
     //use queue.js to parallelize asynchronous data loading
     d3.queue()
