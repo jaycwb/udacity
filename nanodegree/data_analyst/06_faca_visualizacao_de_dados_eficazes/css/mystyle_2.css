@@ -14,17 +14,8 @@ svg {
 
   }
 
-.svg-container {
-    display: inline-block;
-    position: relative;
-    width: 100%;
-    padding-bottom: 100%;
-    vertical-align: top;
-    overflow: hidden;
-}
-
 #menu {
-      float: left; 
+     float: left; 
       background: rgb(39,92,157);
       margin-left: 3.0%;
       border-style: solid;
@@ -32,15 +23,6 @@ svg {
       border-color: black;
       margin-top:2.5%;
       height: 50px !important;
-      text-align: middle !important;
-      color: white;
-}
-
-
-
-#container {
-    display: flex;
-
 }
 
 #map {
@@ -81,5 +63,34 @@ svg {
     font-size: 1em;
     font-weight: bold;
     position: absolute;
+}
+
+ body {
+    background-color: rgb(255,255,255);
+    padding-bottom: 20px;
+}
+
+h3 {
+    text-align: center;
+    color: white;
+    font-family: 'Inconsolata', monospace;
+}
+
+h2 {
+    margin-top: -15px;
+}
+
+.svg-container {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    vertical-align: top;
+    overflow: hidden;
+    padding-bottom: 100%;
+}
+
+#container {
+    display: flex;
+
 }
 
