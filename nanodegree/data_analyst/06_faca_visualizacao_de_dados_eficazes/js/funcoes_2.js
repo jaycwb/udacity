@@ -9,7 +9,6 @@ var dadosOlac = void 0; // VARIÁVEL QUE ARMAZENARÁ OS DADOS DE PRODUCAO DA ANP
 var totalVolume = void 0; // VARIÁVEL QUE RECEBERÁ DADOS AGREGADOS (TOTAL) DE PRODUCAO DA ANP
 var totalPorCategoria = void 0; // VARIÁVEL QUE RECEBERÁ DADOS AGREGADOS POR CATEGORIA
 
-
 var listaVariaveis = ["Volume Total OLAC",
                       "Ciclo Otto", 
                       "Ciclo Diesel", 
@@ -251,11 +250,72 @@ function setMap(){
                                     'fill' : "black"
         });
 
-        criarMenu(dadosOlac);        
-  
+        criarMenu(dadosOlac); 
+        legend(dadosOlac);
+
+
+
+
     };
 
 };
+
+function legend(dadosOlac){
+        //CRIAR LEGENDA
+        // CRIAR UM ARRAY PARA RECEBER OS VOLUMES DE PRODUÇÃO 
+        var volumes = []
+        dadosOlac.forEach(function (d) { 
+					volumes.push(d.volume) })
+        volumes = volumes.sort()
+        var quantile_legend =  d3.scale.quantile()
+                                   .range([d3.rgb(8,48,107),
+                                           d3.rgb(222,235,247), 
+                                           d3.rgb(198,219,239),
+                                           d3.rgb(158,202,225),
+                                           d3.rgb(107,174,214),
+                                           d3.rgb(66,146,198),
+                                           d3.rgb(33,113,181),
+                                           d3.rgb(8,81,156),
+                                           d3.rgb(8,48,107)])
+        
+                var quantize =  d3.scaleQuantize()
+                                .range([d3.rgb(8,48,107),
+                                           d3.rgb(222,235,247), 
+                                           d3.rgb(198,219,239),
+                                           d3.rgb(158,202,225),
+                                           d3.rgb(107,174,214),
+                                           d3.rgb(66,146,198),
+                                           d3.rgb(33,113,181),
+                                           d3.rgb(8,81,156),
+                                           d3.rgb(8,48,107)])
+                        
+        quantize.domain(volumes)
+        quantile_legend.domain(volumes)
+        console.log(quantile_legend.quantiles());
+        console.log(quantile_legend.domain())
+
+        var quantize = d3.scaleQuantize()
+            .domain([ 0, 0.15 ])
+            .range(d3.range(9).map(function(i) { return "q" + i + "-9"; }));
+
+            var svg = d3.select("svg");
+
+            svg.append("g")
+            .attr("class", "legendQuant")
+            .attr("transform", "translate(20,20)");
+
+            var legend = d3.legendColor()
+            .labelFormat(d3.format(".2f"))
+            .useClass(true)
+            .title("A really really really really really long title")
+            .titleWidth(100)
+            .scale(quantize);
+
+            svg.select(".legendQuant")
+            .call(legend);
+          
+
+}
 
 function colorScale(dadosGeo, variavelAlvo) {
 
