@@ -279,7 +279,7 @@ function legend(dadosOlac){
         var colorScale = d3.scale.quantile()
             .domain(volumes)
             .range([
-    d3.rgb(8,48,107),
+    d3.rgb(247,251,255),
     d3.rgb(222,235,247), 
     d3.rgb(198,219,239),
     d3.rgb(158,202,225),
