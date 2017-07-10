@@ -264,23 +264,14 @@ function legend(dadosOlac){
         // CRIAR UM ARRAY PARA RECEBER OS VOLUMES DE PRODUÇÃO 
 
             // Color legend.
-        var colorScale = d3.scale.quantile()
-            .range([
-                    d3.rgb(247,251,255),
-                    d3.rgb(222,235,247), 
-                    d3.rgb(198,219,239),
-                    d3.rgb(158,202,225),
-                    d3.rgb(107,174,214),
-                    d3.rgb(66,146,198),
-                    d3.rgb(33,113,181),
-                    d3.rgb(8,81,156),
-                    d3.rgb(8,48,107)]);
+        var colorScale = d3.scale.quantize()
+            .range(colorbrewer.Blues[9]);
         
     var domainArray = [];
     dadosGeo.features.forEach(function(v){
         domainArray.push(v.properties[variavelAlvo])
     })
-    colorScale.domain(domainArray);
+    colorScale.domain(domainArray.sort());
 
         var svg = d3.select("#legenda");
 
@@ -306,16 +297,7 @@ function colorScale(dadosGeo, variavelAlvo) {
 
     //CRIAR UMA ESCALA DE CORES BASEADA EM QUANTIS
     var quantileScale = d3.scale.quantile()
-    .range([
-    d3.rgb(247,251,255),
-    d3.rgb(222,235,247), 
-    d3.rgb(198,219,239),
-    d3.rgb(158,202,225),
-    d3.rgb(107,174,214),
-    d3.rgb(66,146,198),
-    d3.rgb(33,113,181),
-    d3.rgb(8,81,156),
-    d3.rgb(8,48,107)])
+    .range(colorbrewer.Blues[9])
     //To determine the quantile class breaks properly, the domain array must include 
     //all of the attribute values for the currently expressed attribute 
     //(note: an equal-interval classification can be created by instead passing 
