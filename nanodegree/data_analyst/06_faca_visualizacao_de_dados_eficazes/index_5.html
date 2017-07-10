@@ -76,7 +76,39 @@
             <div id="menu"></div>
             <div id="map"></div>
 
-        </div>    
+        </div>
+
+        <div id="sankey">
+            <p>Além dos volumes de produção de OLAC, a <strong style="color: rgb(255,120,37)">ANP</strong> disponibiliza os dados declaratórios de vendas das empresas. Sendo assim, uma dada empresa pode vender um produto cuja origem se enquadra em uma das seguintes categorias:</p>
+            <ul>
+                <li>OLAC produzido pela própria empresa em território nacional;</li>
+                <li>OLAC produzido em empresa diversa em território nacional;</li>
+                <li>OLAC produzido por empresa localizada fora do país, isto é, o produto é importado;</li>
+            </ul>
+            <p>
+                O <a target="_tab" href="http://www.anp.gov.br/wwwanp/images/publicacoes/boletins-anp/Lubrificantes/n1/Anexo_H-Vendas_nacionais_de_OLAC_pelos_Produtores_e_Importadores.xlsx">ANEXO H</a> do Boletim de Lubrificantes fornece um conjunto de dados que reune as informações declaratórias dos volumes de OLAC vendidos para uma empresa localizada em um determinado estado do Brasil. Dessa forma, cruzando os dados do <a target="_tab" href="http://www.anp.gov.br/wwwanp/images/publicacoes/boletins-anp/Lubrificantes/n1/Anexo_H-Vendas_nacionais_de_OLAC_pelos_Produtores_e_Importadores.xlsx">ANEXO H</a> com aqueles disponíveis no <a target="_tab" href="http://www.anp.gov.br/wwwanp/images/publicacoes/boletins-anp/Lubrificantes/n1/Anexo_E-Relacao_de_Plantas_de_Producao_de_OLAC_Autorizadas.xlsx">ANEXO E</a> é possível inferir a origem
+                da maioria das transações de venda declaradas à <strong style="color: rgb(255,120,37)">ANP</strong>. Todavia, por haver empresas que tercerizam produção ou que vendem produtos que foram importados não é possível determinar a origem de todas as transações.
+            </p>
+
+            <p>
+                Portanto, o sistema <a target="_tab" href="http://www.anp.gov.br/SITE/EXTRAS/SITE_SIMP/INDEX.asp">SIMP</a> recebeu um total de 37.677 declarações de venda de OLAC, dos quais 9848 (26,14%) registros enquadram-se em vendas oriundas de produtos que foram produzidos de forma tercerizada ou importada. Assim, cada registro possui um volume de OLAC associado, portanto, foi possível
+                calcular o percentual de vendas desses produtos em base volumétrica. Dessa forma, apenas 7,96% de todo volume de OLAC vendido no Brasil não pode se inferir a sua origem (em termos de UF ou país de origem).
+            </p>
+
+            <p>
+                O mapa temático acima apresentado permite a visualização dos volumes produzidos de OLAC no Brasil, todavia, nada se pode inferir a respeito da movimentação de comercialização desse produto ao longo do país. Dessa forma, foi realizado um tratamento dos dados do <a target="_tab" href="http://www.anp.gov.br/wwwanp/images/publicacoes/boletins-anp/Lubrificantes/n1/Anexo_H-Vendas_nacionais_de_OLAC_pelos_Produtores_e_Importadores.xlsx">ANEXO H</a> para a produção de um <a target"_tab" href"https://en.wikipedia.org/wiki/Sankey_diagram">diagrama de Sankey</a>
+                com os dados que representam aproximadamente 92% de todo o volume de OLAC comercializado no Brasil em 2016. O diagrama de sankey pertence a categoria dos diagramas de fluxo que por definição possui um ou mais nós cada um possuindo uma origem e um destino e para o caso em estudo os nós são unidades da federação. Além disso, o fluxo associado entre dois nós é proporcional ao volume comercializado entre essas duas entidades.
+            </p>
+
+            <p>
+                Por meio do diagrama abaixo é possível constatar não só a importância das empresas localizadas no estado do Rio de Janeiro na produção de óleos <strong style="color: rgb(255,120,37)">lubrificantes</strong>  no país, mas como no abastecimento desse produto ao longo de todo país. Além disso, como trata-se de uma visualização interativa incentivamos ao leitor a interagir com a mesma para que possa assim extrair as informações que mais lhe interessam. 
+            </p>
+            <p align="center"><iframe src="./graphs/sankey_diagram.html" width="1400" height="900"></iframe></p>
+            
+        </div>
+        <footer class="footer">
+            <p>As visualizações foram produzidas utilizando as bibliotecas <a target="_tab" href="https://github.com/d3/d3/wiki">D3.js</a> e <a target="_tab" href="http://christophergandrud.github.io/d3Network/">d3Network</a> os quais são compatíveis com a maioria dos browsers modernos, exceto IE8 e versões anteriores.</p>
+        </footer>    
 
     </body>
 </html>        
