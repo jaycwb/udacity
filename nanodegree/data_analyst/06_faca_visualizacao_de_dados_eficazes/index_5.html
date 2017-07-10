@@ -13,7 +13,7 @@
         <script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
         <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
         <script src="https://d3js.org/d3-scale.v1.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/1.1.0/d3-legend.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/d3-legend/1.1.0/d3-legend.js"></script>
         <script src="./js/colorbrewer.min.js"></script>
 
 
@@ -79,7 +79,10 @@
         <div id="container">
             <div id="menu"></div>
             <div id="map"></div>
-            <div id="legend"><!-- Legend container --></div>
+            <div id="legend">
+            <!-- Legend container -->
+            <svg width="960" height="500"></svg>
+            </div>
 
         </div>
 
