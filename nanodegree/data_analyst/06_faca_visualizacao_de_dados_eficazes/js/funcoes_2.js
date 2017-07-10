@@ -255,47 +255,54 @@ function setMap(){
 
 
 
-
     };
 
 };
 
-        function legend(dadosOlac){
+function legend(dadosOlac){
         //CRIAR LEGENDA
         // CRIAR UM ARRAY PARA RECEBER OS VOLUMES DE PRODUÇÃO 
         var volumes = []
         dadosOlac.forEach(function (d) { 
 					volumes.push(d.volume) })
         volumes = volumes.sort()
-        var quantile_legend =  d3.scale.quantile()
-                                   .range([d3.rgb(8,48,107),
-                                           d3.rgb(222,235,247), 
-                                           d3.rgb(198,219,239),
-                                           d3.rgb(158,202,225),
-                                           d3.rgb(107,174,214),
-                                           d3.rgb(66,146,198),
-                                           d3.rgb(33,113,181),
-                                           d3.rgb(8,81,156),
-                                           d3.rgb(8,48,107)])
-        
-        quantile_legend.domain(volumes)
-        console.log(quantile_legend.quantiles());
-        console.log(quantile_legend.domain())
 
+        /*
+        var colorScale =  d3.scale.quantize()
+                                  .domain(volumes)
+                                  .range(colorbrewer.PuBu[9].reverse())
+        */
 
         var svg = d3.select("#legenda");
 
+    // Color legend.
+        var colorScale = d3.scale.quantile()
+            .domain(volumes)
+            .range([
+    d3.rgb(8,48,107),
+    d3.rgb(222,235,247), 
+    d3.rgb(198,219,239),
+    d3.rgb(158,202,225),
+    d3.rgb(107,174,214),
+    d3.rgb(66,146,198),
+    d3.rgb(33,113,181),
+    d3.rgb(8,81,156),
+    d3.rgb(8,48,107)]);
+
+        var colorLegend = d3.legend.color()
+            .labelFormat(d3.format(".2f"))
+            .scale(colorScale)
+            .shapePadding(10)
+            .shapeWidth(30)
+            .shapeHeight(30)
+            .labelOffset(10);
+
         svg.append("g")
-        .attr("class", "legendQuant")
-        .attr("transform", "translate(20,20)");
+            .attr("transform", "translate(200, 60)")
+            .call(colorLegend);
 
-        var legend = d3.legend.color()
-        .labelFormat(d3.format(".2f"))
-        .useClass(true)
-        .scale(quantile_legend);
 
-        svg.select(".legendQuant")
-        .call(legend);
+
 }
 
 function colorScale(dadosGeo, variavelAlvo) {
@@ -303,7 +310,7 @@ function colorScale(dadosGeo, variavelAlvo) {
     //CRIAR UMA ESCALA DE CORES BASEADA EM QUANTIS
     var quantileScale = d3.scale.quantile()
     .range([
-    d3.rgb(8,48,107),
+    d3.rgb(247,251,255),
     d3.rgb(222,235,247), 
     d3.rgb(198,219,239),
     d3.rgb(158,202,225),
@@ -418,3 +425,4 @@ function moveLabel() {
         .style("margin-left", x+"px") //reposition label horizontal
         .style("margin-top", y+"px"); //reposition label vertical
 };
+
