@@ -258,26 +258,40 @@ function setMap(){
     };
 
 };
+//FUNÇÃO PARA ORGANIZAR UM ARRAY DE FORMA CRESCENTE
+function compare(a, b){
+    let comparison = 0;
+
+    if (a > b) {
+        comparison = 1;
+    } else if (b > a) {
+        comparison = -1;
+    }
+
+    return comparison;
+}
+
 
 function legend(dadosOlac){
-        //CRIAR LEGENDA
-        // CRIAR UM ARRAY PARA RECEBER OS VOLUMES DE PRODUÇÃO 
-
-            // Color legend.
-        var colorScale = d3.scale.quantize()
+ 
+    var colorScale = d3.scale.quantize()
             .range(colorbrewer.Blues[9]);
         
     var domainArray = [];
     dadosGeo.features.forEach(function(v){
         domainArray.push(v.properties[variavelAlvo])
     })
-    colorScale.domain(domainArray.sort());
 
-        var svg = d3.select("#legenda");
+    domainArray.sort(compare)
+
+    colorScale.domain(domainArray)
+    console.log(variavelAlvo)
+    console.log(domainArray)
+
+    var svg = d3.select("#legenda");
 
 
-
-        var colorLegend = d3.legend.color()
+    var colorLegend = d3.legend.color()
             .labelFormat(d3.format(".2f"))
             .scale(colorScale)
             .shapePadding(10)
@@ -285,7 +299,7 @@ function legend(dadosOlac){
             .shapeHeight(30)
             .labelOffset(10)
 
-        svg.append("g")
+    svg.append("g")
             .attr("transform", "translate(200, 60)")
             .call(colorLegend);
 
