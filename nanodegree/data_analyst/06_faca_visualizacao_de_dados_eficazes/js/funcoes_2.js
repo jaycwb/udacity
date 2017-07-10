@@ -262,32 +262,29 @@ function setMap(){
 function legend(dadosOlac){
         //CRIAR LEGENDA
         // CRIAR UM ARRAY PARA RECEBER OS VOLUMES DE PRODUÇÃO 
-        var volumes = []
-        dadosOlac.forEach(function (d) { 
-					volumes.push(d.volume) })
-        volumes = volumes.sort()
 
-        /*
-        var colorScale =  d3.scale.quantize()
-                                  .domain(volumes)
-                                  .range(colorbrewer.PuBu[9].reverse())
-        */
+            // Color legend.
+        var colorScale = d3.scale.quantile()
+            .range([
+                    d3.rgb(247,251,255),
+                    d3.rgb(222,235,247), 
+                    d3.rgb(198,219,239),
+                    d3.rgb(158,202,225),
+                    d3.rgb(107,174,214),
+                    d3.rgb(66,146,198),
+                    d3.rgb(33,113,181),
+                    d3.rgb(8,81,156),
+                    d3.rgb(8,48,107)]);
+        
+    var domainArray = [];
+    dadosGeo.features.forEach(function(v){
+        domainArray.push(v.properties[variavelAlvo])
+    })
+    colorScale.domain(domainArray);
 
         var svg = d3.select("#legenda");
 
-    // Color legend.
-        var colorScale = d3.scale.quantile()
-            .domain(volumes)
-            .range([
-    d3.rgb(247,251,255),
-    d3.rgb(222,235,247), 
-    d3.rgb(198,219,239),
-    d3.rgb(158,202,225),
-    d3.rgb(107,174,214),
-    d3.rgb(66,146,198),
-    d3.rgb(33,113,181),
-    d3.rgb(8,81,156),
-    d3.rgb(8,48,107)]);
+
 
         var colorLegend = d3.legend.color()
             .labelFormat(d3.format(".2f"))
@@ -295,7 +292,7 @@ function legend(dadosOlac){
             .shapePadding(10)
             .shapeWidth(30)
             .shapeHeight(30)
-            .labelOffset(10);
+            .labelOffset(10)
 
         svg.append("g")
             .attr("transform", "translate(200, 60)")
