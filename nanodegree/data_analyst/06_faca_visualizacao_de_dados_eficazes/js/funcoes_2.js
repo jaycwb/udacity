@@ -283,7 +283,7 @@ function setMap(){
         console.log(quantile_legend.domain())
 
 
-        var svg = d3.select("svg");
+        var svg = d3.select("#legenda");
 
         svg.append("g")
         .attr("class", "legendQuant")
