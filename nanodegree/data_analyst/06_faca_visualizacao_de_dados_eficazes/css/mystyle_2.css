@@ -65,9 +65,13 @@ svg {
     position: absolute;
 }
 
- body {
+body {
     background-color: rgb(255,255,255);
     padding-bottom: 20px;
+}
+
+select {
+    background-color: rgb(255,192,0);
 }
 
 h3 {
@@ -76,8 +80,98 @@ h3 {
     font-family: 'Inconsolata', monospace;
 }
 
+#head {
+    padding: 2rem 15px;
+    color: black;
+    text-align: center;
+    background-color: rgb(255,192,0);
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    margin-bottom: 3rem;
+    text-align: center;
+    border: solid black;
+    font-family: 'Days One', sans-serif;
+    font-size: 30px;
+    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    height: 96%;  
+    width: 96%;
+}
+
+#prod {
+    font-family: 'Bungee Inline', cursive;
+    font-size: 30px;
+}
+
 h2 {
     margin-top: -15px;
+}
+
+blockquote{
+  display:block;
+  background: #fff;
+  padding: 15px 20px 15px 45px;
+  margin: 0 0 20px;
+  position: relative;
+  
+
+  font-family: 'PT Mono', monospace;
+  font-size: 16px;
+  line-height: 1.2;
+  color: #666;
+  text-align: justify;
+  
+
+  border-left: 15px solid rgb(255,192,0);
+  border-right: 2px solid rgb(255,192,0);
+  
+
+  -moz-box-shadow: 2px 2px 15px #ccc;
+  -webkit-box-shadow: 2px 2px 15px #ccc;
+  box-shadow: 2px 2px 15px #ccc;
+}
+
+blockquote::before{
+  content: "\201C"; 
+  
+  font-family: 'PT Mono', monospace;
+  font-size: 60px;
+  font-weight: bold;
+  color: #999;
+  
+  position: absolute;
+  left: 10px;
+  top:5px;
+}
+
+blockquote::after{
+  content: "";
+}
+
+blockquote a{
+  text-decoration: none;
+  background: #eee;
+  cursor: pointer;
+  padding: 0 3px;
+  color: #c76c0c;
+}
+
+blockquote a:hover{
+ color: #666;
+}
+
+blockquote em{
+  font-style: italic;
+}
+
+p { 
+     font-family: 'Roboto', sans-serif;
+}
+
+#conteudo {
+    width: 95%;
+    margin-left: 2.5%
 }
 
 .svg-container {
@@ -86,7 +180,7 @@ h2 {
     width: 100%;
     vertical-align: top;
     overflow: hidden;
-    padding-bottom: 100%;
+    padding-bottom: 45%;
 }
 
 #container {
@@ -94,3 +188,27 @@ h2 {
 
 }
 
+a:visited {
+    color: #097054;
+}
+
+a:link {
+    color: #003366;
+}
+
+.footer p{
+    text-align: center;
+    font-size: 10px !important; 
+}
+
+li {
+    font-family: 'Roboto', sans-serif;
+}
+
+#sankey p{
+    margin-left: 2.5%
+}
+
+#sankey li{
+    margin-left: 3.0%
+}
