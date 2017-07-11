@@ -309,7 +309,7 @@ function legend(variavelAlvo, dadosGeo){
         svg.append("g")
             .attr("transform", "translate(10, 150)")
             .call(colorLegend);
-            
+
     } else {
             var svg = d3.select("#legenda_mapa").append("svg")
                 .attr("width", "400")
@@ -381,10 +381,10 @@ function criarMenu(dadosOlac){
     var menu = d3.select("#menu")
                 .html("<h3>Selecione a Categoria</h3>")
                 .append("select")
-                .on("change", function(){
-                    mudarVariavel(this.value, dadosGeo)
-                })
-                .on("change", function(){legend(this.value, dadosGeo)})
+                .on("change", function() {
+                    mudarVariavel(this.value, dadosGeo);
+                    legend(this.value, dadosGeo);
+                });
 
     menu.selectAll("options")
         .data(listaVariaveis)
