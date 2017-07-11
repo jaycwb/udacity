@@ -179,7 +179,6 @@ p {
     position: relative;
     width: 100%;
     vertical-align: top;
-    overflow: hidden;
     padding-bottom: 45%;
 }
 
@@ -211,4 +210,11 @@ li {
 
 #sankey li{
     margin-left: 3.0%
+}
+
+#legenda_placeholder {
+    width: auto; /* over ride constraints and show all */
+    height: auto;  
+    position: absolute; /* break from flow */ 
+    right: 15em; /* position where you want */
 }

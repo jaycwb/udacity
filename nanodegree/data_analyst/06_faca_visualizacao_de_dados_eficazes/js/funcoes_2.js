@@ -288,7 +288,7 @@ function legend(dadosOlac){
     console.log(variavelAlvo)
     console.log(domainArray)
 
-    var svg = d3.select("#legenda");
+    var svg = d3.select("#legenda")   
 
 
     var colorLegend = d3.legend.color()
@@ -300,7 +300,7 @@ function legend(dadosOlac){
             .labelOffset(10)
 
     svg.append("g")
-            .attr("transform", "translate(200, 60)")
+            .attr("transform", "translate(20, 10)")
             .call(colorLegend);
 
 
