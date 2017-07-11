@@ -212,5 +212,10 @@ li {
     margin-left: 3.0%
 }
 
-#legenda_placeholder {
+#legenda_mapa {
+    background: white;
+    margin-left: -30%;
+    left: -125px;
+    position: relative
+}
 }
