@@ -285,8 +285,6 @@ function legend(variavelAlvo, dadosGeo){
     domainArray.sort(compare)
 
     colorScale.domain(domainArray)
-    console.log(variavelAlvo)
-    console.log(domainArray)
 
     if(d3.select("#legenda_mapa").html() !== "") {
 
