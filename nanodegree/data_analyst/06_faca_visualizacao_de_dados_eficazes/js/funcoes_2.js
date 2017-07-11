@@ -310,7 +310,7 @@ function legend(variavelAlvo, dadosGeo){
             .labelOffset(10)
 
         svg.append("g")
-            .attr("transform", "translate(10, 150)")
+            .attr("transform", "translate(50, 150)")
             .call(colorLegend);
 
     } else {
@@ -329,7 +329,7 @@ function legend(variavelAlvo, dadosGeo){
                 .labelOffset(10)
 
             svg.append("g")
-                .attr("transform", "translate(10, 150)")
+                .attr("transform", "translate(50, 150)")
                 .call(colorLegend);
 
     }
