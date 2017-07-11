@@ -251,7 +251,7 @@ function setMap(){
         });
 
         criarMenu(dadosOlac); 
-        legend(dadosOlac);
+        legend(variavelAlvo, dadosGeo);
 
 
 
@@ -272,7 +272,7 @@ function compare(a, b){
 }
 
 
-function legend(dadosOlac){
+function legend(variavelAlvo, dadosGeo){
  
     var colorScale = d3.scale.quantize()
             .range(colorbrewer.Blues[9]);
@@ -288,13 +288,17 @@ function legend(dadosOlac){
     console.log(variavelAlvo)
     console.log(domainArray)
 
-    var svg = d3.select("#legenda_mapa").append("svg")
+    if(d3.select("#legenda_mapa").html() !== "") {
+
+        d3.select("#legenda_mapa").html("")
+
+        var svg = d3.select("#legenda_mapa").append("svg")
                 .attr("width", "400")
                 .attr("height", "800")
                 .attr("id", "legenda_placeholder")
 
 
-    var colorLegend = d3.legend.color()
+        var colorLegend = d3.legend.color()
             .labelFormat(d3.format(".2f"))
             .scale(colorScale)
             .shapePadding(10)
@@ -302,9 +306,32 @@ function legend(dadosOlac){
             .shapeHeight(30)
             .labelOffset(10)
 
-    svg.append("g")
+        svg.append("g")
             .attr("transform", "translate(10, 150)")
             .call(colorLegend);
+            
+    } else {
+            var svg = d3.select("#legenda_mapa").append("svg")
+                .attr("width", "400")
+                .attr("height", "800")
+                .attr("id", "legenda_placeholder")
+
+
+            var colorLegend = d3.legend.color()
+                .labelFormat(d3.format(".2f"))
+                .scale(colorScale)
+                .shapePadding(10)
+                .shapeWidth(30)
+                .shapeHeight(30)
+                .labelOffset(10)
+
+            svg.append("g")
+                .attr("transform", "translate(10, 150)")
+                .call(colorLegend);
+
+    }
+
+
 
 
 
@@ -357,6 +384,7 @@ function criarMenu(dadosOlac){
                 .on("change", function(){
                     mudarVariavel(this.value, dadosGeo)
                 })
+                .on("change", function(){legend(this.value, dadosGeo)})
 
     menu.selectAll("options")
         .data(listaVariaveis)
@@ -374,6 +402,8 @@ function mudarVariavel(variavel,dadosGeo) {
         .style("fill",function(d){return choropleth(d, colorScale(dadosGeo,variavelAlvo))})
         .select("desc")
         .text(function(d){ return choropleth(d, colorScale(dadosGeo,variavelAlvo))})
+
+
 };
 
 function highlight(data){
