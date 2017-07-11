@@ -176,8 +176,8 @@ p {
 
 .svg-container {
     display: inline-block;
-    position: relative;
-    width: 100%;
+    position: absolute;
+    width: 60%;
     vertical-align: top;
     padding-bottom: 45%;
 }
@@ -213,8 +213,4 @@ li {
 }
 
 #legenda_placeholder {
-    width: auto; /* over ride constraints and show all */
-    height: auto;  
-    position: absolute; /* break from flow */ 
-    right: 15em; /* position where you want */
 }
