@@ -4,6 +4,12 @@
 // # http://www.cartographicperspectives.org/index.php/journal/article/view/cp78-sack-et-al/1359
 
 //global variables
+
+var commaFormat = d3.format(",");
+var dotFormat = function(num){
+  // The expression /,/g is a regular expression that matches all commas.
+  return commaFormat(num).replace(/,/g, ".");
+};
 var dadosGeo = void 0; // VARIÁVEL QUE ARMANEZERÁ OS DADOS GEOGRÁFICOS
 var dadosOlac = void 0; // VARIÁVEL QUE ARMAZENARÁ OS DADOS DE PRODUCAO DA ANP
 var totalVolume = void 0; // VARIÁVEL QUE RECEBERÁ DADOS AGREGADOS (TOTAL) DE PRODUCAO DA ANP
@@ -297,7 +303,6 @@ function legend(variavelAlvo, dadosGeo){
 
 
         var colorLegend = d3.legend.color()
-            .labelFormat(d3.format(".2f"))
             .scale(colorScale)
             .shapePadding(10)
             .shapeWidth(30)
