@@ -324,6 +324,7 @@ function colorScale(dadosGeo, variavelAlvo) {
     dadosGeo.features.forEach(function(v){
         domainArray.push(v.properties[variavelAlvo])
     })
+    domainArray.sort(compare)
     quantileScale.domain(domainArray);
     return quantileScale;
 };
