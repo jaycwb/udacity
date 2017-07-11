@@ -412,7 +412,8 @@ function highlight(data){
         .style("fill", "#FF9900")
     //CONTEÚDO DA LEGENDA
     var nome_legenda = prop_estado.nome;
-    var conteudo_legenda = "<h1>"+prop_estado[variavelAlvo]+" m³"+"</h1><br>"
+    var stringVolume = addDotSeparator(String(prop_estado[variavelAlvo]))
+    var conteudo_legenda = "<h1>"+stringVolume+" m³"+"</h1><br>"
     
     
 
@@ -451,3 +452,15 @@ function moveLabel() {
         .style("margin-top", y+"px"); //reposition label vertical
 };
 
+//ADAPTACAO DA FUNCAO addCommas https://stackoverflow.com/a/2646441
+function addDotSeparator(nStr) {
+    nStr += '';
+    var x = nStr.split('.');
+    var x1 = x[0];
+    var x2 = x.length > 1 ? '.' + x[1] : '';
+    var rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1)) {
+        x1 = x1.replace(rgx, '$1' + '.' + '$2');
+    }
+    return x1 + x2;
+}
