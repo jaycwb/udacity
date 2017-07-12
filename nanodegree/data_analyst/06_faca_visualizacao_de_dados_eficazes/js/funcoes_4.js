@@ -483,10 +483,8 @@ function choropleth(d, recolorMap){
                 //OBTER O VALOR ATRIBUÍDO A VARIÁVEL
                 d.forEach(function(v){
                     var value = v.properties[variavelAlvo]/1000
-                    console.log(value)
+
                     if(value) {
-                    console.log(value)
-                    console.log(myFormatter(value))
                         return recolorMap(value);
                     } else {
                         return d3.rgb(247,251,255);
@@ -495,8 +493,6 @@ function choropleth(d, recolorMap){
             } else {
                 var value = d.properties[variavelAlvo]/1000
                     if(value) {
-                    console.log(value)
-                    console.log(myFormatter(value))
                     return recolorMap(value);
                     } else {
                         return d3.rgb(247,251,255);
@@ -506,10 +502,7 @@ function choropleth(d, recolorMap){
             if(variavelAlvo == "Óleos Lubrificantes para Aviação") {
                 //OBTER O VALOR ATRIBUÍDO A VARIÁVEL
                     var value = d.properties[variavelAlvo]
-                    console.log(value)
                     if(value) {
-                    console.log(value)
-                    console.log(myFormatter(value))
                         return recolorMap(value);
                     } else {
                         return d3.rgb(247,251,255);
@@ -518,8 +511,6 @@ function choropleth(d, recolorMap){
             } else {
                 var value = d.properties[variavelAlvo]/1000
                     if(value) {
-                    console.log(value)
-                    console.log(myFormatter(value))
                     return recolorMap(value);
                     } else {
                         return d3.rgb(247,251,255);
@@ -527,11 +518,6 @@ function choropleth(d, recolorMap){
             }
     }
 };  
-
-      
-
-    
-
 
 function criarMenu(dadosOlac){
     var menu = d3.select("#menu")
