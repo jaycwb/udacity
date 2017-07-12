@@ -305,7 +305,7 @@ function title_legend() {
 function legend(variavelAlvo, dadosGeo){
  
     var colorScale = d3.scale.quantize()
-            .range(colorbrewer.Blues[9]);
+            .range(colorbrewer.Oranges[6]);
         
     var domainArray = [];
     dadosGeo.features.forEach(function(v){
@@ -321,8 +321,8 @@ function legend(variavelAlvo, dadosGeo){
         d3.select("#legenda_mapa").html("")
 
         var svg = d3.select("#legenda_mapa").append("svg")
-                .attr("width", "400")
-                .attr("height", "800")
+                .attr("width", "300")
+                .attr("height", "450")
                 .attr("id", "legenda_placeholder")
 
 
@@ -335,7 +335,7 @@ function legend(variavelAlvo, dadosGeo){
             .labelOffset(10)
 
         svg.append("g")
-            .attr("transform", "translate(50, 150)")
+            .attr("transform", "translate(30, 150)")
             .call(colorLegend);
 
         title_legend()
@@ -343,8 +343,8 @@ function legend(variavelAlvo, dadosGeo){
 
     } else {
             var svg = d3.select("#legenda_mapa").append("svg")
-                .attr("width", "400")
-                .attr("height", "800")
+                .attr("width", "300")
+                .attr("height", "450")
                 .attr("id", "legenda_placeholder")
 
 
@@ -357,7 +357,7 @@ function legend(variavelAlvo, dadosGeo){
                 .labelOffset(10)
 
             svg.append("g")
-                .attr("transform", "translate(50, 150)")
+                .attr("transform", "translate(30, 150)")
                 .call(colorLegend);
 
         title_legend()
@@ -373,8 +373,8 @@ function legend(variavelAlvo, dadosGeo){
 function colorScale(dadosGeo, variavelAlvo) {
 
     //CRIAR UMA ESCALA DE CORES BASEADA EM QUANTIS
-    var quantileScale = d3.scale.quantile()
-    .range(colorbrewer.Blues[9])
+    var quantileScale = d3.scale.quantize()
+    .range(colorbrewer.Oranges[6])
     //To determine the quantile class breaks properly, the domain array must include 
     //all of the attribute values for the currently expressed attribute 
     //(note: an equal-interval classification can be created by instead passing 
@@ -395,6 +395,8 @@ function choropleth(d, recolorMap){
         d.forEach(function(v){
             var value = v.properties[variavelAlvo]
             if(value) {
+               console.log(value)
+               console.log(myFormatter(value))
                 return recolorMap(value);
             } else {
                 return d3.rgb(247,251,255);
@@ -403,7 +405,9 @@ function choropleth(d, recolorMap){
     } else {
         var value = d.properties[variavelAlvo]
             if(value) {
-                return recolorMap(value);
+               console.log(value)
+               console.log(myFormatter(value))
+               return recolorMap(value);
             } else {
                 return d3.rgb(247,251,255);
             }
