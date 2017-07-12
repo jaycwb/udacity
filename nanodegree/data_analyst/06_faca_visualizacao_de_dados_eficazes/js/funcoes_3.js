@@ -266,8 +266,9 @@ function setMap(){
                                     'fill' : "black"
         });
 
-        criarMenu(dadosOlac); 
+        criarMenu(dadosOlac);
         legend(variavelAlvo, dadosGeo);
+        
 
 
 
@@ -287,7 +288,20 @@ function compare(a, b){
     return comparison;
 }
 
+function title_legend() {
+    d3.select("#legenda_placeholder")
+        .append("text")
+        .attr("x", "50")
+        .attr("y", "50")
+        .style("font-family", "sans-serif")
+        .style("font-size", "20px")
+        .attr("transform", "translate(-25, 75)")
+        .text("Volumes de Produção / m³")
 
+
+
+
+}
 function legend(variavelAlvo, dadosGeo){
  
     var colorScale = d3.scale.quantize()
@@ -324,6 +338,9 @@ function legend(variavelAlvo, dadosGeo){
             .attr("transform", "translate(50, 150)")
             .call(colorLegend);
 
+        title_legend()
+
+
     } else {
             var svg = d3.select("#legenda_mapa").append("svg")
                 .attr("width", "400")
@@ -342,6 +359,8 @@ function legend(variavelAlvo, dadosGeo){
             svg.append("g")
                 .attr("transform", "translate(50, 150)")
                 .call(colorLegend);
+
+        title_legend()
 
     }
 
