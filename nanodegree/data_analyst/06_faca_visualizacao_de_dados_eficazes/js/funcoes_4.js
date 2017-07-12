@@ -347,7 +347,7 @@ function legend(variavelAlvo, dadosGeo){
                 .labelOffset(10)
 
             svg.append("g")
-                .attr("transform", "translate(30, 150)")
+                .attr("transform", "translate(70, 150)")
                 .call(colorLegend);
 
             title_legend()
@@ -369,7 +369,7 @@ function legend(variavelAlvo, dadosGeo){
                     .labelOffset(10)
 
                 svg.append("g")
-                    .attr("transform", "translate(30, 150)")
+                    .attr("transform", "translate(70, 150)")
                     .call(colorLegend);
 
             title_legend()
@@ -408,7 +408,7 @@ function legend(variavelAlvo, dadosGeo){
                 .labelOffset(10)
 
             svg.append("g")
-                .attr("transform", "translate(30, 150)")
+                .attr("transform", "translate(70, 150)")
                 .call(colorLegend);
 
             title_legend()
@@ -430,7 +430,7 @@ function legend(variavelAlvo, dadosGeo){
                     .labelOffset(10)
 
                 svg.append("g")
-                    .attr("transform", "translate(30, 150)")
+                    .attr("transform", "translate(70, 150)")
                     .call(colorLegend);
 
             title_legend()
