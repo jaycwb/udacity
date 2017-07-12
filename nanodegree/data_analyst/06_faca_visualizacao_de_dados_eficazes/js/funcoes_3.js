@@ -52,8 +52,8 @@ function initialize(){
 //PARAMETROS DO MAPA
 function setMap(){
     // DEFINIÇÃO DAS DIMENSÕES DO SVG E DA PROJEÇÃO QUE SERÁ UTILIZADA
-    var height = 800;
-    var width = 600;
+    var height = 600;
+    var width = 500;
     var projection = d3.geo.mercator();
 
     // Special d3 helper that converts geo coordinates to paths
@@ -293,7 +293,7 @@ function title_legend() {
         .append("text")
         .attr("x", "50")
         .attr("y", "50")
-        .style("font-family", "sans-serif")
+        .style("font-family", "Inconsolata")
         .style("font-size", "20px")
         .attr("transform", "translate(-25, 75)")
         .text("Volumes de Produção / m³")
@@ -330,8 +330,8 @@ function legend(variavelAlvo, dadosGeo){
             .labelFormat(myFormatter)
             .scale(colorScale)
             .shapePadding(10)
-            .shapeWidth(30)
-            .shapeHeight(30)
+            .shapeWidth(20)
+            .shapeHeight(20)
             .labelOffset(10)
 
         svg.append("g")
@@ -352,8 +352,8 @@ function legend(variavelAlvo, dadosGeo){
                 .labelFormat(myFormatter)
                 .scale(colorScale)
                 .shapePadding(10)
-                .shapeWidth(30)
-                .shapeHeight(30)
+                .shapeWidth(20)
+                .shapeHeight(20)
                 .labelOffset(10)
 
             svg.append("g")
@@ -449,7 +449,6 @@ function highlight(data){
     var nome_legenda = prop_estado.nome;
     var stringVolume = String(myFormatter(prop_estado[variavelAlvo]))
     var conteudo_legenda = "<h1>"+stringVolume+" m³"+"</h1><br>"
-    
     
 
     //DIV PARA RECEBER A LEGENDA
