@@ -30,17 +30,17 @@ var totalVolume = void 0; // VARIÁVEL QUE RECEBERÁ DADOS AGREGADOS (TOTAL) DE 
 var totalPorCategoria = void 0; // VARIÁVEL QUE RECEBERÁ DADOS AGREGADOS POR CATEGORIA
 
 var listaVariaveis = ["Volume Total OLAC",
-                      "Ciclo Otto", 
                       "Ciclo Diesel", 
+                      "Ciclo Otto", 
                       "Engrenagens e Sistemas Circulatórios",
                       "Isolante Tipo A",
                       "Isolante Tipo B",
                       "Óleos Lubrificantes Marítimos",
                       "Óleos Lubrificantes Ferroviários",
-                      "Óleos Lubrificantes para Aviação",
                       "Motores 2 tempos",
                       "Transmissões e Sistemas Hidráulicos",
-                      "Outros Óleos Lubrificantes Acabados"
+                      "Outros Óleos Lubrificantes Acabados",
+                      "Óleos Lubrificantes para Aviação"
                       ]; 
 var variavelAlvo = listaVariaveis[0]; // VARIÁVEL SELECIONADA
 
@@ -110,8 +110,9 @@ function setMap(){
             .entries(dadosOlac);
 
         totalPorCategoria = aggPorCategoria;
-        totalPorCategoria[0]['key'] = "Engrenagens e Sistemas Circulatórios"
-        totalPorCategoria[8]['key'] = "Transmissões e Sistemas Hidráulicos"
+        //console.log(totalPorCategoria)
+        //totalPorCategoria[3]['key'] = "Engrenagens e Sistemas Circulatórios"
+        //totalPorCategoria[9]['key'] = "Transmissões e Sistemas Hidráulicos"
 
         //ARMAZENAR TODAS AS CATEGORIAS DE ÓLEO LUBRIFICANTE ACABADO
         var nomeCategoriaOlac = [];
