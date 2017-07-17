@@ -235,3 +235,6 @@ li {
 
 }
 
+.dimple-axis-x > .tick line {
+  visibility:hidden;
+}   
