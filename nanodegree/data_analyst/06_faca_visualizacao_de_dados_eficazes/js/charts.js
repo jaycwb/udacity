@@ -19,7 +19,8 @@ function barChart() {
                 myChart.setBounds(20, 20, 560, 360)
                 var x = myChart.addCategoryAxis("x", "Categoria");
                 var y = myChart.addMeasureAxis("y", "Percentual");
-                myChart.addSeries(null, dimple.plot.bar);
+                bars = myChart.addSeries(null, dimple.plot.bar);
+                bars.barGap = 0.5;
                 myChart.draw();
         bar = d3.select("#barContainer").select("svg")
                 .append("line")
@@ -28,6 +29,78 @@ function barChart() {
                 .attr("x1", myChart._yPixels())
                 .attr("x2", myChart._yPixels() + myChart._heightPixels() + 200)
                 .style("stroke", "red")
-                .style("stroke-dasharray", "3");
+                .style("stroke-dasharray", "4");
+
+        d3.select("#barContainer")
+            .select("svg")
+            .select("#dimple-all-ciclo-diesel---")
+            .style("fill", "red");
+        d3.select("#barContainer")
+            .select("svg")
+            .select("#dimple-all-ciclo-otto---")
+            .style("fill", "red");
+
+        d3.select("#barContainer")
+            .select("svg")
+            .select("#dimple-all--leos-lubrificantes-mar-timos---")
+            .style("fill", "black")
+            .style("opacity", "0.15")
+            .style("stroke", "black")    
+
+        d3.select("#barContainer")
+            .select("svg")
+            .select("#dimple-all--leos-lubrificantes-ferrovi-rios---")
+            .style("fill", "black")
+            .style("opacity", "0.15")
+            .style("stroke", "black")         
+
+        d3.select("#barContainer")
+            .select("svg")
+            .select("#dimple-all-motores-2-tempos---")
+            .style("fill", "black")
+            .style("opacity", "0.15")
+            .style("stroke", "black")  
+
+        d3.select("#barContainer")
+            .select("svg")
+            .select("#dimple-all-transmiss-es-e-sistemas-hidr-ulicos---")
+            .style("fill", "black")
+            .style("opacity", "0.15")
+            .style("stroke", "black")  
+
+        d3.select("#barContainer")
+            .select("svg")
+            .select("#dimple-all-engrenagens-e-sistemas-circulat-rios---")
+            .style("fill", "black")
+            .style("opacity", "0.15")
+            .style("stroke", "black")  
+
+        d3.select("#barContainer")
+            .select("svg")
+            .select("#dimple-all-isolante-tipo-a---")
+            .style("fill", "black")
+            .style("opacity", "0.15")
+            .style("stroke", "black")  
+
+        d3.select("#barContainer")
+            .select("svg")
+            .select("#dimple-all-outros--leos-lubrificantes-acabados---")
+            .style("fill", "black")
+            .style("opacity", "0.15")
+            .style("stroke", "black")  
+
+        d3.select("#barContainer")
+            .select("svg")
+            .select("#dimple-all-isolante-tipo-b---")
+            .style("fill", "black")
+            .style("opacity", "0.15")
+            .style("stroke", "black")  
+
+         d3.select("#barContainer")
+            .select("svg")
+            .select("#dimple-all--leos-lubrificantes-para-avia--o---")
+            .style("fill", "black")
+            .style("opacity", "0.15")
+            .style("stroke", "black")  
         });
 }
