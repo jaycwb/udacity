@@ -1,5 +1,5 @@
 function pieChart() {
-        var svg = dimple.newSvg("#chartContainer", 700, 400);
+        var svg = dimple.newSvg("#chartContainer", 900, 400);
         d3.csv("/data/producao_categoria_m3.csv", function (data) {
                 var myChart = new dimple.chart(svg, data);
                 myChart.setBounds(20, 20, 560, 360)
