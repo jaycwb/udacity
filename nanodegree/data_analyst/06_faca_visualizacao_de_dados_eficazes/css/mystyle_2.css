@@ -216,7 +216,7 @@ li {
     position: relative
 }
 
-#chartContainer{
+#pieContainer{
     overflow: auto;
     overflow-x: hidden;
     overflow-y: hidden;
@@ -225,3 +225,13 @@ li {
 
 
 }
+
+#barContainer{
+    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    height: 96%;  
+    width: 96%;
+
+}
+
