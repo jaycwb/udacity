@@ -215,4 +215,13 @@ li {
     margin-left: -14%;
     position: relative
 }
+
+#chartContainer{
+    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    height: 96%;  
+    width: 96%;
+
+
 }

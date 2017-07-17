@@ -76,7 +76,7 @@ function setMap(){
 		var states = topojson.feature(brasilData, brasilData.objects.estados);
         dadosOlac = csvData;
         dadosGeo = states;
-        
+
         //AGREGAÇÃO DO SOMATÓRIO DE VOLUME POR UNIDADE DA FEDERAÇÃO
         var listUF = [];
         
@@ -269,9 +269,7 @@ function setMap(){
         });
 
         criarMenu(dadosOlac);
-        legend(variavelAlvo, dadosGeo);
-        
-
+        legend(variavelAlvo, dadosGeo);      
 
 
     };
