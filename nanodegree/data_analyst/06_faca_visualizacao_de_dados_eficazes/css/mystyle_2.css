@@ -224,6 +224,7 @@ li {
     width: 30%;
     margin-right: auto; 
     margin-left: 27%;
+    margin-top: -50px;
 
 
 }
@@ -234,9 +235,18 @@ li {
     overflow-y: hidden;
     height: 65%;  
     width: 30%;
+    margin-right: auto; 
+    margin-left: 27%;
 
 }
 
 .dimple-axis-x > .tick line {
   visibility:hidden;
 }   
+
+#conteudoPie > p {
+    width: 95%;
+    margin-left: 2.5%;
+    margin-top:30px
+    
+}
