@@ -222,6 +222,8 @@ li {
     overflow-y: hidden;
     height: 45%;  
     width: 30%;
+    margin-right: auto; 
+    margin-left: 27%;
 
 
 }
