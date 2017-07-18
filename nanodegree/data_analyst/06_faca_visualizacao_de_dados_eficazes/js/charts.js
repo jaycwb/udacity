@@ -26,13 +26,13 @@ function barChart() {
         x.shapes.selectAll("text").attr("transform",
         function (d) { return d3.select(this).attr("transform") + " translate(0, 20) rotate(-45)";
     });
-        d3.select("#barContainer").select(".dimple-chart").attr("transform", "translate(10,0)");
+        d3.select("#barContainer").select(".dimple-chart").attr("transform", "translate(30,0)");
         bar = d3.select("#barContainer").select("svg")
                 .append("line")
                 .attr("y1", y._scale(1))
                 .attr("y2", y._scale(1))
-                .attr("x1", myChart._yPixels()+10)
-                .attr("x2", myChart._yPixels() + myChart._heightPixels() + 210)
+                .attr("x1", myChart._yPixels()+30)
+                .attr("x2", myChart._yPixels() + myChart._heightPixels() + 230)
                 .style("stroke", "red")
                 .style("stroke-dasharray", "4");
 
