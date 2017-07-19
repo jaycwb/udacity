@@ -34,6 +34,8 @@ Com o consolidado de 3 feedbacks foram levantadas algumas perguntas e ideias sug
 
 Essa nova visualização foi agregada ao projeto e o resultado está consolidado no arquivo **index_4.html**.
 
+O arquivo **index_4.html** foi submetido a apreciação e um dos revisores da equipe da udacity fez pontuções e sugestões de melhoria ao projeto O resultado das modificações realizadas está consolidada no arquivo **index_5.html** que foi submetido para segunda avaliação do projeto.
+
 ### 3. FEEDBACK
 
 #### 3.1 THIAGO KARASHIMA
