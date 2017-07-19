@@ -13,7 +13,7 @@ function pieChart() {
 }
 
 function barChart() {
-        var svg = dimple.newSvg("#barContainer", 700, 550);
+        var svg = dimple.newSvg("#barContainer", 720, 550);
         d3.csv("/data/producao_vs_vendas.csv", function (data) {
                 var myChart = new dimple.chart(svg, data);
                 myChart.setBounds(20, 20, 560, 360)
