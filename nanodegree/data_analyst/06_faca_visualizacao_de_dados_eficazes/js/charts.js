@@ -18,7 +18,7 @@ function barChart() {
                 var myChart = new dimple.chart(svg, data);
                 myChart.setBounds(20, 20, 560, 360)
                 var x = myChart.addCategoryAxis("x", "Categoria");
-                var y = myChart.addMeasureAxis("y", "Percentual");
+                var y = myChart.addMeasureAxis("y", "Produção / Vendas");
                 bars = myChart.addSeries(null, dimple.plot.bar);
                 bars.barGap = 0.5;
                 myChart.draw();
@@ -26,6 +26,11 @@ function barChart() {
         x.shapes.selectAll("text").attr("transform",
         function (d) { return d3.select(this).attr("transform") + " translate(0, 20) rotate(-45)";
     });
+        //ALTERAR O FONT SIZE DOS LABELS DO EIXO X
+        d3.selectAll(".dimple-custom-axis-label").style("font-size","12px");
+        //ALTERAR O FONT SIZE DO LABEL DO EIXO Y
+        d3.selectAll(".dimple-custom-axis-title").filter(".dimple-axis-y").style("font-size","14px")
+
         d3.select("#barContainer").select(".dimple-chart").attr("transform", "translate(30,0)");
         bar = d3.select("#barContainer").select("svg")
                 .append("line")
