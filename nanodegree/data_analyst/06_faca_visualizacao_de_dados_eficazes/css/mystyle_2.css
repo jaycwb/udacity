@@ -258,3 +258,43 @@ li {
     margin-top:30px
     
 }
+
+#sumario > h2{
+
+    width: 95%;
+    margin-left: 1%;
+    margin-top:30px;
+    font-family: 'Bungee Inline', cursive;
+
+}
+
+li {
+    font-family: 'Montserrat', sans-serif;
+}
+
+#intro > h2{
+
+    width: 95%;
+    margin-left: 1%;
+    margin-top:30px;
+    font-family: 'Bungee Inline', cursive;
+
+}
+
+#mid> h2{
+
+    width: 95%;
+    margin-top:30px;
+    font-family: 'Bungee Inline', cursive;
+    margin-left: -1.5%;
+
+}
+
+#mid_rj> h2{
+
+    width: 95%;
+    margin-top:30px;
+    font-family: 'Bungee Inline', cursive;
+    margin-left: -1.5%;
+
+}

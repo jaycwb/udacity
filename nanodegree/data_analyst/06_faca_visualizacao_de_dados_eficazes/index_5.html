@@ -5,6 +5,7 @@
         <link href="https://fonts.googleapis.com/css?family=Bungee+Inline" rel="stylesheet"> 
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
         <link href="https://fonts.googleapis.com/css?family=PT+Mono" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 
         <script src="https://d3js.org/d3.v3.min.js"></script>
         <script src="https://d3js.org/topojson.v1.min.js"></script>
@@ -30,20 +31,25 @@
             <h4 id="prod">RIO DE JANEIRO É O MAIOR PRODUTOR DO BRASIL</h4>
         </div>
         <div id="sumario">
-            <h2>Sumário:</h2>
-            <ol>
-                <li><strong>Gráfico donut:</strong> Apresenta o <em>market share</em> da produção de diferentes categorias de lubrificantes.</li>
-                <li><strong>Gráfico de barras:</strong> Apresenta a autossuficência de produção de algumas categorias de lubrificantes.</li>
+            <h2 id="sum_vis">Sumário de visualizações:</h2>
+            <ol><li><strong>Gráfico donut:</strong> Apresenta o <em>market share</em> da produção de diferentes categorias de <strong style="color: rgb(255,120,37)">lubrificantes</strong>.</li>
+            <li><strong>Gráfico de barras:</strong> Apresenta a autossuficiência de produção de algumas categorias de <strong style="color: rgb(255,120,37)">lubrificantes</strong>.</li>
+            <li><strong>Mapa coroplético:</strong> Apresenta os volumes de produção de <strong style="color: rgb(255,120,37)">lubrificantes</strong> associados as diferentes unidades da federação.</li>
+            <li><strong>Diagrama de Sankey:</strong> Apresenta os fluxos de comercialização de <strong style="color: rgb(255,120,37)">lubrificantes</strong> entre diferentes unidades da federação.</li>
             </ol>
         </div>
- 
+        <div id="intro">
+            <h2>Óleos Lubrificantes - O que são?</h2>
+        </div>
         <div id="conteudo">
             <p>   
                 Quando uma superfície desliza sobre outra, há sempre alguma resistência ao movimento. Esta força de resistência é conhecida como atrito. 
                 Qualquer substância que reduza o atrito é conhecida como <strong style="color: rgb(255,120,37)">lubrificante</strong> - que pode ser sólido, líquido ou gasoso. <strong style="color: rgb(255,120,37)"> Óleos lubrificantes</strong> podem ser 
                 definidos como substâncias que se interpõem entre superfícies, formando uma película que evita ou minimiza o atrito, diminuindo o desgaste.
             </p>
-
+        <div id="mid">
+            <h2>O Estado regulador e a indústria de lubrificantes...</h2>
+        </div>
              <p> 
                 Para promover uma adequada regulação do mercado de <strong style="color: rgb(255,120,37)">lubrificantes</strong>, a <a target="_tab" href="http://www.anp.gov.br/wwwanp/">
                 <strong style="color: rgb(255,120,37)">Agência Nacional do Petróleo, Gás Natural e Biocombustíveis - ANP</strong></a> instuiu um sistema denominado <a target="_tab" href="http://www.anp.gov.br/SITE/EXTRAS/SITE_SIMP/INDEX.asp">SIMP 
@@ -59,9 +65,13 @@
                 e a sua regulação.
             </blockquote>
 
+        <div id="mid_rj">
+            <h2>Rio de Janeiro: menos é mais ?</h2>
+        </div>
+
             <p>
                 Os dados disponibilizados pela <strong style="color: rgb(255,120,37)">ANP</strong> informam que para o ano de 2016 haviam 64 plantas industriais autorizadas pelo órgão a produzir OLAC, das quais a grande maioria (41) encontra-se
-                localizadas no estado de São Paulo. Todavia, apesar do estado do Rio de Janeiro ter apenas 11 plantas autorizadas a produzir, esse concentra a maior parte da produção de <strong style="color: rgb(255,120,37)">lubrificantes</strong>  do país. Para o ano em análise, a produção realizada no RJ
+                localizadas no estado de São Paulo. Todavia, apesar do estado do Rio de Janeiro ter <u><strong>apenas 11 plantas autorizadas a produzir</strong></u>, esse concentra a maior parte da produção de <strong style="color: rgb(255,120,37)">lubrificantes</strong>  do país. Para o ano em análise, a produção realizada no RJ
                 representou <strong>76,98%</strong> de todo óleo <strong style="color: rgb(255,120,37)">lubrificante</strong> acabado produzido no Brasil. Desse total produzido em 2016, os <strong style="color: rgb(255,120,37)">lubrificantes</strong> destinados a motores do ciclo otto e diesel (segmento automotivo) representaram aproximadamente <strong>60%</strong> de toda produção nacional. No gráfico abaixo é possível visualizar o percentual de produção das demais categorias de OLAC.                
             </p> 
 
