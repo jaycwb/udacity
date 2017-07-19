@@ -30,6 +30,8 @@ function barChart() {
         d3.selectAll(".dimple-custom-axis-label").style("font-size","12px");
         //ALTERAR O FONT SIZE DO LABEL DO EIXO Y
         d3.selectAll(".dimple-custom-axis-title").filter(".dimple-axis-y").style("font-size","14px")
+        //ALTERAR O FONT SIZE DAS LEGENDAS
+        d3.selectAll(".dimple-legend").style("font-size","12px")
 
         d3.select("#barContainer").select(".dimple-chart").attr("transform", "translate(30,0)");
         bar = d3.select("#barContainer").select("svg")
