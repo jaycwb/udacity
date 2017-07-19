@@ -272,6 +272,10 @@ li {
     font-family: 'Montserrat', sans-serif;
 }
 
+li {
+    font-family: 'Montserrat', sans-serif;
+}
+
 #intro > h2{
 
     width: 95%;
@@ -298,3 +302,31 @@ li {
     margin-left: -1.5%;
 
 }
+
+#lubmotor> h2{
+
+    width: 95%;
+    margin-top:30px;
+    font-family: 'Bungee Inline', cursive;
+    margin-left: 1%;
+
+}
+
+#rjprod > h2{
+
+    width: 95%;
+    margin-top:30px;
+    font-family: 'Bungee Inline', cursive;
+    margin-left: 1%;
+
+}
+
+#pipelines > h2{
+
+    width: 95%;
+    margin-top:30px;
+    font-family: 'Bungee Inline', cursive;
+    margin-left: 1%;
+
+}
+
