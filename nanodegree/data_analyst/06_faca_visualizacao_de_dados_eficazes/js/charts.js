@@ -1,6 +1,6 @@
 function pieChart() {
         var svg = dimple.newSvg("#pieContainer", 900, 400);
-        d3.csv("/data/producao_categoria_m3.csv", function (data) {
+        d3.csv("./data/producao_categoria_m3.csv", function (data) {
                 var myChart = new dimple.chart(svg, data);
                 myChart.setBounds(20, 20, 560, 360)
                 myChart.addMeasureAxis("p", "Volume");
@@ -14,7 +14,7 @@ function pieChart() {
 
 function barChart() {
         var svg = dimple.newSvg("#barContainer", 720, 550);
-        d3.csv("/data/producao_vs_vendas.csv", function (data) {
+        d3.csv("./data/producao_vs_vendas.csv", function (data) {
                 var myChart = new dimple.chart(svg, data);
                 myChart.setBounds(20, 20, 560, 360)
                 var x = myChart.addCategoryAxis("x", "Categoria");
